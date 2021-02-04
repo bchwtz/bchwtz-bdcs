@@ -1,8 +1,15 @@
-# Factor Analysis
+# Getting Started
 
 Wow content
 
-## Test
+![](./gfx/org/systemarchitecture-highlevel.png)
+Move on
+
+## Sensor Dev Env
+
+Content
+
+## Gateway Dev Env
 
 test
 test2

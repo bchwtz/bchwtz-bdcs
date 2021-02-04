@@ -8,11 +8,11 @@ documentclass: book
 bibliography: [book.bib, packages.bib]
 biblio-style: apalike
 link-citations: yes
-github-repo: bchwtz/bchwtz-smod
+github-repo: bchwtz/bchwtz-bdcs
 description: "Big Data Case Studies"
 ---
 
-# Prerequisites
+# Introduction
 
 This repo contains course materials.
 
