@@ -1,3 +1,14 @@
 # Gateway
 
 Lorem ipsum
+
+This is a R-Markdown file that supports R Code execution and formulas.
+
+```{r}
+rnorm(5)
+```
+
+
+$$
+f(x) = \frac{1}{x} + x^2
+$$
