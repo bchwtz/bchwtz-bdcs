@@ -14,7 +14,7 @@ f(x) = \frac{1}{x} + x^2
 $$
 
 
-```{python}
+```{python, eval=F}
 import sys
 print("Python version")
 print (sys.version)
