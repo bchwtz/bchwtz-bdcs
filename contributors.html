@@ -144,14 +144,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a></li>
 <li class="chapter" data-level="5" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>5</b> Backend</a></li>
 <li class="part"><span><b>To Do</b></span></li>
-<li class="chapter" data-level="6" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>6</b> Sensor</a></li>
-<li class="chapter" data-level="7" data-path="external-flash-memory.html"><a href="external-flash-memory.html"><i class="fa fa-check"></i><b>7</b> External Flash Memory</a></li>
-<li class="chapter" data-level="8" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>8</b> Gateway</a></li>
-<li class="chapter" data-level="9" data-path="backend-1.html"><a href="backend-1.html"><i class="fa fa-check"></i><b>9</b> Backend</a></li>
+<li class="chapter" data-level="6" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>6</b> Gateway</a></li>
+<li class="chapter" data-level="7" data-path="backend-1.html"><a href="backend-1.html"><i class="fa fa-check"></i><b>7</b> Backend</a></li>
 <li class="part"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i>Contributors</a><ul>
 <li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html#ws-2020-2021"><i class="fa fa-check"></i>WS 2020 / 2021</a></li>
-<li class="chapter" data-level="9.1" data-path="contributors.html"><a href="contributors.html#ss-2021"><i class="fa fa-check"></i><b>9.1</b> SS 2021</a></li>
+<li class="chapter" data-level="7.1" data-path="contributors.html"><a href="contributors.html#ss-2021"><i class="fa fa-check"></i><b>7.1</b> SS 2021</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="system-info.html"><a href="system-info.html"><i class="fa fa-check"></i>System Info</a></li>
 <li class="divider"></li>
@@ -185,7 +183,7 @@ TH
 VB</p>
 </div>
 <div id="ss-2021" class="section level2">
-<h2><span class="header-section-number">9.1</span> SS 2021</h2>
+<h2><span class="header-section-number">7.1</span> SS 2021</h2>
 
 </div>
 </div>
@@ -245,6 +243,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
