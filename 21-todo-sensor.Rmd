@@ -1,7 +1,7 @@
 # Sensor
 
 
-# External Flash Memory
+## External Flash Memory
 
 ![](./gfx/org/systemarchitecture-highlevel.png)
 
