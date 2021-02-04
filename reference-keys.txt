@@ -1,9 +1,12 @@
-prerequisites
-factor-analysis
-test
+introduction
+getting-started
+sensor-dev-env
+gateway-dev-env
 sensor
 gateway
 backend
 sensor-1
+external-flash-memory
 gateway-1
 backend-1
+ss-2021
