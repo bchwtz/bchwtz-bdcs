@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-02-04" />
+<meta name="date" content="2021-02-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -140,7 +140,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a></li>
 </ul></li>
 <li class="part"><span><b>Documentation</b></span></li>
-<li class="chapter" data-level="3" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>3</b> Sensor</a></li>
+<li class="chapter" data-level="3" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>3</b> Sensor</a><ul>
+<li class="chapter" data-level="3.1" data-path="sensor.html"><a href="sensor.html#initilizing-acceleration-logging"><i class="fa fa-check"></i><b>3.1</b> Initilizing acceleration logging</a></li>
+<li class="chapter" data-level="3.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>3.2</b> Retrieving data from FIFO</a></li>
+<li class="chapter" data-level="3.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>3.3</b> Using the data by hearbeat</a></li>
+<li class="chapter" data-level="3.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>3.4</b> Initialization during boot</a></li>
+</ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a></li>
 <li class="chapter" data-level="5" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>5</b> Backend</a></li>
 <li class="part"><span><b>To Do</b></span></li>
@@ -177,8 +182,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="sensor" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Sensor</h1>
-<p>Lorem ipsum</p>
+<p>The following figure shows the high level architecture of acceleration data logging in Ruuvi Tag. All configuration is done via the gateway. It communicates with the Ruuvi Tag using the Nordic UART interface via GATT messages transported by Blutooth Low Energy (BLE). Most logic regarding acceleration logging is implemented inside the module app_accelerometer_logging.c.</p>
+<p><img src="gfx/org/wrapping_of_data_get.png" /></p>
+<p>Three usecases are shown in this figure.</p>
+<div id="initilizing-acceleration-logging" class="section level2">
+<h2><span class="header-section-number">3.1</span> Initilizing acceleration logging</h2>
+<p>The initialization is shown with blue arrows and numbers in black circles until #4.</p>
+<p>To activate acceleration logging the gateway sends the message <strong>0xFA 0xFA 0x0A 0x01</strong>. In general GATT messages are handled by the function <strong>handle_comms()</strong> inside the module app_comm.c. Message regarding acceleration logging are handled by the function <strong>handle_lis2dh12_comms()</strong> inside the same module. After receiving the message to activate acceleration logging the function <strong>app_enable_sensor_logging()</strong> inside the module app_accelerometer_logging.c in called (1).</p>
+<p>The first step in activation is to check if some conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling <strong>find_sensor()</strong> inside of app_sensor.c (2). This function return the sensor context. The sensor context consists of several information abut the sensor. In the next step assiciates the function <strong>on_fifo_full()</strong> from app_accelerometer_logging.c with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At least the function pointer to <strong>data_get()</strong> inside the sensor context is replaced by the pointer to the function <strong>lis2dh12_logged_data_get()</strong>.</p>
+</div>
+<div id="retrieving-data-from-fifo" class="section level2">
+<h2><span class="header-section-number">3.2</span> Retrieving data from FIFO</h2>
+<p>When FIFO is full inside LIS2DH12 the interrupt starts the function <strong>on_fifo_full()</strong>. This functions does not directly handle the new data. It schedules a call to <strong>fifo_full_handler()</strong>. Instead of <strong>on_fifo_full()</strong> this is called in the main thread of the application. When processing is done inside a function inside an interrupt context this prevents processing of other interrupt. This should be avoided.</p>
+<p>Inside <strong>fifo_full_handler()</strong> the FIFO from LIS2DH12 is read (5). The values are store in the memory in raw format to be ready to present them to the function <strong>lis2dh12_logged_data_get()</strong> which is important for heartbesat. In parallel the raw values are compacted by removing all unused bits. This is done by the functions <strong>pack8/10/12()</strong>. A timestamp is added to the compacted values. These values are handover to the ringbuffer which writes them to flash (6).</p>
+</div>
+<div id="using-the-data-by-hearbeat" class="section level2">
+<h2><span class="header-section-number">3.3</span> Using the data by hearbeat</h2>
+<p>This usecase is shown with magenta arrows and numbers inside magenta circles in the figure above.</p>
+<p>The heartbeat retrieves the values from all sensors by calling the function <strong>app_sensor_get()</strong> inside the module app_sensors.c. In the original setup this function calls <strong>ri_lis2dh12_data_get()</strong> inside of ruuvi_interface_lis2dh12.c. During initialization this function is replaced by <strong>lis2dh12_logged_data_get()</strong>.</p>
+<p><strong>lis2dh12_logged_data_get()</strong> retrieves the raw accleration values from memory. Then the values are parsed by calling <strong>ri_lis2dh12_raw_data_parse()</strong> and returned to the heartbeat.</p>
+</div>
+<div id="initialization-during-boot" class="section level2">
+<h2><span class="header-section-number">3.4</span> Initialization during boot</h2>
+<p>All sensor initialization is done inside <strong>setup()</strong> from main.c. This function calls <strong>app_acc_logging_init()</strong> inside app_accelerometer_logging.c. The function checks if the ringbuffer exists. If this is true it activates acceleration logging as described earlier.</p>
 
+</div>
 </div>
             </section>
 

@@ -3,6 +3,10 @@ getting-started
 sensor-dev-env
 gateway-dev-env
 sensor
+initilizing-acceleration-logging
+retrieving-data-from-fifo
+using-the-data-by-hearbeat
+initialization-during-boot
 gateway
 backend
 sensor-1
