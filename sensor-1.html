@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-02-09" />
+<meta name="date" content="2021-02-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -150,9 +150,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>5</b> Backend</a></li>
 <li class="part"><span><b>To Do</b></span></li>
 <li class="chapter" data-level="6" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>6</b> Sensor</a><ul>
-<li class="chapter" data-level="6.1" data-path="sensor-1.html"><a href="sensor-1.html#external-flash-memory"><i class="fa fa-check"></i><b>6.1</b> External Flash Memory</a></li>
+<li class="chapter" data-level="6.1" data-path="sensor-1.html"><a href="sensor-1.html#hardware"><i class="fa fa-check"></i><b>6.1</b> Hardware</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="sensor-1.html"><a href="sensor-1.html#external-flash-memory"><i class="fa fa-check"></i><b>6.1.1</b> External Flash Memory</a></li>
+<li class="chapter" data-level="6.1.2" data-path="sensor-1.html"><a href="sensor-1.html#board-redesign"><i class="fa fa-check"></i><b>6.1.2</b> Board Redesign</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>7</b> Gateway</a></li>
+<li class="chapter" data-level="6.2" data-path="sensor-1.html"><a href="sensor-1.html#software"><i class="fa fa-check"></i><b>6.2</b> Software</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="sensor-1.html"><a href="sensor-1.html#general-todo"><i class="fa fa-check"></i><b>6.2.1</b> General ToDo</a></li>
+<li class="chapter" data-level="6.2.2" data-path="sensor-1.html"><a href="sensor-1.html#security"><i class="fa fa-check"></i><b>6.2.2</b> Security</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>7</b> Gateway</a><ul>
+<li class="chapter" data-level="7.1" data-path="gateway-1.html"><a href="gateway-1.html#hardware-1"><i class="fa fa-check"></i><b>7.1</b> Hardware</a><ul>
+<li class="chapter" data-level="7.1.1" data-path="gateway-1.html"><a href="gateway-1.html#uninterruptible-power-supply"><i class="fa fa-check"></i><b>7.1.1</b> Uninterruptible Power Supply</a></li>
+<li class="chapter" data-level="7.1.2" data-path="gateway-1.html"><a href="gateway-1.html#camera"><i class="fa fa-check"></i><b>7.1.2</b> Camera</a></li>
+<li class="chapter" data-level="7.1.3" data-path="gateway-1.html"><a href="gateway-1.html#g4g5g-module"><i class="fa fa-check"></i><b>7.1.3</b> 3g/4g/5g Module</a></li>
+<li class="chapter" data-level="7.1.4" data-path="gateway-1.html"><a href="gateway-1.html#bluetooth-hardware"><i class="fa fa-check"></i><b>7.1.4</b> Bluetooth Hardware</a></li>
+<li class="chapter" data-level="7.1.5" data-path="gateway-1.html"><a href="gateway-1.html#case"><i class="fa fa-check"></i><b>7.1.5</b> Case</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="gateway-1.html"><a href="gateway-1.html#software-1"><i class="fa fa-check"></i><b>7.2</b> Software</a></li>
+</ul></li>
 <li class="chapter" data-level="8" data-path="backend-1.html"><a href="backend-1.html"><i class="fa fa-check"></i><b>8</b> Backend</a></li>
 <li class="part"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i>Contributors</a><ul>
@@ -182,13 +198,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="sensor-1" class="section level1">
 <h1><span class="header-section-number">Chapter 6</span> Sensor</h1>
-<div id="external-flash-memory" class="section level2">
-<h2><span class="header-section-number">6.1</span> External Flash Memory</h2>
-<p><img src="gfx/org/systemarchitecture-highlevel.png" /></p>
-<p>Lorem ipsum</p>
-<pre><code>No language indicated, so no syntax highlighting. 
-But let&#39;s throw in a &lt;b&gt;tag&lt;/b&gt;.</code></pre>
+<div id="hardware" class="section level2">
+<h2><span class="header-section-number">6.1</span> Hardware</h2>
+<div id="external-flash-memory" class="section level3">
+<h3><span class="header-section-number">6.1.1</span> External Flash Memory</h3>
+<p>For more extensive data logging external memory (not in the SoC) is required. The most promising candidate is the <a href="https://www.macronix.com/en-us/products/NOR-Flash/Serial-NOR-Flash/Pages/spec.aspx?p=MX25R6435F&amp;m=Serial%20NOR%20Flash&amp;n=PM2138">Macronix MX25R</a> as it supports low power battery driven applications, is quite flexible in terms of required voltage and is also used in some newer Nordic reference designs.</p>
+</div>
+<div id="board-redesign" class="section level3">
+<h3><span class="header-section-number">6.1.2</span> Board Redesign</h3>
+<p>The current sensor board revision features two antennas, while the bluetooth antenna is required and onboard NFC antenna is not used, therefore the board footprint could be smaller.</p>
+<p>Inspiration for a board revision could be drawn from the discontinued <a href="https://www.nordicsemi.com/Software-and-tools/Reference-Designs/nRF51822-Beacon-Kit">nRF51822 Bluetooth Smart Beacon Kit</a> reference design.</p>
+</div>
+</div>
+<div id="software" class="section level2">
+<h2><span class="header-section-number">6.2</span> Software</h2>
+<div id="general-todo" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> General ToDo</h3>
+<ul>
+<li>Remotely customizing the Heartbeat interval (persistence required)</li>
+<li>Flexibilizing the Logging Rate so that it can be precisely controlled and the sensor supports rates that the accelerometer does not support natively (e.g. 2 Hz)</li>
+<li>Adapted Advertisement Message Format: Indicate amount of used internal storage to be used by the gateway to trigger connections and manage dowloading of logged data.</li>
+</ul>
+</div>
+<div id="security" class="section level3">
+<h3><span class="header-section-number">6.2.2</span> Security</h3>
+<p><strong>Questions:</strong>
+* Can Advertisements be encrypted?
+* How to manage access for downloading internally stored data and allow for encrypted transportation?</p>
 
+</div>
 </div>
 </div>
             </section>
@@ -247,20 +285,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
