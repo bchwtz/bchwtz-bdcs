@@ -27,3 +27,182 @@ The heartbeat retrieves the values from all sensors by calling the function `app
 
 ## Initialization during boot ##
 All sensor initialization is done inside `setup()` from main.c. This function calls `app_acc_logging_init()` inside app_accelerometer_logging.c. The function checks if the ringbuffer exists. If this is true it activates acceleration logging as described earlier.
+
+## Implementation ##
+
+### app_accelerometer_logging.c ###
+
+#### `rd_status_t app_enable_sensor_logging(void)` ####
+
+Enables the logging of acceleration data.
+
+| Special error codes |
+| - |
+| RD_ERROR_INVALID_STATE | When logging is already enabled. |
+| RD_ERROR_NOT_FOUND | When LIS2DH12 is not available. |
+
+#### `rd_status_t app_disable_sensor_logging(void)` ####
+
+Disables the logging of acceleration data.
+
+| Special error codes |
+| - |
+| RD_ERROR_INVALID_STATE | When logging is already disabled. |
+| RD_ERROR_NOT_FOUND | When LIS2DH12 is not available. |
+
+#### `void on_fifo_full (const ri_gpio_evt_t evt)` ####
+
+Callback function when FIFO full interrupt occurs at LIS2DH12. This functions schedules the execution of `void fifo_full_handler (void * p_event_data, uint16_t event_size)`. See ruuvi_interface_scheduler.h for parameters used in this function.
+
+#### `void fifo_full_handler (void * p_event_data, uint16_t event_size)` ####
+
+This functions reads the FIFO and stores the data inside the ringbuffer. See ruuvi_interface_scheduler.h for parameters used in this function.
+
+#### `void pack8/10/12(const uint16_t sizeData, const uint8_t* const data, uint8_t* const packeddata)` ####
+
+These functions store raw accelerometer values in 8/10/12 Bit format in compact form (without unused bits). 
+
+| Parameters |
+| - |
+| sizeData | in | Size of input data. |
+| data | in | Input data. |
+| packeddata | in/out | Memory for storing compacted data. |
+
+#### `rd_status_t lis2dh12_logged_data_get (rd_sensor_data_t * const data)` ####
+
+This functions retrieves raw accelerometer values from RAM. The values are parsed and returned inside data. It is called by `app_sensor_get()` inside app_sensor.c when accelerometer logging is active.
+
+| Parameters |
+| - |
+| raw_data | in/out | Memory for storing accelerometer values. |
+
+#### `rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp)` ####
+
+This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from RAM, does the compacting of the bits by calling `pack8/10/12()` and sends the data to the requestor.
+
+| Parameters |
+| - |
+| reply_fp | in | Function pointer to reply function. |
+
+| Special error codes |
+| - |
+| RD_ERROR_INVALID_STATE | When logging is not active. |
+
+#### `rd_status_t app_acc_logging_state(void)` ####
+
+This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller.
+
+| Special error codes |
+| - |
+| RD_SUCCESS | When logging is active. |
+| RD_ERROR_INVALID_STATE | When logging is not active. |
+
+#### `rd_status_t app_acc_logging_configuration_set (rt_sensor_ctx_t* sensor, rd_sensor_configuration_t* new_config)` ####
+
+This function is called when a request to update the sensor configuration is received by GATT/UART. It checks every configuration parameter if it should be changed. It also checks if the value is different than actual value. If a change is detected it clears the ringbuffer, updates the configuration and stores the configuration in flash.
+
+| Parameters |
+| - |
+| sensor | in | Sensor context of the sensor which configuration should be changed. |
+| new_config | in | Structure containing the new configuration values. |
+
+#### `rd_status_t app_acc_logging_init(void)` ####
+
+Initialize acceleration logging during boot. When logging was active before reboot it will be activated.
+
+When logging was not active before reboot this function return `RD_SUCCESS` without activating acceleration logging.
+
+The state if logging was active before reboot is detected by looking for the ringbuffer. When the ringbuffer exists, the logging must be active before reboot.
+
+This function is called from main.c / `setup()`.
+
+#### `rd_status_t app_acc_logging_uninit(void)` ####
+
+The uninitialization of acceleration logging disables the logging when it is actually active. When logging is not active this function return RD_SUCCESS without doing anything.
+
+
+### app_comms.c ####
+
+#### `void handle_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
+
+Added new switch/case which forwards messages regarding configuration and control to the function `handle_lis2dh12_comms()`.
+
+#### `rd_status_t handle_lis2dh12_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
+
+This function handles the GATT/UART communication needed to control the functionality of acceleration logging.
+
+| Parameters |
+| - |
+| reply_fp | in | Function pointer to reply function. |
+| raw_message | in | Message received. |
+| data_len | in | Length of the received message. |
+
+### app_config.h ###
+
+- Added macro APP_SENSOR_LOGGING to control compilation of app_accelerometer_logging.*
+- When APP_SENSOR_LOGGING is not defined or is defined as 0 the functionality of logging of acceleration data is not available in the application.
+
+### app_heartbeat.c ###
+
+#### `void heartbeat (void * p_event, uint16_t event_size)` ####
+
+When acceleration logging is activated, than logging of environmental data is disabled to avoid extreme fragmentation of flash memory.
+
+### app_sensor.c ###
+
+#### `rt_sensor_ctx_t* app_sensor_find (const char *name)` ####
+
+Find sensor by it’s name. Works only with initialized sensors, will not return a sensor which is supported in firmware but not initialized.
+
+This function is called by `app_enable_sensor_logging()` / `app_disable_sensor_logging()` to retrieve the sensor context.
+
+| Parameters |
+| - |
+| name | in | Name of the sensor. |
+
+### main.c ###
+
+#### `void setup (void)'  ####
+
+Added call to `app_acc_logging_init()` to initialize acceleration logging when desired.
+
+### ruuvi_interface_lis2dh12.c ###
+
+#### `rd_status_t ri_lis2dh12_acceleration_raw_get (uint8_t * const raw_data)` ####
+
+This functions read raw acceleration values from the registers of LIS2DH12. It is called from the interrupt handler inside app_accelerometer_logging and from `ri_lis2dh12_data_get()` inside this module.
+
+| Parameters |
+| - |
+| raw_data | in/out | Memory for storing raw accelerometer values. |
+
+#### `rd_status_t ri_lis2dh12_data_get (rd_sensor_data_t * const data)` ####
+
+The original function `ri_lis2dh12_data_get()` is split into retrieving raw values from the sensor and parsing these data. Parsing is done by `ri_lis2dh12_raw_data_parse()`.
+
+This function is used when the acceleration logging is not active. When acceleration logging is active this function is replaced by `lis2dh12_logged_data_get()` inside app_accelerometer_logging.c.
+
+| Parameters |
+| - |
+| data | in/out | Structure for storing parsed accelerometer values. |
+
+#### `rd_status_t ri_lis2dh12_raw_data_parse (rd_sensor_data_t * const data, axis3bit16_t *raw_acceleration, uint8_t *raw_temperature)` ####
+
+This function parses raw values from the sensor and stores the values inside data. It is called from `ri_lis2dh12_data_get()` and from `lis2dh12_logged_data_get()`.
+
+| Parameters |
+| - |
+| data | in/out | Structure for storing parsed accelerometer values. |
+| Raw_acceration | in | Raw acceleration values. |
+| Raw_temperature | in | Raw temperature value. When used from app_accelerometer_logging.c this parameter is NULL. |
+
+### ruuvi_nrf5_sdk_rtc_mcu.c ###
+
+#### `rd_status_t ri_set_rtc_millis(uint64_t millis)` ####
+
+Set system time by external source. Set RTC to zero.
+
+| Parameters |
+| - |
+| millis | in | External time. |
+
