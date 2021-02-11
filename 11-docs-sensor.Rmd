@@ -36,8 +36,8 @@ All sensor initialization is done inside `setup()` from main.c. This function ca
 
 Enables the logging of acceleration data.
 
-| Special error codes |
-| - |
+| Special error codes |||
+| - | - | - |
 | RD_ERROR_INVALID_STATE | When logging is already enabled. |
 | RD_ERROR_NOT_FOUND | When LIS2DH12 is not available. |
 
@@ -45,8 +45,8 @@ Enables the logging of acceleration data.
 
 Disables the logging of acceleration data.
 
-| Special error codes |
-| - |
+| Special error codes ||
+| - ||
 | RD_ERROR_INVALID_STATE | When logging is already disabled. |
 | RD_ERROR_NOT_FOUND | When LIS2DH12 is not available. |
 
@@ -62,8 +62,8 @@ This functions reads the FIFO and stores the data inside the ringbuffer. See ruu
 
 These functions store raw accelerometer values in 8/10/12 Bit format in compact form (without unused bits). 
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | sizeData | in | Size of input data. |
 | data | in | Input data. |
 | packeddata | in/out | Memory for storing compacted data. |
@@ -72,28 +72,28 @@ These functions store raw accelerometer values in 8/10/12 Bit format in compact 
 
 This functions retrieves raw accelerometer values from RAM. The values are parsed and returned inside data. It is called by `app_sensor_get()` inside app_sensor.c when accelerometer logging is active.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | raw_data | in/out | Memory for storing accelerometer values. |
 
 #### `rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp)` ####
 
 This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from RAM, does the compacting of the bits by calling `pack8/10/12()` and sends the data to the requestor.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | reply_fp | in | Function pointer to reply function. |
 
-| Special error codes |
-| - |
+| Special error codes ||
+| - ||
 | RD_ERROR_INVALID_STATE | When logging is not active. |
 
 #### `rd_status_t app_acc_logging_state(void)` ####
 
 This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller.
 
-| Special error codes |
-| - |
+| Special error codes ||
+| - ||
 | RD_SUCCESS | When logging is active. |
 | RD_ERROR_INVALID_STATE | When logging is not active. |
 
@@ -101,8 +101,8 @@ This function is used to query the state of accelerometer logging. It is called 
 
 This function is called when a request to update the sensor configuration is received by GATT/UART. It checks every configuration parameter if it should be changed. It also checks if the value is different than actual value. If a change is detected it clears the ringbuffer, updates the configuration and stores the configuration in flash.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | sensor | in | Sensor context of the sensor which configuration should be changed. |
 | new_config | in | Structure containing the new configuration values. |
 
@@ -131,8 +131,8 @@ Added new switch/case which forwards messages regarding configuration and contro
 
 This function handles the GATT/UART communication needed to control the functionality of acceleration logging.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | reply_fp | in | Function pointer to reply function. |
 | raw_message | in | Message received. |
 | data_len | in | Length of the received message. |
@@ -156,8 +156,8 @@ Find sensor by it’s name. Works only with initialized sensors, will not return
 
 This function is called by `app_enable_sensor_logging()` / `app_disable_sensor_logging()` to retrieve the sensor context.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | name | in | Name of the sensor. |
 
 ### main.c ###
@@ -172,8 +172,8 @@ Added call to `app_acc_logging_init()` to initialize acceleration logging when d
 
 This functions read raw acceleration values from the registers of LIS2DH12. It is called from the interrupt handler inside app_accelerometer_logging and from `ri_lis2dh12_data_get()` inside this module.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | raw_data | in/out | Memory for storing raw accelerometer values. |
 
 #### `rd_status_t ri_lis2dh12_data_get (rd_sensor_data_t * const data)` ####
@@ -182,16 +182,16 @@ The original function `ri_lis2dh12_data_get()` is split into retrieving raw valu
 
 This function is used when the acceleration logging is not active. When acceleration logging is active this function is replaced by `lis2dh12_logged_data_get()` inside app_accelerometer_logging.c.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | data | in/out | Structure for storing parsed accelerometer values. |
 
 #### `rd_status_t ri_lis2dh12_raw_data_parse (rd_sensor_data_t * const data, axis3bit16_t *raw_acceleration, uint8_t *raw_temperature)` ####
 
 This function parses raw values from the sensor and stores the values inside data. It is called from `ri_lis2dh12_data_get()` and from `lis2dh12_logged_data_get()`.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | data | in/out | Structure for storing parsed accelerometer values. |
 | Raw_acceration | in | Raw acceleration values. |
 | Raw_temperature | in | Raw temperature value. When used from app_accelerometer_logging.c this parameter is NULL. |
@@ -202,7 +202,7 @@ This function parses raw values from the sensor and stores the values inside dat
 
 Set system time by external source. Set RTC to zero.
 
-| Parameters |
-| - |
+| Parameters |||
+| - | - | - |
 | millis | in | External time. |
 
