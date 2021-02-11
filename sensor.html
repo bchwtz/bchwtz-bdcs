@@ -243,14 +243,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Special error codes</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>RD_ERROR_INVALID_STATE</td>
+<td>When logging is already enabled.</td>
+<td></td>
 </tr>
 <tr class="even">
 <td>RD_ERROR_NOT_FOUND</td>
+<td>When LIS2DH12 is not available.</td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -258,21 +264,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="rd_status_t-app_disable_sensor_loggingvoid" class="section level4">
 <h4><span class="header-section-number">3.5.1.2</span> <code>rd_status_t app_disable_sensor_logging(void)</code></h4>
 <p>Disables the logging of acceleration data.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Special error codes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RD_ERROR_INVALID_STATE</td>
-</tr>
-<tr class="even">
-<td>RD_ERROR_NOT_FOUND</td>
-</tr>
-</tbody>
-</table>
+<div class="line-block">Special error codes ||<br />
+- ||<br />
+RD_ERROR_INVALID_STATE | When logging is already disabled. |<br />
+RD_ERROR_NOT_FOUND | When LIS2DH12 is not available. |</div>
 </div>
 <div id="void-on_fifo_full-const-ri_gpio_evt_t-evt" class="section level4">
 <h4><span class="header-section-number">3.5.1.3</span> <code>void on_fifo_full (const ri_gpio_evt_t evt)</code></h4>
@@ -289,17 +284,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>sizeData</td>
+<td>in</td>
+<td>Size of input data.</td>
 </tr>
 <tr class="even">
 <td>data</td>
+<td>in</td>
+<td>Input data.</td>
 </tr>
 <tr class="odd">
 <td>packeddata</td>
+<td>in/out</td>
+<td>Memory for storing compacted data.</td>
 </tr>
 </tbody>
 </table>
@@ -311,11 +314,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>raw_data</td>
+<td>in/out</td>
+<td>Memory for storing accelerometer values.</td>
 </tr>
 </tbody>
 </table>
@@ -327,61 +334,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>reply_fp</td>
+<td>in</td>
+<td>Function pointer to reply function.</td>
 </tr>
 </tbody>
 </table>
-<table>
-<thead>
-<tr class="header">
-<th>Special error codes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RD_ERROR_INVALID_STATE</td>
-</tr>
-</tbody>
-</table>
+<div class="line-block">Special error codes ||<br />
+- ||<br />
+RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 </div>
 <div id="rd_status_t-app_acc_logging_statevoid" class="section level4">
 <h4><span class="header-section-number">3.5.1.8</span> <code>rd_status_t app_acc_logging_state(void)</code></h4>
 <p>This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Special error codes</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RD_SUCCESS</td>
-</tr>
-<tr class="even">
-<td>RD_ERROR_INVALID_STATE</td>
-</tr>
-</tbody>
-</table>
+<div class="line-block">Special error codes ||<br />
+- ||<br />
+RD_SUCCESS | When logging is active. |<br />
+RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 </div>
 <div id="rd_status_t-app_acc_logging_configuration_set-rt_sensor_ctx_t-sensor-rd_sensor_configuration_t-new_config" class="section level4">
 <h4><span class="header-section-number">3.5.1.9</span> <code>rd_status_t app_acc_logging_configuration_set (rt_sensor_ctx_t* sensor, rd_sensor_configuration_t* new_config)</code></h4>
 <p>This function is called when a request to update the sensor configuration is received by GATT/UART. It checks every configuration parameter if it should be changed. It also checks if the value is different than actual value. If a change is detected it clears the ringbuffer, updates the configuration and stores the configuration in flash.</p>
 <table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>sensor</td>
+<td>in</td>
+<td>Sensor context of the sensor which configuration should be changed.</td>
 </tr>
 <tr class="even">
 <td>new_config</td>
+<td>in</td>
+<td>Structure containing the new configuration values.</td>
 </tr>
 </tbody>
 </table>
@@ -411,17 +413,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>reply_fp</td>
+<td>in</td>
+<td>Function pointer to reply function.</td>
 </tr>
 <tr class="even">
 <td>raw_message</td>
+<td>in</td>
+<td>Message received.</td>
 </tr>
 <tr class="odd">
 <td>data_len</td>
+<td>in</td>
+<td>Length of the received message.</td>
 </tr>
 </tbody>
 </table>
@@ -451,11 +461,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>name</td>
+<td>in</td>
+<td>Name of the sensor.</td>
 </tr>
 </tbody>
 </table>
@@ -477,11 +491,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>raw_data</td>
+<td>in/out</td>
+<td>Memory for storing raw accelerometer values.</td>
 </tr>
 </tbody>
 </table>
@@ -494,11 +512,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>data</td>
+<td>in/out</td>
+<td>Structure for storing parsed accelerometer values.</td>
 </tr>
 </tbody>
 </table>
@@ -507,20 +529,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4><span class="header-section-number">3.5.7.3</span> <code>rd_status_t ri_lis2dh12_raw_data_parse (rd_sensor_data_t * const data, axis3bit16_t *raw_acceleration, uint8_t *raw_temperature)</code></h4>
 <p>This function parses raw values from the sensor and stores the values inside data. It is called from <code>ri_lis2dh12_data_get()</code> and from <code>lis2dh12_logged_data_get()</code>.</p>
 <table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>data</td>
+<td>in/out</td>
+<td>Structure for storing parsed accelerometer values.</td>
 </tr>
 <tr class="even">
 <td>Raw_acceration</td>
+<td>in</td>
+<td>Raw acceleration values.</td>
 </tr>
 <tr class="odd">
 <td>Raw_temperature</td>
+<td>in</td>
+<td>Raw temperature value. When used from app_accelerometer_logging.c this parameter is NULL.</td>
 </tr>
 </tbody>
 </table>
@@ -535,11 +570,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <thead>
 <tr class="header">
 <th>Parameters</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>millis</td>
+<td>in</td>
+<td>External time.</td>
 </tr>
 </tbody>
 </table>
