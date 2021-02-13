@@ -141,7 +141,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="part"><span><b>Documentation</b></span></li>
 <li class="chapter" data-level="3" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>3</b> Sensor</a><ul>
-<li class="chapter" data-level="3.1" data-path="sensor.html"><a href="sensor.html#initilizing-acceleration-logging"><i class="fa fa-check"></i><b>3.1</b> Initilizing acceleration logging</a></li>
+<li class="chapter" data-level="3.1" data-path="sensor.html"><a href="sensor.html#initializing-acceleration-logging"><i class="fa fa-check"></i><b>3.1</b> Initializing acceleration logging</a></li>
 <li class="chapter" data-level="3.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>3.2</b> Retrieving data from FIFO</a></li>
 <li class="chapter" data-level="3.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>3.3</b> Using the data by hearbeat</a></li>
 <li class="chapter" data-level="3.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>3.4</b> Initialization during boot</a></li>
@@ -167,15 +167,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-system-time-0x08"><i class="fa fa-check"></i><b>6.1.5</b> Set system time (<code>0x08</code>)</a></li>
 <li class="chapter" data-level="6.1.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time-0x09"><i class="fa fa-check"></i><b>6.1.6</b> Read system time (<code>0x09</code>)</a></li>
 <li class="chapter" data-level="6.1.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging-0x0a"><i class="fa fa-check"></i><b>6.1.7</b> Control acceleration logging (<code>0x0A</code>)</a></li>
-<li class="chapter" data-level="6.1.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-state-of-acceleration-logging-0x0b"><i class="fa fa-check"></i><b>6.1.8</b> Query state of acceleration logging (<code>0x0B</code>)</a></li>
+<li class="chapter" data-level="6.1.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging-0x0b"><i class="fa fa-check"></i><b>6.1.8</b> Query status of acceleration logging (<code>0x0B</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.2</b> Response messages</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#state-response-0x00"><i class="fa fa-check"></i><b>6.2.1</b> State response (<code>0x00</code>)</a></li>
+<li class="chapter" data-level="6.2.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response-0x00"><i class="fa fa-check"></i><b>6.2.1</b> status response (<code>0x00</code>)</a></li>
 <li class="chapter" data-level="6.2.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message-0x03-0x05"><i class="fa fa-check"></i><b>6.2.2</b> End of data message (<code>0x03</code>, <code>0x05</code>)</a></li>
 <li class="chapter" data-level="6.2.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response-0x07"><i class="fa fa-check"></i><b>6.2.3</b> Configuration response (<code>0x07</code>)</a></li>
 <li class="chapter" data-level="6.2.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response-0x09"><i class="fa fa-check"></i><b>6.2.4</b> Timestamp response (<code>0x09</code>)</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.3</b> Data message</a></li>
+<li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.4</b> Communication example</a></li>
 </ul></li>
 <li class="part"><span><b>To Do</b></span></li>
 <li class="chapter" data-level="7" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>7</b> Sensor</a><ul>
@@ -227,25 +228,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="sensor" class="section level1">
 <h1><span class="header-section-number">Chapter 3</span> Sensor</h1>
-<p>The following figure shows the high level architecture of acceleration data logging in Ruuvi Tag. All configuration is done via the gateway. It communicates with the Ruuvi Tag using the Nordic UART interface via GATT messages transported by Blutooth Low Energy (BLE). Most logic regarding acceleration logging is implemented inside the module app_accelerometer_logging.c.</p>
+<p>The following figure shows the high level architecture of acceleration data logging in Ruuvi Tag. All configuration is done via the gateway. It communicates with the Ruuvi Tag using the Nordic UART interface via GATT messages transported by Bluetooth Low Energy (BLE). Most logic regarding acceleration logging is implemented inside the module app_accelerometer_logging.c.</p>
 <p><img src="gfx/org/wrapping_of_data_get.png" /></p>
-<p>Three usecases are shown in this figure.</p>
-<div id="initilizing-acceleration-logging" class="section level2">
-<h2><span class="header-section-number">3.1</span> Initilizing acceleration logging</h2>
+<p>Three use cases are shown in this figure.</p>
+<div id="initializing-acceleration-logging" class="section level2">
+<h2><span class="header-section-number">3.1</span> Initializing acceleration logging</h2>
 <p>The initialization is shown with blue arrows and numbers in black circles until #4.</p>
 <p>To activate acceleration logging the gateway sends the message <code>0xFA 0xFA 0x0A 0x01</code>. In general GATT messages are handled by the function <code>handle_comms()</code> inside the module app_comm.c. Message regarding acceleration logging are handled by the function <code>handle_lis2dh12_comms()</code> inside the same module. After receiving the message to activate acceleration logging the function <code>app_enable_sensor_logging()</code> inside the module app_accelerometer_logging.c in called (1).</p>
-<p>The first step in activation is to check if some conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling <code>find_sensor()</code> inside of app_sensor.c (2). This function return the sensor context. The sensor context consists of several information abut the sensor. In the next step assiciates the function <code>on_fifo_full()</code> from app_accelerometer_logging.c with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At least the function pointer to <code>data_get()</code> inside the sensor context is replaced by the pointer to the function <code>lis2dh12_logged_data_get()</code>.</p>
+<p>The first step in activation is to check if some conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling <code>find_sensor()</code> inside of app_sensor.c (2). This function returns the sensor context. The sensor context consists of several information about the sensor. In the next step associates the function <code>on_fifo_full()</code> from app_accelerometer_logging.c with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At least the function pointer to <code>data_get()</code> inside the sensor context is replaced by the pointer to the function <code>lis2dh12_logged_data_get()</code>.</p>
 </div>
 <div id="retrieving-data-from-fifo" class="section level2">
 <h2><span class="header-section-number">3.2</span> Retrieving data from FIFO</h2>
-<p>When FIFO is full inside LIS2DH12 the interrupt starts the function <code>on_fifo_full()</code>. This functions does not directly handle the new data. It schedules a call to <code>fifo_full_handler()</code>. Instead of <code>on_fifo_full()</code> this is called in the main thread of the application. When processing is done inside a function inside an interrupt context this prevents processing of other interrupt. This should be avoided.</p>
-<p>Inside <code>fifo_full_handler()</code> the FIFO from LIS2DH12 is read (5). The values are store in the memory in raw format to be ready to present them to the function <code>lis2dh12_logged_data_get()</code> which is important for heartbesat. In parallel the raw values are compacted by removing all unused bits. This is done by the functions <code>pack8/10/12()</code>. A timestamp is added to the compacted values. These values are handover to the ringbuffer which writes them to flash (6).</p>
+<p>When FIFO is full inside LIS2DH12 the interrupt starts the function <code>on_fifo_full()</code>. This function does not directly handle the new data. It schedules a call to <code>fifo_full_handler()</code>. Instead of <code>on_fifo_full()</code> this is called in the main thread of the application. If processing is done inside a function inside an interrupt context this prevents processing of another interrupt. This should be avoided.</p>
+<p>Inside <code>fifo_full_handler()</code> the FIFO from LIS2DH12 is read (5). The values are store in the memory in raw format to be ready to present them to the function <code>lis2dh12_logged_data_get()</code> which is important for heartbeat. In parallel the raw values are compacted by removing all unused bits. This is done by the functions <code>pack8/10/12()</code>. A timestamp is added to the compacted values. These values are handover to the ringbuffer which writes them to flash (6).</p>
 </div>
 <div id="using-the-data-by-hearbeat" class="section level2">
 <h2><span class="header-section-number">3.3</span> Using the data by hearbeat</h2>
-<p>This usecase is shown with magenta arrows and numbers inside magenta circles in the figure above.</p>
-<p>The heartbeat retrieves the values from all sensors by calling the function <code>app_sensor_get()</code> inside the module app_sensors.c. In the original setup this function calls <code>ri_lis2dh12_data_get()</code> inside of ruuvi_interface_lis2dh12.c. During initialization this function is replaced by <code>lis2dh12_logged_data_get()</code>.</p>
-<p><code>lis2dh12_logged_data_get()</code> retrieves the raw accleration values from memory. Then the values are parsed by calling <code>ri_lis2dh12_raw_data_parse()</code> and returned to the heartbeat.</p>
+<p>This use case is shown with magenta arrows and numbers inside magenta circles in the figure above.</p>
+<p>The heartbeat retrieves the values from all sensors by calling the function <code>app_sensor_get()</code> inside the module app_sensors.c. In the original setup this function calls <code>ri_lis2dh12_data_get()</code> inside ruuvi_interface_lis2dh12.c. During initialization this function is replaced by <code>lis2dh12_logged_data_get()</code>.</p>
+<p><code>lis2dh12_logged_data_get()</code> retrieves the raw acceleration values from memory. Then the values are parsed by calling <code>ri_lis2dh12_raw_data_parse()</code> and returned to the heartbeat.</p>
 </div>
 <div id="initialization-during-boot" class="section level2">
 <h2><span class="header-section-number">3.4</span> Initialization during boot</h2>
@@ -269,12 +270,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td>RD_ERROR_INVALID_STATE</td>
-<td>When logging is already enabled.</td>
+<td>If logging is already enabled.</td>
 <td></td>
 </tr>
 <tr class="even">
 <td>RD_ERROR_NOT_FOUND</td>
-<td>When LIS2DH12 is not available.</td>
+<td>If LIS2DH12 is not available.</td>
 <td></td>
 </tr>
 </tbody>
@@ -293,11 +294,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tbody>
 <tr class="odd">
 <td>RD_ERROR_INVALID_STATE</td>
-<td>When logging is already disabled.</td>
+<td>If logging is already disabled.</td>
 </tr>
 <tr class="even">
 <td>RD_ERROR_NOT_FOUND</td>
-<td>When LIS2DH12 is not available.</td>
+<td>If LIS2DH12 is not available.</td>
 </tr>
 </tbody>
 </table>
@@ -308,11 +309,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="void-fifo_full_handler-void-p_event_data-uint16_t-event_size" class="section level4">
 <h4><span class="header-section-number">3.5.1.4</span> <code>void fifo_full_handler (void * p_event_data, uint16_t event_size)</code></h4>
-<p>This functions reads the FIFO and stores the data inside the ringbuffer. See ruuvi_interface_scheduler.h for parameters used in this function.</p>
+<p>This function reads the FIFO and stores the data inside the ringbuffer. See ruuvi_interface_scheduler.h for parameters used in this function.</p>
 </div>
 <div id="void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata" class="section level4">
 <h4><span class="header-section-number">3.5.1.5</span> <code>void pack8/10/12(const uint16_t sizeData, const uint8_t* const data, uint8_t* const packeddata)</code></h4>
-<p>These functions store raw accelerometer values in 8/10/12 Bit format in compact form (without unused bits).</p>
+<p>These functions store raw accelerometer values in 8/10/12 bit format in compact form (without unused bits).</p>
 <table>
 <thead>
 <tr class="header">
@@ -342,7 +343,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data" class="section level4">
 <h4><span class="header-section-number">3.5.1.6</span> <code>rd_status_t lis2dh12_logged_data_get (rd_sensor_data_t * const data)</code></h4>
-<p>This functions retrieves raw accelerometer values from RAM. The values are parsed and returned inside data. It is called by <code>app_sensor_get()</code> inside app_sensor.c when accelerometer logging is active.</p>
+<p>This function retrieves raw accelerometer values from RAM. The values are parsed and returned inside data. It is called by <code>app_sensor_get()</code> inside app_sensor.c if accelerometer logging is active.</p>
 <table>
 <thead>
 <tr class="header">
@@ -362,7 +363,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="rd_status_t-app_acc_logging_send_last_sampleconst-ri_comm_xfer_fp_t-reply_fp" class="section level4">
 <h4><span class="header-section-number">3.5.1.7</span> <code>rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp)</code></h4>
-<p>This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from RAM, does the compacting of the bits by calling <code>pack8/10/12()</code> and sends the data to the requestor.</p>
+<p>This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from RAM, does the compacting of the bits by calling <code>pack8/10/12()</code> and sends the data to the requester.</p>
 <table>
 <thead>
 <tr class="header">
@@ -379,17 +380,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </tbody>
 </table>
-<div class="line-block">Special error codes ||<br />
-- ||<br />
-RD_ERROR_INVALID_STATE | When logging is not active. |</div>
+<table>
+<thead>
+<tr class="header">
+<th>Special error codes</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RD_ERROR_INVALID_STATE</td>
+<td>If logging is not active.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="rd_status_t-app_acc_logging_statevoid" class="section level4">
 <h4><span class="header-section-number">3.5.1.8</span> <code>rd_status_t app_acc_logging_state(void)</code></h4>
 <p>This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller.</p>
-<div class="line-block">Special error codes ||<br />
-- ||<br />
-RD_SUCCESS | When logging is active. |<br />
-RD_ERROR_INVALID_STATE | When logging is not active. |</div>
+<table>
+<thead>
+<tr class="header">
+<th>Special error codes</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RD_SUCCESS</td>
+<td>If logging is active.</td>
+</tr>
+<tr class="even">
+<td>RD_ERROR_INVALID_STATE</td>
+<td>If logging is not active.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="rd_status_t-app_acc_logging_configuration_set-rt_sensor_ctx_t-sensor-rd_sensor_configuration_t-new_config" class="section level4">
 <h4><span class="header-section-number">3.5.1.9</span> <code>rd_status_t app_acc_logging_configuration_set (rt_sensor_ctx_t* sensor, rd_sensor_configuration_t* new_config)</code></h4>
@@ -423,14 +449,13 @@ RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 </div>
 <div id="rd_status_t-app_acc_logging_initvoid" class="section level4">
 <h4><span class="header-section-number">3.5.1.10</span> <code>rd_status_t app_acc_logging_init(void)</code></h4>
-<p>Initialize acceleration logging during boot. When logging was active before reboot it will be activated.</p>
-<p>When logging was not active before reboot this function return <code>RD_SUCCESS</code> without activating acceleration logging.</p>
-<p>The state if logging was active before reboot is detected by looking for the ringbuffer. When the ringbuffer exists, the logging must be active before reboot.</p>
+<p>Initialize acceleration logging during boot. If logging was active before reboot it will be activated. If logging was not active before reboot this function return <code>RD_SUCCESS</code> without activating acceleration logging.</p>
+<p>The state if logging was active before reboot is detected by looking for the ringbuffer. If the ringbuffer exists, the logging must be active before reboot.</p>
 <p>This function is called from main.c / <code>setup()</code>.</p>
 </div>
 <div id="rd_status_t-app_acc_logging_uninitvoid" class="section level4">
 <h4><span class="header-section-number">3.5.1.11</span> <code>rd_status_t app_acc_logging_uninit(void)</code></h4>
-<p>The uninitialization of acceleration logging disables the logging when it is actually active. When logging is not active this function return RD_SUCCESS without doing anything.</p>
+<p>The uninitialization of acceleration logging disables the logging if it is actually active. If logging is not active this function return RD_SUCCESS without doing anything.</p>
 </div>
 </div>
 <div id="app_comms.c" class="section level3">
@@ -474,21 +499,21 @@ RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 <h3><span class="header-section-number">3.5.3</span> app_config.h</h3>
 <ul>
 <li>Added macro APP_SENSOR_LOGGING to control compilation of app_accelerometer_logging.*</li>
-<li>When APP_SENSOR_LOGGING is not defined or is defined as 0 the functionality of logging of acceleration data is not available in the application.</li>
+<li>If APP_SENSOR_LOGGING is not defined or is defined as 0 the functionality of logging of acceleration data is not available in the application.</li>
 </ul>
 </div>
 <div id="app_heartbeat.c" class="section level3">
 <h3><span class="header-section-number">3.5.4</span> app_heartbeat.c</h3>
 <div id="void-heartbeat-void-p_event-uint16_t-event_size" class="section level4">
 <h4><span class="header-section-number">3.5.4.1</span> <code>void heartbeat (void * p_event, uint16_t event_size)</code></h4>
-<p>When acceleration logging is activated, than logging of environmental data is disabled to avoid extreme fragmentation of flash memory.</p>
+<p>If acceleration logging is activated, than logging of environmental data is disabled to avoid extreme fragmentation of flash memory.</p>
 </div>
 </div>
 <div id="app_sensor.c" class="section level3">
 <h3><span class="header-section-number">3.5.5</span> app_sensor.c</h3>
 <div id="rt_sensor_ctx_t-app_sensor_find-const-char-name" class="section level4">
 <h4><span class="header-section-number">3.5.5.1</span> <code>rt_sensor_ctx_t* app_sensor_find (const char *name)</code></h4>
-<p>Find sensor by it’s name. Works only with initialized sensors, will not return a sensor which is supported in firmware but not initialized.</p>
+<p>Find sensor by its name. Works only with initialized sensors, will not return a sensor which is supported in firmware but not initialized.</p>
 <p>This function is called by <code>app_enable_sensor_logging()</code> / <code>app_disable_sensor_logging()</code> to retrieve the sensor context.</p>
 <table>
 <thead>
@@ -512,14 +537,14 @@ RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 <h3><span class="header-section-number">3.5.6</span> main.c</h3>
 <div id="void-setup-void" class="section level4">
 <h4><span class="header-section-number">3.5.6.1</span> <code>void setup (void)</code></h4>
-<p>Added call to <code>app_acc_logging_init()</code> to initialize acceleration logging when desired.</p>
+<p>Added call to <code>app_acc_logging_init()</code> to initialize acceleration logging.</p>
 </div>
 </div>
 <div id="ruuvi_interface_lis2dh12.c" class="section level3">
 <h3><span class="header-section-number">3.5.7</span> ruuvi_interface_lis2dh12.c</h3>
 <div id="rd_status_t-ri_lis2dh12_acceleration_raw_get-uint8_t-const-raw_data" class="section level4">
 <h4><span class="header-section-number">3.5.7.1</span> <code>rd_status_t ri_lis2dh12_acceleration_raw_get (uint8_t * const raw_data)</code></h4>
-<p>This functions read raw acceleration values from the registers of LIS2DH12. It is called from the interrupt handler inside app_accelerometer_logging and from <code>ri_lis2dh12_data_get()</code> inside this module.</p>
+<p>This function reads raw acceleration values from the registers of LIS2DH12. It is called from the interrupt handler inside app_accelerometer_logging and from <code>ri_lis2dh12_data_get()</code> inside this module.</p>
 <table>
 <thead>
 <tr class="header">
@@ -540,7 +565,7 @@ RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 <div id="rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data" class="section level4">
 <h4><span class="header-section-number">3.5.7.2</span> <code>rd_status_t ri_lis2dh12_data_get (rd_sensor_data_t * const data)</code></h4>
 <p>The original function <code>ri_lis2dh12_data_get()</code> is split into retrieving raw values from the sensor and parsing these data. Parsing is done by <code>ri_lis2dh12_raw_data_parse()</code>.</p>
-<p>This function is used when the acceleration logging is not active. When acceleration logging is active this function is replaced by <code>lis2dh12_logged_data_get()</code> inside app_accelerometer_logging.c.</p>
+<p>This function is used if the acceleration logging is not active. If acceleration logging is active this function is replaced by <code>lis2dh12_logged_data_get()</code> inside app_accelerometer_logging.c.</p>
 <table>
 <thead>
 <tr class="header">
@@ -581,14 +606,14 @@ RD_ERROR_INVALID_STATE | When logging is not active. |</div>
 <td>Structure for storing parsed accelerometer values.</td>
 </tr>
 <tr class="even">
-<td>raw_acceration</td>
+<td>raw_acceleration</td>
 <td>in</td>
 <td>Raw acceleration values.</td>
 </tr>
 <tr class="odd">
 <td>raw_temperature</td>
 <td>in</td>
-<td>Raw temperature value. When used from app_accelerometer_logging.c this parameter is NULL.</td>
+<td>Raw temperature value. If used from app_accelerometer_logging.c this parameter is NULL.</td>
 </tr>
 </tbody>
 </table>

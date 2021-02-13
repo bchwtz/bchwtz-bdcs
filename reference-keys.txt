@@ -3,7 +3,7 @@ getting-started
 sensor-dev-env
 gateway-dev-env
 sensor
-initilizing-acceleration-logging
+initializing-acceleration-logging
 retrieving-data-from-fifo
 using-the-data-by-hearbeat
 initialization-during-boot
@@ -47,13 +47,14 @@ read-configuration-of-acceleration-sensor-0x07
 set-system-time-0x08
 read-system-time-0x09
 control-acceleration-logging-0x0a
-query-state-of-acceleration-logging-0x0b
+query-status-of-acceleration-logging-0x0b
 response-messages
-state-response-0x00
+status-response-0x00
 end-of-data-message-0x03-0x05
 configuration-response-0x07
 timestamp-response-0x09
 data-message
+communication-example
 sensor-1
 hardware
 external-flash-memory
