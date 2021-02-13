@@ -38,7 +38,7 @@ ruuvi_nrf5_sdk_rtc_mcu.c
 rd_status_t-ri_set_rtc_millisuint64_t-millis
 gateway
 backend
-messages
+ble-gatt-messages
 control-messages
 start-transmitting-last-sample-0x03
 start-transmitting-logged-data-0x05
