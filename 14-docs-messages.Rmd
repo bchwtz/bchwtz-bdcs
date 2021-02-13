@@ -1,10 +1,11 @@
-# Messages #
+# BLE GATT Messages #
 
 Communication between Gateway and Sensor is done via Bluetooth Low Energy. It uses the Nordic UART service which itself uses the GATT protocol. 
 
 Three types of messages are used.
+
 1. The Gateway sends control messages to the sensor to set or read configuration or start transmission of logged data.
-2. The Sensor responds to control messages via response messages. This message type transports status information or configuration data.
+2. The Sensor responds to control messages via response messages. This message type transports state information or configuration data.
 3. When the Gateway requests the Sensor to send logged data, this data is send by data messages. To Transport all data many data messages are repeated. The end of data is signalled by a response message.
 
 All messages are distinguished by the first byte. All messages must be padded by nullbytes to a minimum length of 11 bytes. This requirement is introduced by the Ruuvi firmware. The padding bytes are not shown in the following description of the messages.
@@ -23,7 +24,7 @@ This message starts transmitting the last sample of acceleration data. This samp
 
 This message takes no parameters. It's concrete content is: `0xFA 0xFA 0x03`.
 
-When acceleration logging is not active, the Sensor responds a status message containing an error code.
+When acceleration logging is not active, the Sensor responds a state message containing an error code.
 
 ### Start transmitting logged data (`0x05`) ###
 
@@ -31,11 +32,11 @@ This message starts transmitting the logged acceleration data from the ringbuffe
 
 This message takes no parameters. It's concrete content is: `0xFA 0xFA 0x05`.
 
-When acceleration logging is not active, the Sensor responds a status message containing an error code.
+When acceleration logging is not active, the Sensor responds with a state message containing an error code.
 
 ### Set configuration of acceleration sensor (`0x06`) ###
 
-This message is used to set the configuration of the acceleration sensor (LIS2DH12). The message takes 8 Parameters. The Sensor responds to this message with a status response. The parameters are as follows.
+This message is used to set the configuration of the acceleration sensor (LIS2DH12). The message takes 8 Parameters. The Sensor responds to this message with a state response. The parameters are as follows.
 
 | Parameter | Description |
 |-|-|
@@ -44,7 +45,7 @@ This message is used to set the configuration of the acceleration sensor (LIS2DH
 | P3 | Scale. Allowable values are 2, 4, 8, 16. |
 | P4 | DSP function. See datasheet of LIS2DH12. |
 | P5 | DSP parameter. See datasheet of LIS2DH12. |
-| P6 | Mode of operation. Allowable values are `0xF2`, `0xF3`, `0xF4'. See datasheet of LIS2DH12. |
+| P6 | Mode of operation. Allowable values are `0xF2`, `0xF3`, `0xF4`. See datasheet of LIS2DH12. |
 | P7 | Reserved. Set to `0x00`. |
 | P8 | Reserved. Set to `0x00`. |
 
@@ -54,31 +55,31 @@ The concrete content of this message is `0xFA 0xFA 0x06 P1 P2 P3 P4 P5 P6 P7 P8`
 
 ### Read configuration of acceleration sensor (`0x07`) ###
 
-This message is used to read the configuration of the acceleration sensor (LIS2DH12). The messag takes no parameters. The Sensor responds to this message either by a status message containing an error code or by a response message which transmits the configuration.
+This message is used to read the configuration of the acceleration sensor (LIS2DH12). The messag takes no parameters. The Sensor responds to this message either by a state message containing an error code or by a response message which transmits the configuration.
 
 The concrete content of this message is: `0xFA 0xFA 0x07`.
 
 ### Set system time (`0x08`) ###
 
-This message is used to set the RTC of the sensor to a timestamp which is part of the message. The timestamp must be a 8 byte UNIX timestamp. It must be transmitted in little-endian byte sequence. The sensor responds to this message with a status response.
+This message is used to set the RTC of the sensor to a timestamp which is part of the message. The timestamp must be a 8 byte UNIX timestamp. It must be transmitted in little-endian byte sequence. The sensor responds to this message with a state response.
 
 The concrete content of this message is `0xFA 0xFA 0x08 XX XX XX XX XX XX XX XX`.
 
 ### Read system time (`0x09`) ###
 
-This message is used to read the RTC of the sensor. The sensor responds to this message with a status response containing an error code or with a timestamp response.
+This message is used to read the RTC of the sensor. The sensor responds to this message with a state response containing an error code or with a timestamp response.
 
 The concrete content of this message is `0xFA 0xFA 0x09`.
 
 ### Control acceleration logging (`0x0A`) ###
 
-This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true acceleration logging is activated. If it maps to false acceleration logging is deactivated. The sensor responds to this message using a status response. Sending a control message to activate logging when it is already active results in an error. The same condition is when sending a message to deactivate logging.
+This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true acceleration logging is activated. If it maps to false acceleration logging is deactivated. The sensor responds to this message using a state response. Sending a control message to activate logging when it is already active results in an error. The same condition is when sending a message to deactivate logging.
 
 The concrete content of this message is `0xFA 0xFA 0x0A XX`. Where `XX` can be `0x00` or `0x01`.
 
 ### Query state of acceleration logging (`0x0B`) ###
 
-This message is used to query the state of acceleration logging. The sensor responds to this message with a status response. When logging is active, the response contains the state `RD_SUCCESS` when logging is not active the state is `RD_ERROR_NOT_INITIALIZED`.
+This message is used to query the state of acceleration logging. The sensor responds to this message with a state response. When logging is active, the response contains the state `RD_SUCCESS` when logging is not active the state is `RD_ERROR_NOT_INITIALIZED`.
 
 The concrete content of this message is `0xFA 0xFA 0x0B`.
 
@@ -113,7 +114,7 @@ State must be interpreted as a bitfield. The bits represent the different error 
 | 32768   | RD_ERROR_RESOURCES: Not enough resources for operation
 | 65535   | RD_ERROR_NOT_IMPLEMENTED: Not implemented yet
 | 131072  | RD_ERROR_SELFTEST: Self-test fail
-| 262144  | RD_STATUS_MORE_AVAILABLE: Driver has more data queued
+| 262144  | RD_state_MORE_AVAILABLE: Driver has more data queued
 | 524288  | RD_ERROR_NOT_INITIALIZED: Driver is not initialized.
 | 1048576 | RD_ERROR_NOT_ACKNOWLEDGED: Ack was expected but not received
 | 2097152 | RD_ERROR_NOT_ENABLED: Driver is not enabled
