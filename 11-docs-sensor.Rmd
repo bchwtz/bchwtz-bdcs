@@ -46,7 +46,7 @@ Enables the logging of acceleration data.
 Disables the logging of acceleration data.
 
 | Special error codes ||
-| - ||
+| - | - |
 | RD_ERROR_INVALID_STATE | When logging is already disabled. |
 | RD_ERROR_NOT_FOUND | When LIS2DH12 is not available. |
 
@@ -162,7 +162,7 @@ This function is called by `app_enable_sensor_logging()` / `app_disable_sensor_l
 
 ### main.c ###
 
-#### `void setup (void)'  ####
+#### `void setup (void)`  ####
 
 Added call to `app_acc_logging_init()` to initialize acceleration logging when desired.
 
@@ -193,8 +193,8 @@ This function parses raw values from the sensor and stores the values inside dat
 | Parameters |||
 | - | - | - |
 | data | in/out | Structure for storing parsed accelerometer values. |
-| Raw_acceration | in | Raw acceleration values. |
-| Raw_temperature | in | Raw temperature value. When used from app_accelerometer_logging.c this parameter is NULL. |
+| raw_acceration | in | Raw acceleration values. |
+| raw_temperature | in | Raw temperature value. When used from app_accelerometer_logging.c this parameter is NULL. |
 
 ### ruuvi_nrf5_sdk_rtc_mcu.c ###
 
