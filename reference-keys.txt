@@ -54,12 +54,16 @@ end-of-data-message-0x03-0x05
 configuration-response-0x07
 timestamp-response-0x09
 data-message
+bit-data-format
+bit-data-format-1
+bit-data-format-2
 communication-example
 sensor-1
 hardware
 external-flash-memory
 board-redesign
 software
+implementation-1
 general-todo
 security
 gateway-1
