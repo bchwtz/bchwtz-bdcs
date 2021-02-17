@@ -11,6 +11,9 @@ Content
 
 ## Gateway Dev Env
 
-test 
-test2
-test3
+```{bash, eval=F}
+sudo apt-get install libatlas-base-dev
+sudo apt-get install python3-pandas
+sudo apt-get install python3-numpy
+```
+
