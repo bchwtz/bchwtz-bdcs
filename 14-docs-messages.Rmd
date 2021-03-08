@@ -47,7 +47,7 @@ This message is used to set the configuration of the acceleration sensor (LIS2DH
 | P3 | Measuring range. Allowed values are 2G, 4G, 8G, 16G. |
 | P4 | DSP function. See datasheet of LIS2DH12. |
 | P5 | DSP parameter. See datasheet of LIS2DH12. |
-| P6 | Mode of operation. Allowed values are `0xF2`, `0xF3`, `0xF4`. See datasheet of LIS2DH12. |
+| P6 | Mode of operation. Allowed values are `0xF2`, `0xF3`, `0xF4`. See ruuvi_driver_sensor.h for explanation. |
 | P7 | Reserved. Set to `0x00`. |
 | P8 | Reserved. Set to `0x00`. |
 
@@ -57,25 +57,25 @@ The concrete content of this message is `0xFA 0xFA 0x06 P1 P2 P3 P4 P5 P6 P7 P8`
 
 ### Read configuration of acceleration sensor (`0x07`) ###
 
-This message is used to read the configuration of the acceleration sensor (LIS2DH12). The message takes no parameters. The Sensor responds to this message either by a [status response](ble-gatt-messages.html#status-response-0x00) containing an error code or by a [response message which transmits the configuration](ble-gatt-messages.html#configuration-response-0x07).
+This message is used to read the configuration of the acceleration sensor (LIS2DH12). The message takes no parameters. The Sensor responds to this message by a [response message which transmits the configuration](ble-gatt-messages.html#configuration-response-0x07).
 
 The concrete content of this message is: `0xFA 0xFA 0x07`.
 
 ### Set system time (`0x08`) ###
 
-This message is used to set the RTC of the sensor to a timestamp which is part of the message. The timestamp must be a 8 byte UNIX timestamp. It must be transmitted in [little-endian][endianess] byte sequence. The sensor responds to this message with a [status response](ble-gatt-messages.html#status-response-0x00).
+This message is used to set the RTC of the sensor to a timestamp which is part of the message. The time is expressed in milliseconds. It must be transmitted in [little-endian][endianess] byte sequence. The sensor responds to this message with a [status response](ble-gatt-messages.html#status-response-0x00).
 
 The concrete content of this message is `0xFA 0xFA 0x08 XX XX XX XX XX XX XX XX`.
 
 ### Read system time (`0x09`) ###
 
-This message is used to read the RTC of the sensor. The sensor responds to this message with a [status response](ble-gatt-messages.html#status-response-0x00) containing an error code or with a [timestamp response](ble-gatt-messages.html#timestamp-response-0x09).
+This message is used to read the RTC of the sensor. The sensor responds to this message with a [timestamp response](ble-gatt-messages.html#timestamp-response-0x09).
 
 The concrete content of this message is `0xFA 0xFA 0x09`.
 
 ### Control acceleration logging (`0x0A`) ###
 
-This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true acceleration logging is activated. If it maps to false acceleration logging is deactivated. The sensor responds to this message using a [status response](ble-gatt-messages.html#status-response-0x00). Activating acceleration logging when it is already active results in an error. Deactivating acceleration logging when it is not active results in an error.
+This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true, acceleration logging is activated. If it maps to false, acceleration logging is deactivated. The sensor responds to this message using a [status response](ble-gatt-messages.html#status-response-0x00). Activating acceleration logging when it is already active results in an error. Deactivating acceleration logging when it is not active results in an error.
 
 The concrete content of this message is `0xFA 0xFA 0x0A XX`. Where `XX` can be `0x00` or `0x01`.
 
@@ -133,19 +133,23 @@ This message is sent to the gateway after returning data. It signals the end of 
 
 To compute the CRC16 value the polynom `0x11021` with the initial value `0xFFFF` is used. The output bytes are not reversed and not XOR'd. The CRC value is of size 2 bytes. It is transfered in [little-endian][endianess] byte sequence.
 
-The concrete content of this message is `0xFB 0x03/0x05 P1 P2 P3 P4 P5 P6 P7 P8 CRC1 CRC2`. 
+The concrete content of this message is `0xFB 0x03/0x05 SS P1 P2 P3 P4 P5 P6 P7 P8 CRC1 CRC2`. 
+
+Where `SS` is the status code.
 
 ### Configuration response (`0x07`) ###
 
-This message is sent to the gateway after requesting the current configuration. The message contains one parameter containing the current configuration.
+This message is sent to the gateway after requesting the current configuration. The message contains eight parameters containing the current configuration. If the status code signals an error the transmitted values is undefined.
 
-The concrete content of this message is `0xFB 0x07 P1 P2 P3 P4 P5 P6 P7 P8`. The values P1 to P8 map to the same values as shown in [set configuration message](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06).
+The concrete content of this message is `0xFB 0x07 SS P1 P2 P3 P4 P5 P6 P7 P8`. The values P1 to P8 map to the same values as shown in [set configuration message](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06).
+
+Where `SS` is the status code.
 
 ### Timestamp response (`0x09`) ###
 
-This message is sent to the gateway after requesting the system time. The message contains one parameter. The parameter is a 8 byte value containing the current timestamp. The bytes are transferred in [little-endian][endianess] sequence.
+This message is sent to the gateway after requesting the system time. The message contains one parameter. The parameter is a 8 byte value containing the current timestamp. The bytes are transferred in [little-endian][endianess] sequence. If the status code signals an error the transmitted value is undefined.
 
-The concrete content of this message is `0xFB 0x09 XX XX XX XX XX XX XX XX`. 
+The concrete content of this message is `0xFB 0x09 SS XX XX XX XX XX XX XX XX`. Where `SS` is the status code. 
 
 ## Data message ##
 
