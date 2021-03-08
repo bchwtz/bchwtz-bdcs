@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-02-17" />
+<meta name="date" content="2021-03-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -315,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 <tr class="even">
 <td>P6</td>
-<td>Mode of operation. Allowed values are <code>0xF2</code>, <code>0xF3</code>, <code>0xF4</code>. See datasheet of LIS2DH12.</td>
+<td>Mode of operation. Allowed values are <code>0xF2</code>, <code>0xF3</code>, <code>0xF4</code>. See ruuvi_driver_sensor.h for explanation.</td>
 </tr>
 <tr class="odd">
 <td>P7</td>
@@ -332,22 +332,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="read-configuration-of-acceleration-sensor-0x07" class="section level3">
 <h3><span class="header-section-number">6.1.4</span> Read configuration of acceleration sensor (<code>0x07</code>)</h3>
-<p>This message is used to read the configuration of the acceleration sensor (LIS2DH12). The message takes no parameters. The Sensor responds to this message either by a <a href="ble-gatt-messages.html#status-response-0x00">status response</a> containing an error code or by a <a href="ble-gatt-messages.html#configuration-response-0x07">response message which transmits the configuration</a>.</p>
+<p>This message is used to read the configuration of the acceleration sensor (LIS2DH12). The message takes no parameters. The Sensor responds to this message by a <a href="ble-gatt-messages.html#configuration-response-0x07">response message which transmits the configuration</a>.</p>
 <p>The concrete content of this message is: <code>0xFA 0xFA 0x07</code>.</p>
 </div>
 <div id="set-system-time-0x08" class="section level3">
 <h3><span class="header-section-number">6.1.5</span> Set system time (<code>0x08</code>)</h3>
-<p>This message is used to set the RTC of the sensor to a timestamp which is part of the message. The timestamp must be a 8 byte UNIX timestamp. It must be transmitted in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> byte sequence. The sensor responds to this message with a <a href="ble-gatt-messages.html#status-response-0x00">status response</a>.</p>
+<p>This message is used to set the RTC of the sensor to a timestamp which is part of the message. The time is expressed in milliseconds. It must be transmitted in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> byte sequence. The sensor responds to this message with a <a href="ble-gatt-messages.html#status-response-0x00">status response</a>.</p>
 <p>The concrete content of this message is <code>0xFA 0xFA 0x08 XX XX XX XX XX XX XX XX</code>.</p>
 </div>
 <div id="read-system-time-0x09" class="section level3">
 <h3><span class="header-section-number">6.1.6</span> Read system time (<code>0x09</code>)</h3>
-<p>This message is used to read the RTC of the sensor. The sensor responds to this message with a <a href="ble-gatt-messages.html#status-response-0x00">status response</a> containing an error code or with a <a href="ble-gatt-messages.html#timestamp-response-0x09">timestamp response</a>.</p>
+<p>This message is used to read the RTC of the sensor. The sensor responds to this message with a <a href="ble-gatt-messages.html#timestamp-response-0x09">timestamp response</a>.</p>
 <p>The concrete content of this message is <code>0xFA 0xFA 0x09</code>.</p>
 </div>
 <div id="control-acceleration-logging-0x0a" class="section level3">
 <h3><span class="header-section-number">6.1.7</span> Control acceleration logging (<code>0x0A</code>)</h3>
-<p>This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true acceleration logging is activated. If it maps to false acceleration logging is deactivated. The sensor responds to this message using a <a href="ble-gatt-messages.html#status-response-0x00">status response</a>. Activating acceleration logging when it is already active results in an error. Deactivating acceleration logging when it is not active results in an error.</p>
+<p>This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true, acceleration logging is activated. If it maps to false, acceleration logging is deactivated. The sensor responds to this message using a <a href="ble-gatt-messages.html#status-response-0x00">status response</a>. Activating acceleration logging when it is already active results in an error. Deactivating acceleration logging when it is not active results in an error.</p>
 <p>The concrete content of this message is <code>0xFA 0xFA 0x0A XX</code>. Where <code>XX</code> can be <code>0x00</code> or <code>0x01</code>.</p>
 </div>
 <div id="query-status-of-acceleration-logging-0x0b" class="section level3">
@@ -493,17 +493,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">6.2.2</span> End of data message (<code>0x03</code>, <code>0x05</code>)</h3>
 <p>This message is sent to the gateway after returning data. It signals the end of the transmission. The type byte (<code>0x03</code>, <code>0x05</code>) maps to the type of data requested. This message contains nine parameters. The current configuration of the acceleration sensor are the first eight parameter. The structure is the same as shown in the <a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">set configuration message</a>. The CRC16 value of the transmitted data is the 9th parameter.</p>
 <p>To compute the CRC16 value the polynom <code>0x11021</code> with the initial value <code>0xFFFF</code> is used. The output bytes are not reversed and not XOR’d. The CRC value is of size 2 bytes. It is transfered in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> byte sequence.</p>
-<p>The concrete content of this message is <code>0xFB 0x03/0x05 P1 P2 P3 P4 P5 P6 P7 P8 CRC1 CRC2</code>.</p>
+<p>The concrete content of this message is <code>0xFB 0x03/0x05 SS P1 P2 P3 P4 P5 P6 P7 P8 CRC1 CRC2</code>.</p>
+<p>Where <code>SS</code> is the status code.</p>
 </div>
 <div id="configuration-response-0x07" class="section level3">
 <h3><span class="header-section-number">6.2.3</span> Configuration response (<code>0x07</code>)</h3>
-<p>This message is sent to the gateway after requesting the current configuration. The message contains one parameter containing the current configuration.</p>
-<p>The concrete content of this message is <code>0xFB 0x07 P1 P2 P3 P4 P5 P6 P7 P8</code>. The values P1 to P8 map to the same values as shown in <a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">set configuration message</a>.</p>
+<p>This message is sent to the gateway after requesting the current configuration. The message contains eight parameters containing the current configuration. If the status code signals an error the transmitted values is undefined.</p>
+<p>The concrete content of this message is <code>0xFB 0x07 SS P1 P2 P3 P4 P5 P6 P7 P8</code>. The values P1 to P8 map to the same values as shown in <a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">set configuration message</a>.</p>
+<p>Where <code>SS</code> is the status code.</p>
 </div>
 <div id="timestamp-response-0x09" class="section level3">
 <h3><span class="header-section-number">6.2.4</span> Timestamp response (<code>0x09</code>)</h3>
-<p>This message is sent to the gateway after requesting the system time. The message contains one parameter. The parameter is a 8 byte value containing the current timestamp. The bytes are transferred in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> sequence.</p>
-<p>The concrete content of this message is <code>0xFB 0x09 XX XX XX XX XX XX XX XX</code>.</p>
+<p>This message is sent to the gateway after requesting the system time. The message contains one parameter. The parameter is a 8 byte value containing the current timestamp. The bytes are transferred in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> sequence. If the status code signals an error the transmitted value is undefined.</p>
+<p>The concrete content of this message is <code>0xFB 0x09 SS XX XX XX XX XX XX XX XX</code>. Where <code>SS</code> is the status code.</p>
 </div>
 </div>
 <div id="data-message" class="section level2">
