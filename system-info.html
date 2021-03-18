@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-03-08" />
+<meta name="date" content="2021-03-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -155,6 +155,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.5.7</b> ruuvi_interface_lis2dh12.c</a></li>
 <li class="chapter" data-level="3.5.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.5.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
 </ul></li>
+<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#ringbuffer-module"><i class="fa fa-check"></i><b>3.6</b> Ringbuffer module</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#general-functionality"><i class="fa fa-check"></i><b>3.6.1</b> General functionality</a></li>
+<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#project-related-use-case"><i class="fa fa-check"></i><b>3.6.2</b> Project-related use case</a></li>
+<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#implemented-functions"><i class="fa fa-check"></i><b>3.6.3</b> Implemented functions</a></li>
+<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#exemplary-use"><i class="fa fa-check"></i><b>3.6.4</b> Exemplary use</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a></li>
 <li class="chapter" data-level="5" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>5</b> Backend</a></li>
@@ -236,9 +242,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="system-info" class="section level1 unnumbered">
 <h1>System Info</h1>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="system-info.html#cb2-1"></a><span class="kw">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-03-08 16:57:44 UTC&quot;</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="system-info.html#cb4-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="system-info.html#cb3-1"></a><span class="kw">Sys.time</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2021-03-18 12:24:04 UTC&quot;</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="system-info.html#cb5-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.0.4 (2021-02-15)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
 ## Running under: macOS Catalina 10.15.7
@@ -257,10 +263,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] kableExtra_1.3.4 knitr_1.31      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] rstudioapi_0.13   xml2_1.3.2        magrittr_2.0.1    rvest_0.3.6      
+##  [1] rstudioapi_0.13   xml2_1.3.2        magrittr_2.0.1    rvest_1.0.0      
 ##  [5] munsell_0.5.0     colorspace_2.0-0  viridisLite_0.3.0 R6_2.5.0         
 ##  [9] rlang_0.4.10      stringr_1.4.0     httr_1.4.2        tools_4.0.4      
-## [13] webshot_0.5.2     xfun_0.21         htmltools_0.5.1.1 systemfonts_1.0.1
+## [13] webshot_0.5.2     xfun_0.22         htmltools_0.5.1.1 systemfonts_1.0.1
 ## [17] yaml_2.2.1        digest_0.6.27     lifecycle_1.0.0   bookdown_0.21    
 ## [21] glue_1.4.2        evaluate_0.14     rmarkdown_2.7     stringi_1.5.3    
 ## [25] compiler_4.0.4    scales_1.1.1      svglite_2.0.0</code></pre>

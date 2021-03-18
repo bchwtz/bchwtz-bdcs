@@ -36,6 +36,17 @@ rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data
 rd_status_t-ri_lis2dh12_raw_data_parse-rd_sensor_data_t-const-data-axis3bit16_t-raw_acceleration-uint8_t-raw_temperature
 ruuvi_nrf5_sdk_rtc_mcu.c
 rd_status_t-ri_set_rtc_millisuint64_t-millis
+ringbuffer-module
+general-functionality
+project-related-use-case
+implemented-functions
+rd_status_t-rt_flash_ringbuffer_createconst-uint32_t-page_id-const-uint32_t-record_id-const-uint8_t-number_of_pages-const-uint16_t-page_size
+rd_status_t-rt_flash_ringbuffer_createconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-uint8_t-packeddata-rt_flash_ringbuffer_flashpage_t-flashpage
+rd_status_t-rt_flash_ringbuffer_writeconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-void-data
+rd_status_t-rt_flash_ringbuffer_readconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-void-data
+rd_status_t-rt_flash_ringbuffer_clearconst-uint32_t-page_id-const-uint32_t-record_id
+rd_status_t-rt_flash_ringbuffer_deleteconst-uint32_t-page_id-const-uint32_t-record_id
+exemplary-use
 gateway
 backend
 ble-gatt-messages
