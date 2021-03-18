@@ -204,3 +204,134 @@ Set system time by external source. Set RTC to zero.
 | - | - | - |
 | millis | in | External time. |
 
+
+
+## Ringbuffer module ##
+
+***
+`ruuvi.firmware.c\src\ruuvi.drivers.c\src\tasks\ruuvi_task_flash_ringbuffer.h`
+`ruuvi.firmware.c\src\ruuvi.drivers.c\src\tasks\ruuvi_task_flash_ringbuffer.c`
+
+***
+
+### General functionality ###
+
+A ringbuffer is a data structure that represents a fixed-sized queue. As the following figure shows, the current read or write position is indicated by the two attributes start and end. After every read or write, the corresponding value points to the next area.
+
+<center>
+![](./gfx/org/ringbuffer.PNG)
+</center>
+
+
+### Project-related use case ###
+
+In the use case of the Ruuvi Tag the data of the ringbuffer should be stored in the flash memory of the sensor. This flash memory is structured in flashpages, each consisting of several records. 
+
+The implemented ringbuffer reserves a selected number of flashpages and stores its current state (size, start and end attribute, reserved pages) in the following struct at a previously defined memory address. The maximum size of the ringbuffer is defined by the property `RT_FLASH_RINGBUFFER_MAXSIZE`. For the memory access the FDS library is used.
+
+| rt_flash_ringbuffer_state_t |||
+| - | - | - |
+| size | uint8_t | Number of pages |
+| start | uint8_t | Start position |
+| end | uint8_t | End position  |
+| reserved_pages | fds_reserve_token_t[] | Array of fds_reserve_token |
+
+The following struct makes it possible to buffer the accumulating accelerometer data until the amount of data for an entire flashpage is reached. 
+
+| rt_flash_ringbuffer_flashpage_t |||
+| - | - | - |
+| max_size | uint16_t | Maximum size of the flashpage |
+| actual_size | uint16_t | Actual size of the flashpage |
+| packeddata[4073] | uint8_t | Actual picked data  |
+
+### Implemented functions ###
+
+#### `rd_status_t rt_flash_ringbuffer_create(const uint32_t page_id, const uint32_t record_id, const uint8_t number_of_pages, const uint16_t page_size)` ####
+
+This function creates a new ringbuffer, reserves the pages in flash and initializes the ringbuffer state.
+
+| Parameters |||
+| - | - | - |
+| page_id | in | PageID of the ringbuffer state |
+| record_id | in | RecordID of the ringbuffer state |
+| number_of_pages | in | Number of pages in the ringbuffer |
+| page_size | in | Size of each page in the ringbuffer |
+
+#### `rd_status_t rt_flash_ringbuffer_create(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const uint8_t* packeddata, rt_flash_ringbuffer_flashpage_t* flashpage)` ####
+
+This function collects data to store in ringbuffer. After the amount of data of an entire flashpage is reached, the write operation is called.
+
+| Parameters |||
+| - | - | - |
+| page_id | in | PageID of the ringbuffer state |
+| record_id | in | RecordID of the ringbuffer state |
+| size | in | Size of packeddata |
+| packeddata | in | Data to collect for flashpage  |
+| flashpage | in/out | Flashpage struct  |
+
+#### `rd_status_t rt_flash_ringbuffer_write(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const void* data)` ####
+
+ This function writes data to the ringbuffer.
+
+| Parameters |||
+| - | - | - |
+| page_id | in | PageID of the ringbuffer state |
+| record_id | in | RecordID of the ringbuffer state |
+| size | in | Size of data |
+| data | in | Data to be written  |
+
+#### `rd_status_t rt_flash_ringbuffer_read(const uint32_t page_id, const uint32_t record_id, const uint16_t size, void* data)` ####
+
+This functiion reads data from the ringbuffer.
+
+| Parameters |||
+| - | - | - |
+| page_id | in | PageID of the ringbuffer state |
+| record_id | in | RecordID of the ringbuffer state |
+| size | in | Size of data |
+| data | in/out | Data to be read  |
+
+#### `rd_status_t rt_flash_ringbuffer_clear(const uint32_t page_id, const uint32_t record_id)` ####
+
+This function clears the contents of the ringbuffer (start/end attribute of the ringbuffer state are set to 0). 
+
+| Parameters |||
+| - | - | - |
+| page_id | in | PageID of the ringbuffer state |
+| record_id | in | RecordID of the ringbuffer state |
+
+#### `rd_status_t rt_flash_ringbuffer_delete(const uint32_t page_id, const uint32_t record_id)` ####
+
+This function deletes the entire ringbuffer.
+
+| Parameters |||
+| - | - | - |
+| page_id | in | PageID of the ringbuffer state |
+| record_id | in | RecordID of the ringbuffer state |
+
+
+### Exemplary use ###
+
+```c
+#include "ruuvi_task_flash_ringbuffer.h"
+
+// create ringbuffer
+rd_status_t error = rt_flash_ringbuffer_create(FILE_ID, RECORD_KEY, RT_FLASH_RINGBUFFER_MAXSIZE, 4073);
+
+// create flashpage struct
+rt_flash_ringbuffer_flashpage_t flashpage;
+flashpage.actual_size = 0;
+flashpage.max_size = 4073;
+
+// write data 
+int i=1;
+while(i <= 1500) {
+    rt_flash_ringbuffer_collect_flashpage(FILE_ID, RECORD_KEY, sizeof(i),  &i, &flashpage); 
+    // the collect operation calls the write operation when the data size for a flashpage is reached
+    i++;
+}
+
+// read data from flash
+rt_flash_ringbuffer_flashpage_t flashpage_read;
+error = rt_flash_ringbuffer_read(FILE_ID, RECORD_KEY, sizeof(flashpage_read), &flashpage_read);
+```
