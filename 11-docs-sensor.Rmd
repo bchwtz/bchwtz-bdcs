@@ -234,7 +234,7 @@ The implemented ringbuffer reserves a selected number of flashpages and stores i
 | size | uint8_t | Number of pages |
 | start | uint8_t | Start position |
 | end | uint8_t | End position  |
-| reserved_pages | fds_reserve_token_t[] | Array of fds_reserve_token |
+| reserved_pages[] | fds_reserve_token_t | Array of fds_reserve_token |
 
 The following struct makes it possible to buffer the accumulating accelerometer data until the amount of data for an entire flashpage is reached. 
 
