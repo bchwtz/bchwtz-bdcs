@@ -1,5 +1,5 @@
 # Gateway #
-The gateway has two different tasks:
+The gateway has three different tasks:
 
 1. Manipulate the state of one or more sensors via control messages
 2.	Receive acceleration data from one or more sensors, parse and store them
