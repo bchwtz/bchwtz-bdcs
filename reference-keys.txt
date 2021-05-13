@@ -1,6 +1,8 @@
 introduction
 getting-started
 sensor-dev-env
+software-setup
+hardware-setup
 gateway-dev-env
 sensor
 initializing-acceleration-logging
