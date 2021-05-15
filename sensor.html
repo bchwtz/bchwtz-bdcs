@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-05-13" />
+<meta name="date" content="2021-05-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -139,11 +139,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a><ul>
-<li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#sensor-dev-env"><i class="fa fa-check"></i><b>2.1</b> Sensor Dev Env</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#sensor-development-environment"><i class="fa fa-check"></i><b>2.1</b> Sensor Development Environment</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="getting-started.html"><a href="getting-started.html#software-setup"><i class="fa fa-check"></i><b>2.1.1</b> Software Setup</a></li>
 <li class="chapter" data-level="2.1.2" data-path="getting-started.html"><a href="getting-started.html#hardware-setup"><i class="fa fa-check"></i><b>2.1.2</b> Hardware Setup</a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-started.html"><a href="getting-started.html#testing-the-gateway-connection"><i class="fa fa-check"></i><b>2.1.3</b> Testing the Gateway Connection</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-development-environment"><i class="fa fa-check"></i><b>2.2</b> Gateway Development Environment</a></li>
 </ul></li>
 <li class="part"><span><b>Documentation</b></span></li>
 <li class="chapter" data-level="3" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>3</b> Sensor</a><ul>
@@ -956,27 +957,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="exemplary-use" class="section level3">
 <h3><span class="header-section-number">3.6.4</span> Exemplary use</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="sensor.html#cb2-1"></a><span class="pp">#include </span><span class="im">&quot;ruuvi_task_flash_ringbuffer.h&quot;</span></span>
-<span id="cb2-2"><a href="sensor.html#cb2-2"></a></span>
-<span id="cb2-3"><a href="sensor.html#cb2-3"></a><span class="co">// create ringbuffer</span></span>
-<span id="cb2-4"><a href="sensor.html#cb2-4"></a>rd_status_t error = rt_flash_ringbuffer_create(FILE_ID, RECORD_KEY, RT_FLASH_RINGBUFFER_MAXSIZE, <span class="dv">4073</span>);</span>
-<span id="cb2-5"><a href="sensor.html#cb2-5"></a></span>
-<span id="cb2-6"><a href="sensor.html#cb2-6"></a><span class="co">// create flashpage struct</span></span>
-<span id="cb2-7"><a href="sensor.html#cb2-7"></a>rt_flash_ringbuffer_flashpage_t flashpage;</span>
-<span id="cb2-8"><a href="sensor.html#cb2-8"></a>flashpage.actual_size = <span class="dv">0</span>;</span>
-<span id="cb2-9"><a href="sensor.html#cb2-9"></a>flashpage.max_size = <span class="dv">4073</span>;</span>
-<span id="cb2-10"><a href="sensor.html#cb2-10"></a></span>
-<span id="cb2-11"><a href="sensor.html#cb2-11"></a><span class="co">// write data </span></span>
-<span id="cb2-12"><a href="sensor.html#cb2-12"></a><span class="dt">int</span> i=<span class="dv">1</span>;</span>
-<span id="cb2-13"><a href="sensor.html#cb2-13"></a><span class="cf">while</span>(i &lt;= <span class="dv">1500</span>) {</span>
-<span id="cb2-14"><a href="sensor.html#cb2-14"></a>    rt_flash_ringbuffer_collect_flashpage(FILE_ID, RECORD_KEY, <span class="kw">sizeof</span>(i),  &amp;i, &amp;flashpage); </span>
-<span id="cb2-15"><a href="sensor.html#cb2-15"></a>    <span class="co">// the collect operation calls the write operation when the data size for a flashpage is reached</span></span>
-<span id="cb2-16"><a href="sensor.html#cb2-16"></a>    i++;</span>
-<span id="cb2-17"><a href="sensor.html#cb2-17"></a>}</span>
-<span id="cb2-18"><a href="sensor.html#cb2-18"></a></span>
-<span id="cb2-19"><a href="sensor.html#cb2-19"></a><span class="co">// read data from flash</span></span>
-<span id="cb2-20"><a href="sensor.html#cb2-20"></a>rt_flash_ringbuffer_flashpage_t flashpage_read;</span>
-<span id="cb2-21"><a href="sensor.html#cb2-21"></a>error = rt_flash_ringbuffer_read(FILE_ID, RECORD_KEY, <span class="kw">sizeof</span>(flashpage_read), &amp;flashpage_read);</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb6-1"><a href="sensor.html#cb6-1"></a><span class="pp">#include </span><span class="im">&quot;ruuvi_task_flash_ringbuffer.h&quot;</span></span>
+<span id="cb6-2"><a href="sensor.html#cb6-2"></a></span>
+<span id="cb6-3"><a href="sensor.html#cb6-3"></a><span class="co">// create ringbuffer</span></span>
+<span id="cb6-4"><a href="sensor.html#cb6-4"></a>rd_status_t error = rt_flash_ringbuffer_create(FILE_ID, RECORD_KEY, RT_FLASH_RINGBUFFER_MAXSIZE, <span class="dv">4073</span>);</span>
+<span id="cb6-5"><a href="sensor.html#cb6-5"></a></span>
+<span id="cb6-6"><a href="sensor.html#cb6-6"></a><span class="co">// create flashpage struct</span></span>
+<span id="cb6-7"><a href="sensor.html#cb6-7"></a>rt_flash_ringbuffer_flashpage_t flashpage;</span>
+<span id="cb6-8"><a href="sensor.html#cb6-8"></a>flashpage.actual_size = <span class="dv">0</span>;</span>
+<span id="cb6-9"><a href="sensor.html#cb6-9"></a>flashpage.max_size = <span class="dv">4073</span>;</span>
+<span id="cb6-10"><a href="sensor.html#cb6-10"></a></span>
+<span id="cb6-11"><a href="sensor.html#cb6-11"></a><span class="co">// write data </span></span>
+<span id="cb6-12"><a href="sensor.html#cb6-12"></a><span class="dt">int</span> i=<span class="dv">1</span>;</span>
+<span id="cb6-13"><a href="sensor.html#cb6-13"></a><span class="cf">while</span>(i &lt;= <span class="dv">1500</span>) {</span>
+<span id="cb6-14"><a href="sensor.html#cb6-14"></a>    rt_flash_ringbuffer_collect_flashpage(FILE_ID, RECORD_KEY, <span class="kw">sizeof</span>(i),  &amp;i, &amp;flashpage); </span>
+<span id="cb6-15"><a href="sensor.html#cb6-15"></a>    <span class="co">// the collect operation calls the write operation when the data size for a flashpage is reached</span></span>
+<span id="cb6-16"><a href="sensor.html#cb6-16"></a>    i++;</span>
+<span id="cb6-17"><a href="sensor.html#cb6-17"></a>}</span>
+<span id="cb6-18"><a href="sensor.html#cb6-18"></a></span>
+<span id="cb6-19"><a href="sensor.html#cb6-19"></a><span class="co">// read data from flash</span></span>
+<span id="cb6-20"><a href="sensor.html#cb6-20"></a>rt_flash_ringbuffer_flashpage_t flashpage_read;</span>
+<span id="cb6-21"><a href="sensor.html#cb6-21"></a>error = rt_flash_ringbuffer_read(FILE_ID, RECORD_KEY, <span class="kw">sizeof</span>(flashpage_read), &amp;flashpage_read);</span></code></pre></div>
 
 </div>
 </div>
