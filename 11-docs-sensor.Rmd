@@ -9,9 +9,9 @@ Three use cases are shown in this figure.
 ## Initializing acceleration logging ##
 The initialization is shown with blue arrows and numbers in black circles until #4. 
 
-To activate acceleration logging the gateway sends the message [`0xFA 0xFA 0x0A 0x01`](ble-gatt-messages.html#control-acceleration-logging-0x0a). In general GATT messages are handled by the function [`handle_comms()`](sensor.html#void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the module [app_comm.c](sensor.html#app_comms.c). Messages regarding acceleration logging are delegated to the function [`handle_lis2dh12_comms()`](sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the same module. After receiving the message to activate acceleration logging the function [`app_enable_sensor_logging()`](sensor.html#rd_status_t-app_enable_sensor_loggingvoid) inside the module [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) in called (1).
+To activate acceleration logging the gateway sends the [control acceleration logging message](ble-gatt-messages.html#control-acceleration-logging). In general GATT messages are handled by the function [`handle_comms()`](sensor.html#void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the module [app_comm.c](sensor.html#app_comms.c). Messages regarding acceleration logging are delegated to the function [`handle_lis2dh12_comms()`](sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the same module. After receiving the message to activate acceleration logging the function [`app_enable_sensor_logging()`](sensor.html#rd_status_t-app_enable_sensor_loggingvoid) inside the module [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) in called (1).
 
-The first step in activation is to check if some conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling [`find_sensor()`](sensor.html#rt_sensor_ctx_t-app_sensor_find-const-char-name) inside of [app_sensor.c](sensor.html#app_sensor.c) (2). This function returns the sensor context. The sensor context consists of several information about the sensor. The next step associates the function [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) from [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At last the function pointer to `data_get()` inside the sensor context is replaced by the pointer to the function [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data). 
+The first step in activation is to check if all conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling [`find_sensor()`](sensor.html#rt_sensor_ctx_t-app_sensor_find-const-char-name) inside of [app_sensor.c](sensor.html#app_sensor.c) (2). This function returns the sensor context. The sensor context consists of several information about the sensor. The next step associates the function [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) from [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At last the function pointer to `data_get()` inside the sensor context is replaced by the pointer to the function [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data). 
 
 ## Retrieving data from FIFO ##
 When FIFO is full inside LIS2DH12 the interrupt starts the function [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). This function does not directly handle the new data. It schedules a call to [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size). Instead of [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) this is called in the main thread of the application. If processing is done inside a function inside an interrupt context this prevents processing of another interrupt. This should be avoided.
@@ -76,13 +76,37 @@ This function retrieves raw accelerometer values from memory. The values are par
 | - | - | - |
 | raw_data | in/out | Memory for storing accelerometer values. |
 
-#### `rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp)` ####
+#### `rd_status_t app_acc_logging_send_eof/app_acc_logging_send_eof_v2(const ri_comm_xfer_fp_t reply_fp, const rd_status_t status_code, const uint16_t crc)` ####
+
+This function is called by [`app_acc_logging_send_last_sample()`](sensor.html#rd_status_t-app_acc_logging_send_last_sampleconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2) and [`app_acc_logging_send_logged_data()`](sensor.html#rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2) after all data is sent to the requestor. This function builds the [end of data message](ble-gatt-messages.html#end-of-data-message) and sends it.
+
+| Parameters |||
+| - | - | - |
+| reply_fp | in | Function pointer to reply function. |
+| status_code | in | Status code of the whole operation. This code is sent to the requestor. |
+| crc | in | CRC value of the data. |
+
+#### `rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp, const bool is_v2)` ####
 
 This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from memory, does the compacting of the bits by calling [`pack8/10/12()`](sensor.html#void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata) and sends the data to the requester.
 
 | Parameters |||
 | - | - | - |
 | reply_fp | in | Function pointer to reply function. |
+| is_v2 | in | Specify format of response messages. |
+
+| Special error codes ||
+| - | - |
+| RD_ERROR_INVALID_STATE | If logging is not active. |
+
+#### `rd_status_t app_acc_logging_send_logged_data(const ri_comm_xfer_fp_t reply_fp, const bool is_v2)` ####
+
+This function is called when a request to send the logged acceleration data is received by GATT/UART. It retrieves the data from ringbuffer and sends it to the requester.
+
+| Parameters |||
+| - | - | - |
+| reply_fp | in | Function pointer to reply function. |
+| is_v2 | in | Specify format of response messages. |
 
 | Special error codes ||
 | - | - |
@@ -123,11 +147,11 @@ The uninitialization of acceleration logging disables the logging if it is actua
 
 #### `void handle_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
 
-Added new switch/case which forwards messages regarding configuration and control of acceleration logging to the function [`handle_lis2dh12_comms()`](sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len).
+Added new switch/case which forwards messages regarding configuration and control of acceleration logging to the function [`handle_lis2dh12_comms()`](sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len), [`handle_lis2dh12_comms_v2()`](sensor.html#rd_status_t-handle_lis2dh12_comms_v2-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len), [`handle_rtc_comms()`](sensor.html#rd_status_t-handle_rtc_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len).
 
 #### `rd_status_t handle_lis2dh12_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
 
-This function handles the GATT/UART communication needed to control the functionality of acceleration logging.
+This function handles messages using the proprietary message format by GATT/UART communication needed to control the functionality of acceleration logging.
 
 | Parameters |||
 | - | - | - |
@@ -135,16 +159,45 @@ This function handles the GATT/UART communication needed to control the function
 | raw_message | in | Message received. |
 | data_len | in | Length of the received message. |
 
+| Special error codes ||
+| - | - |
+| RD_ERROR_NOT_FOUND | If LIS2DH12 is not found. |
+| RD_ERROR_INVALID_PARAM | If unknown or invalid message was received. |
+
+#### `rd_status_t handle_lis2dh12_comms_v2 (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
+
+This function handles messages using version 2 message format by GATT/UART communication needed to control the functionality of acceleration logging.
+
+| Parameters |||
+| - | - | - |
+| reply_fp | in | Function pointer to reply function. |
+| raw_message | in | Message received. |
+| data_len | in | Length of the received message. |
+
+| Special error codes ||
+| - | - |
+| RD_ERROR_NOT_FOUND | If LIS2DH12 is not found. |
+| RD_ERROR_INVALID_PARAM | If unknown or invalid message was received. |
+
+#### `rd_status_t handle_rtc_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
+
+This function handles messages using version 2 message format by GATT/UART communication needed to control the RTC clock.
+
+| Parameters |||
+| - | - | - |
+| reply_fp | in | Function pointer to reply function. |
+| raw_message | in | Message received. |
+| data_len | in | Length of the received message. |
+
+| Special error codes ||
+| - | - |
+| RD_ERROR_INVALID_PARAM | If unknown or invalid message was received. |
+
 ### app_config.h ###
 
 - Added macro APP_SENSOR_LOGGING to control compilation of app_accelerometer_logging.*
 - If APP_SENSOR_LOGGING is not defined or is defined as 0 the functionality of logging of acceleration data is not available in the application.
-
-### app_heartbeat.c ###
-
-#### `void heartbeat (void * p_event, uint16_t event_size)` ####
-
-If acceleration logging is activated, than logging of environmental data is disabled to avoid extreme fragmentation of flash memory.
+- Changed the definition of APP_FLASH_PAGES to include the flash pages used for acceleration logging.
 
 ### app_sensor.c ###
 
@@ -174,6 +227,14 @@ This function reads raw acceleration values from the registers of LIS2DH12. It i
 | - | - | - |
 | raw_data | in/out | Memory for storing raw accelerometer values. |
 
+#### `rd_status_t ri_lis2dh12_temperature_raw_get (uint8_t * const raw_temperature)` ####
+
+This function reads raw temperature value from the registers of LIS2DH12. It is called  [`ri_lis2dh12_data_get()`](sensor.html#rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data) and [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data).
+
+| Parameters |||
+| - | - | - |
+| raw_temperature | in/out | Memory for storing raw temperature values. |
+
 #### `rd_status_t ri_lis2dh12_data_get (rd_sensor_data_t * const data)` ####
 
 The original function `ri_lis2dh12_data_get()` is split into retrieving raw values from the sensor and parsing these data. Parsing is done by [`ri_lis2dh12_raw_data_parse()`](sensor.html#rd_status_t-ri_lis2dh12_raw_data_parse-rd_sensor_data_t-const-data-axis3bit16_t-raw_acceleration-uint8_t-raw_temperature).
@@ -192,7 +253,7 @@ This function parses raw values from the sensor and stores the values inside dat
 | - | - | - |
 | data | in/out | Structure for storing parsed accelerometer values. |
 | raw_acceleration | in | Raw acceleration values. |
-| raw_temperature | in | Raw temperature value. If used from [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data) this parameter is NULL. |
+| raw_temperature | in | Raw temperature value. This parameter can be NULL. |
 
 ### ruuvi_nrf5_sdk_rtc_mcu.c ###
 
@@ -242,7 +303,7 @@ The following struct makes it possible to buffer the accumulating accelerometer 
 | - | - | - |
 | max_size | uint16_t | Maximum size of the flashpage |
 | actual_size | uint16_t | Actual size of the flashpage |
-| packeddata[4073] | uint8_t | Actual picked data  |
+| packeddata[4073] | uint8_t | Actual packed data  |
 
 ### Implemented functions ###
 
@@ -257,7 +318,7 @@ This function creates a new ringbuffer, reserves the pages in flash and initiali
 | number_of_pages | in | Number of pages in the ringbuffer |
 | page_size | in | Size of each page in the ringbuffer |
 
-#### `rd_status_t rt_flash_ringbuffer_create(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const uint8_t* packeddata, rt_flash_ringbuffer_flashpage_t* flashpage)` ####
+#### `rd_status_t rt_flash_ringbuffer_collect_flashpage(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const uint8_t* packeddata, rt_flash_ringbuffer_flashpage_t* flashpage)` ####
 
 This function collects data to store in ringbuffer. After the amount of data of an entire flashpage is reached, the write operation is called.
 
@@ -309,6 +370,53 @@ This function deletes the entire ringbuffer.
 | page_id | in | PageID of the ringbuffer state |
 | record_id | in | RecordID of the ringbuffer state |
 
+#### `rd_status_t rt_flash_ringbuffer_free_flash (rt_flash_ringbuffer_state_t *state)` ####
+
+This function frees the flash pages used by the ringbuffer. It is called from [`rt_flash_ringbuffer_delete()`](sensor.html#rd_status_t-rt_flash_ringbuffer_deleteconst-uint32_t-page_id-const-uint32_t-record_id) or [`rt_flash_ringbuffer_create()`](sensor.html#rd_status_t-rt_flash_ringbuffer_createconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-uint8_t-packeddata-rt_flash_ringbuffer_flashpage_t-flashpage). Depending of the state of the individual flash page it cancels the reservation or deletes the flash page.
+
+| Parameters |||
+| - | - | - |
+| state | in | Structure which contains the list of flash pages. |
+
+### ruuvi_task_flash.c ###
+
+This module acts as a proxy for ruuvi_nrf5_sdk15_flash.c. Three functions were added regarding reservation of flash pages.
+
+| function | forward to |
+|-|-|
+| rt_flash_write_reserved() | [`ri_flash_write_reserved()`](sensor.html#rd_status_t-ri_flash_write_reserved-const-fds_reserve_token_t-const-reserve_token-const-uint32_t-record_id-const-size_t-data_size-const-void-const-data) |
+| rt_flash_reserve() | [`ri_flash_reserve()`](sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size) |
+| rt_flash_write_reserved() | [`ri_flash_reserve_cancel()`](sensor.html#rd_status_t-ri_flash_reserve_cancel-fds_reserve_token_t-const-reserve_token) |
+
+### ruuvi_nrf5_sdk15_flash.c ###
+
+#### rd_status_t ri_flash_write_reserved (const fds_reserve_token_t* const reserve_token, const uint32_t record_id, const size_t data_size, const void * const data) ####
+
+This function writes data to a formerly reserved flash page. This function write data asynchronous.
+
+| Parameters |||
+| - | - | - |
+| reserve_token | in | Token received from [`ri_flash_reserve()`](sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size). |
+| record_id | in | ID of a record. Can be a random number. |
+| data_size | in | Size of data. |
+| data | in | Data to write. |
+
+#### rd_status_t ri_flash_reserve (fds_reserve_token_t* const reserve_token, const uint16_t size) ####
+
+This function reserves a flash page.
+
+| Parameters |||
+| - | - | - |
+| reserve_token | out | Pointer to reserve tocken. |
+| size | in | Size of data. |
+
+#### rd_status_t ri_flash_reserve_cancel (fds_reserve_token_t* const reserve_token) ####
+
+This function cancels a reservation of a formerly reserved flash page.
+
+| Parameters |||
+| - | - | - |
+| reserve_token | in | Token received from [`ri_flash_reserve()`](sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size). |
 
 ### Exemplary use ###
 
