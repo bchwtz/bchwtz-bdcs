@@ -1,3 +1,91 @@
-# Gateway
+# Gateway #
+The gateway has three different tasks:
 
-Lorem ipsum
+1. Manipulate the state of one or more sensors via control messages
+2.	Receive acceleration data from one or more sensors, parse and store them
+3.	Logging Bluetooth advertisements from sensors
+
+For the first two tasks there is the “Sensor Gateway Communication” library. An executable is used to log the advertisements. Both are written in python. To run the code, you need a few libraries which are listed below:
+
+    ruuvitag_sensor
+    bluez
+    crcmod
+    pygatt
+    interruptingcow
+
+## Sensor Gateway Communication Library ##
+This library is used for communication between the gateway and the sensors. It sends messages to the sensor to change their state or get their data. The library has the following functions.
+
+
+### Activate acceleration logging ###
+
+The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging ([6.1.7](ble-gatt-messages.html#control-acceleration-logging-0x0a)) message to the target sensor. The message content is `F0A 0xFA 0x0A 0x01`. If Logging is already activated an error message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) will be received.
+
+### Deactivate acceleration logging ###
+
+The “deactivate_logging_at_sensor()” function deactivates logging at all sensors in Bluetooth range. With a mac address as argument, a specific sensor can be deactivated. To deactivate the logging, the gateway sends a control acceleration logging ([6.1.7](ble-gatt-messages.html#control-acceleration-logging-0x0a)) message to the target sensor. The message content is `0xFA 0xFA 0x0A 0x00`. Stopping the logging cause a deletion of all flash pages. If Logging is not activated an error message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) will be received.
+
+### Set sensor configuration ###
+With the “set_config_sensor()” function three sensor properties can be manipulated:
+
+1. Sampling rate (sampling_rate): Measuring interval of the sensor. Allowed values can be found in Chapter ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)). 
+2. Sampling resolution (sampling_resolution): Resolution of the measured values. Allowed values can be found in Chapter ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)).
+3. Measuring range(measuring_range): Measuring range. Allowed values can be found in Chapter ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)).
+
+The configuration will be sent via a “Set configuration of acceleration sensor” ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)) message to all sensors in Bluetooth range, if no specific mac address is passed as argument. 
+Only arguments with allowed values will be set. All others stay as they are. After setting the configuration all flash pages will be deleted. This can cause a loss of data. The Sensor send a status response message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) to the gateway if the configuration was set successful or not.
+
+### Set sensor time ###
+
+With the “set_sensor_time() “ function all sensors in Bluetooth range will be set to the current time in UTC. Giving a specific mac address as argument will set the time at this sensor only. To set the sensor time a “Set system time” ([6.1.5](ble-gatt-messages.html#set-system-time-0x08)) message, with the current time, will be send. After setting the sensor time all flash pages will be deleted. This can cause a loss of data. The Sensor send a response message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) to the gateway if the time was set successful or not.
+
+### Get sensor configuratin ###
+The “get_config_from_sensor()”send a “Read configuration of acceleration sensor” ([6.1.4](ble-gatt-messages.html#read-configuration-of-acceleration-sensor-0x07)) message to the target sensor. The sensor returns with a “Configuration response” ([6.2.3](ble-gatt-messages.html#configuration-response-0x07)) message. The configuration will be displayed. If no argument is given all sensors in Bluetooth range will be messaged. To see a specific sensor configuration, use its mac address as argument.
+
+### Get sensor time ###
+The “get_time_from_sensor()” function returns the current time from all sensors in Bluetooth range. To see a specific sensor time, use its mac address as argument. The function sends a “Read system time” ([6.1.6](ble-gatt-messages.html#read-system-time-0x09)) message to all targets and receives “Timestamp response” ([6.2.4](ble-gatt-messages.html#timestamp-response-0x09)) messages.
+
+### Get last sample###
+The “get_last_sample_acceleration_data()” collects, parse and displays the last 32 samples from all sensors in Bluetooth range. To do this, the gateway send a “Start transmitting last sample” ([6.1.1](ble-gatt-messages.html#start-transmitting-last-sample-0x03)) Message to the targets and receives the data which are followed by an “End of data message” ([6.2.2](ble-gatt-messages.html#end-of-data-message-0x03-0x05)). The displayed values are shown as X-, Y-, Z-Values. Use the mac address to see samples from a specific Sensor.
+
+### Get acceleration data ###
+The “get_acceleration_data()” collect all samples from all sensors in Bluetooth range, parse and stores them in a Csv file. To do this, the gateway sends a “Start transmitting logged data” ([6.1.2](ble-gatt-messages.html#start-transmitting-logged-data-0x05)) Message to all targets and receives the data which are followed by an “End of data message” ([6.2.2](ble-gatt-messages.html#end-of-data-message-0x03-0x05)).
+
+### Find Macs ###
+The “find_tags_mac()” returns all unique mac addresses that are found. 
+
+## Advertisement logging ##
+This executable is used for logging all advertisements that are send from any sensor in the Bluetooth rang. It parses the messages the gateway receives in a human readable design and stores it in a Csv file. The “decode_data()” function from the ruuvitag_sensor library is used to parse the received messages from the sensors.
+
+## Data storage format ##
+For an easy access, the received data is stored in csv files. Separate Files are used for the acceleration logging and the advertisement logging. They both have different structures which are shown in this chapter. 
+
+### Csv file acceleration Logging ###
+Five values will be stored in these Csv files. These values are:
+
+    •	Acceleration in X directory
+    •	Acceleration in Y directory
+    •	Acceleration in Z directory
+    •	Timestamp
+    •	Mac address
+The name of the Csv file will be “acceleration” plus the observation time.
+
+### Csv file advertisement  Logging ###
+Fourteen values will be stored in these Csv files. These values are:
+
+    •	Data format
+    •	Humidity
+    •	Temperature in °C
+    •	Pressure in Pa
+    •	Acceleration
+    •	Acceleration in X directory
+    •	Acceleration in Y directory
+    •	Acceleration in Z directory
+    •	Tx power in dBm
+    •	Battery in mV
+    •	Movement counter
+    •	Measurement sequence
+    •	Mac address
+    •	Timestamp
+    
+The name of the Csv file is the date of the observation. One Csv file will only include observations from one day. 
