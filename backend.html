@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-05-15" />
+<meta name="date" content="2021-06-13" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -156,17 +156,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.5.1</b> app_accelerometer_logging.c</a></li>
 <li class="chapter" data-level="3.5.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.5.2</b> app_comms.c</a></li>
 <li class="chapter" data-level="3.5.3" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.5.3</b> app_config.h</a></li>
-<li class="chapter" data-level="3.5.4" data-path="sensor.html"><a href="sensor.html#app_heartbeat.c"><i class="fa fa-check"></i><b>3.5.4</b> app_heartbeat.c</a></li>
-<li class="chapter" data-level="3.5.5" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.5.5</b> app_sensor.c</a></li>
-<li class="chapter" data-level="3.5.6" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.5.6</b> main.c</a></li>
-<li class="chapter" data-level="3.5.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.5.7</b> ruuvi_interface_lis2dh12.c</a></li>
-<li class="chapter" data-level="3.5.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.5.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.5.4" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.5.4</b> app_sensor.c</a></li>
+<li class="chapter" data-level="3.5.5" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.5.5</b> main.c</a></li>
+<li class="chapter" data-level="3.5.6" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.5.6</b> ruuvi_interface_lis2dh12.c</a></li>
+<li class="chapter" data-level="3.5.7" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.5.7</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
 </ul></li>
 <li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#ringbuffer-module"><i class="fa fa-check"></i><b>3.6</b> Ringbuffer module</a><ul>
 <li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#general-functionality"><i class="fa fa-check"></i><b>3.6.1</b> General functionality</a></li>
 <li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#project-related-use-case"><i class="fa fa-check"></i><b>3.6.2</b> Project-related use case</a></li>
 <li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#implemented-functions"><i class="fa fa-check"></i><b>3.6.3</b> Implemented functions</a></li>
-<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#exemplary-use"><i class="fa fa-check"></i><b>3.6.4</b> Exemplary use</a></li>
+<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash.c"><i class="fa fa-check"></i><b>3.6.4</b> ruuvi_task_flash.c</a></li>
+<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_flash.c"><i class="fa fa-check"></i><b>3.6.5</b> ruuvi_nrf5_sdk15_flash.c</a></li>
+<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#exemplary-use"><i class="fa fa-check"></i><b>3.6.6</b> Exemplary use</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
@@ -189,28 +190,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>5</b> Backend</a></li>
 <li class="chapter" data-level="6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html"><i class="fa fa-check"></i><b>6</b> BLE GATT Messages</a><ul>
-<li class="chapter" data-level="6.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-messages"><i class="fa fa-check"></i><b>6.1</b> Control messages</a><ul>
-<li class="chapter" data-level="6.1.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#start-transmitting-last-sample-0x03"><i class="fa fa-check"></i><b>6.1.1</b> Start transmitting last sample (<code>0x03</code>)</a></li>
-<li class="chapter" data-level="6.1.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#start-transmitting-logged-data-0x05"><i class="fa fa-check"></i><b>6.1.2</b> Start transmitting logged data (<code>0x05</code>)</a></li>
-<li class="chapter" data-level="6.1.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06"><i class="fa fa-check"></i><b>6.1.3</b> Set configuration of acceleration sensor (<code>0x06</code>)</a></li>
-<li class="chapter" data-level="6.1.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-configuration-of-acceleration-sensor-0x07"><i class="fa fa-check"></i><b>6.1.4</b> Read configuration of acceleration sensor (<code>0x07</code>)</a></li>
-<li class="chapter" data-level="6.1.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-system-time-0x08"><i class="fa fa-check"></i><b>6.1.5</b> Set system time (<code>0x08</code>)</a></li>
-<li class="chapter" data-level="6.1.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time-0x09"><i class="fa fa-check"></i><b>6.1.6</b> Read system time (<code>0x09</code>)</a></li>
-<li class="chapter" data-level="6.1.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging-0x0a"><i class="fa fa-check"></i><b>6.1.7</b> Control acceleration logging (<code>0x0A</code>)</a></li>
-<li class="chapter" data-level="6.1.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging-0x0b"><i class="fa fa-check"></i><b>6.1.8</b> Query status of acceleration logging (<code>0x0B</code>)</a></li>
+<li class="chapter" data-level="6.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#general-message-structure"><i class="fa fa-check"></i><b>6.1</b> General message structure</a></li>
+<li class="chapter" data-level="6.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-messages"><i class="fa fa-check"></i><b>6.2</b> Control messages</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#start-transmitting-acceleration-data"><i class="fa fa-check"></i><b>6.2.1</b> Start transmitting acceleration data</a></li>
+<li class="chapter" data-level="6.2.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor"><i class="fa fa-check"></i><b>6.2.2</b> Set configuration of acceleration sensor</a></li>
+<li class="chapter" data-level="6.2.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-configuration-of-acceleration-sensor"><i class="fa fa-check"></i><b>6.2.3</b> Read configuration of acceleration sensor</a></li>
+<li class="chapter" data-level="6.2.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-system-time"><i class="fa fa-check"></i><b>6.2.4</b> Set system time</a></li>
+<li class="chapter" data-level="6.2.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time"><i class="fa fa-check"></i><b>6.2.5</b> Read system time</a></li>
+<li class="chapter" data-level="6.2.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging"><i class="fa fa-check"></i><b>6.2.6</b> Control acceleration logging</a></li>
+<li class="chapter" data-level="6.2.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging"><i class="fa fa-check"></i><b>6.2.7</b> Query status of acceleration logging</a></li>
 </ul></li>
-<li class="chapter" data-level="6.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.2</b> Response messages</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response-0x00"><i class="fa fa-check"></i><b>6.2.1</b> Status response (<code>0x00</code>)</a></li>
-<li class="chapter" data-level="6.2.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message-0x03-0x05"><i class="fa fa-check"></i><b>6.2.2</b> End of data message (<code>0x03</code>, <code>0x05</code>)</a></li>
-<li class="chapter" data-level="6.2.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response-0x07"><i class="fa fa-check"></i><b>6.2.3</b> Configuration response (<code>0x07</code>)</a></li>
-<li class="chapter" data-level="6.2.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response-0x09"><i class="fa fa-check"></i><b>6.2.4</b> Timestamp response (<code>0x09</code>)</a></li>
+<li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.3</b> Response messages</a><ul>
+<li class="chapter" data-level="6.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response"><i class="fa fa-check"></i><b>6.3.1</b> Status response</a></li>
+<li class="chapter" data-level="6.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message"><i class="fa fa-check"></i><b>6.3.2</b> End of data message</a></li>
+<li class="chapter" data-level="6.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response"><i class="fa fa-check"></i><b>6.3.3</b> Configuration response</a></li>
+<li class="chapter" data-level="6.3.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response"><i class="fa fa-check"></i><b>6.3.4</b> Timestamp response</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.3</b> Data message</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>6.3.1</b> 12 bit data format</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>6.3.2</b> 10 bit data format</a></li>
-<li class="chapter" data-level="6.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>6.3.3</b> 8 bit data format</a></li>
+<li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.4</b> Data message</a><ul>
+<li class="chapter" data-level="6.4.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>6.4.1</b> 12 bit data format</a></li>
+<li class="chapter" data-level="6.4.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>6.4.2</b> 10 bit data format</a></li>
+<li class="chapter" data-level="6.4.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>6.4.3</b> 8 bit data format</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.4</b> Communication example</a></li>
+<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic"><i class="fa fa-check"></i><b>6.5</b> Flash statistic</a></li>
+<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.6</b> Communication example</a></li>
 </ul></li>
 <li class="part"><span><b>To Do</b></span></li>
 <li class="chapter" data-level="7" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>7</b> Sensor</a><ul>
@@ -219,9 +221,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.1.2" data-path="sensor-1.html"><a href="sensor-1.html#board-redesign"><i class="fa fa-check"></i><b>7.1.2</b> Board Redesign</a></li>
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="sensor-1.html"><a href="sensor-1.html#software"><i class="fa fa-check"></i><b>7.2</b> Software</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="sensor-1.html"><a href="sensor-1.html#implementation-1"><i class="fa fa-check"></i><b>7.2.1</b> Implementation</a></li>
-<li class="chapter" data-level="7.2.2" data-path="sensor-1.html"><a href="sensor-1.html#general-todo"><i class="fa fa-check"></i><b>7.2.2</b> General ToDo</a></li>
-<li class="chapter" data-level="7.2.3" data-path="sensor-1.html"><a href="sensor-1.html#security"><i class="fa fa-check"></i><b>7.2.3</b> Security</a></li>
+<li class="chapter" data-level="7.2.1" data-path="sensor-1.html"><a href="sensor-1.html#general-todo"><i class="fa fa-check"></i><b>7.2.1</b> General ToDo</a></li>
+<li class="chapter" data-level="7.2.2" data-path="sensor-1.html"><a href="sensor-1.html#security"><i class="fa fa-check"></i><b>7.2.2</b> Security</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>8</b> Gateway</a><ul>
