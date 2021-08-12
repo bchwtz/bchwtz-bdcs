@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-06-13" />
+<meta name="date" content="2021-08-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -139,12 +139,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="divider"></li>
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting Started</a><ul>
-<li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#sensor-development-environment"><i class="fa fa-check"></i><b>2.1</b> Sensor Development Environment</a><ul>
+<li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#sensor-dev-env"><i class="fa fa-check"></i><b>2.1</b> Sensor Dev Env</a><ul>
 <li class="chapter" data-level="2.1.1" data-path="getting-started.html"><a href="getting-started.html#software-setup"><i class="fa fa-check"></i><b>2.1.1</b> Software Setup</a></li>
 <li class="chapter" data-level="2.1.2" data-path="getting-started.html"><a href="getting-started.html#hardware-setup"><i class="fa fa-check"></i><b>2.1.2</b> Hardware Setup</a></li>
-<li class="chapter" data-level="2.1.3" data-path="getting-started.html"><a href="getting-started.html#testing-the-gateway-connection"><i class="fa fa-check"></i><b>2.1.3</b> Testing the Gateway Connection</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-development-environment"><i class="fa fa-check"></i><b>2.2</b> Gateway Development Environment</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a></li>
 </ul></li>
 <li class="part"><span><b>Documentation</b></span></li>
 <li class="chapter" data-level="3" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>3</b> Sensor</a><ul>
@@ -267,92 +266,80 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="getting-started" class="section level1">
 <h1><span class="header-section-number">Chapter 2</span> Getting Started</h1>
-<div id="sensor-development-environment" class="section level2">
-<h2><span class="header-section-number">2.1</span> Sensor Development Environment</h2>
+<p>Wow content</p>
+<p><img src="gfx/org/systemarchitecture-highlevel.png" />
+Move on</p>
+<div id="sensor-dev-env" class="section level2">
+<h2><span class="header-section-number">2.1</span> Sensor Dev Env</h2>
 <p>This Chapter is a short guide for setting up your development environment. Until you receive your hardware you can start with installing the necessary software.</p>
 <div id="software-setup" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Software Setup</h3>
 <ol style="list-style-type: decimal">
-<li><p>Download <strong>Segger Embedded Studio for ARM 5.10d</strong> (<a href="https://www.segger.com/downloads/embedded-studio" class="uri">https://www.segger.com/downloads/embedded-studio</a>)</p></li>
-<li><p>Download <strong>nRF5_SDK_15.3.0_59ac345.zip</strong> (<a href="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/" class="uri">https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/</a>)</p></li>
-<li><p>Clone <a href="https://github.com/bchwtz-fhswf/ruuvi.firmware.c" class="uri">https://github.com/bchwtz-fhswf/ruuvi.firmware.c</a>. Copy the extracted ZIP from 2. Inside the cloned folder (If you don’t know how to clone a git repository look at <a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository" class="uri">https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository</a>.</p></li>
+<li><p>Download “Segger Embedded Studio for ARM 5.10d” (<a href="https://www.segger.com/downloads/embedded-studio" class="uri">https://www.segger.com/downloads/embedded-studio</a>)</p></li>
+<li><p>Download nRF5_SDK_15.3.0_59ac345.zip (<a href="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/" class="uri">https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/</a>)</p></li>
+<li><p>Clone <a href="https://github.com/bchwtz-fhswf/ruuvi.firmware.c" class="uri">https://github.com/bchwtz-fhswf/ruuvi.firmware.c</a>. Copy the extracted ZIP from 2. Inside the cloned folder (If you don’t know how to clone a git repository look at <a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository" class="uri">https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository</a> or search on google/youtube)
+It should look like this:</p></li>
 </ol>
-<p>The final result should look like this:</p>
 <p><img src="gfx/org/nRF_in_Ruuvi_folder.png" /></p>
 <ol start="4" style="list-style-type: decimal">
-<li><p>Open SEGGER and click <strong>File</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Open Solution</strong>, navigate to the cloned repository and open <code>ruuvi.firmware.c</code>. The project should now be inside SEGGER.</p></li>
-<li><p>Search <em>Project ‘ruuvitag_b’</em> on the left inside SEGGER, right-click and choose <em>Set as Active Project</em>.</p></li>
+<li><p>Open SEGGER and click “File” -&gt; “Open Solution”, navigate to the cloned repository and open “ruuvi.firmware.c”. The project should now be inside SEGGER.</p></li>
+<li><p>Search “Project ‘ruuvitag_b’” on the left inside SEGGER, right-click and choose “Set as Active Project”.</p></li>
 </ol>
 </div>
 <div id="hardware-setup" class="section level3">
 <h3><span class="header-section-number">2.1.2</span> Hardware Setup</h3>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Open your ruuvi tag, take PCB &amp; battery out (you can do so with a little screwdriver or by gently pulling on the battery clip)</p></li>
-<li><p>Remove the battery by pressing it down
-<img src="gfx/org/Tag_Demontage.jpg" /></p></li>
+<li>Open your ruuvi tag, take PCB &amp; battery out (you can do so with a little screwdriver or by gently pulling on the battery clip)</li>
+</ol>
+<p><img src="gfx/org/Tag_Demontage.jpg" /></p>
+<ol start="7" style="list-style-type: decimal">
 <li><p>Connect the “Tag Connector” cable + plug to your ruuvi tag
 <img src="gfx/org/Tag_connector.jpg" /></p></li>
-<li><p>Connect the other side of the tag connector to the Debug in slot on the Nordic SDK</p></li>
+<li><p>Connect the other side of the tag connector to the Debug out slot on the Nordic SDK</p></li>
 <li><p>Connect your SDK over USB with your PC
 <img src="gfx/org/SDK_SetUp.jpg" /></p></li>
-<li><p>To test if everything is right, open SEGGER and click <strong>Target</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Connect J-Link</strong>. SEGGER should connect to your SDK</p></li>
-<li><p>To flash your ruuvi tag with the cloned firmware, click <strong>Target</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Erase All</strong>, afterwards click <strong>Build</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Build and Run</strong>.</p></li>
+<li><p>To test if everything is right, open SEGGER and click “Target”-&gt;”Connect J-Link”. SEGGER should connect to your SDK</p></li>
+<li><p>To flash your ruuvi tag with the cloned firmware, click “Target”-&gt;”Erase All”, afterwards click “Build”-&gt;”Build and Run”.</p></li>
 </ol>
 </div>
-<div id="testing-the-gateway-connection" class="section level3">
-<h3><span class="header-section-number">2.1.3</span> Testing the Gateway Connection</h3>
+</div>
+<div id="gateway-dev-env" class="section level2">
+<h2><span class="header-section-number">2.2</span> Gateway Dev Env</h2>
 <ol style="list-style-type: decimal">
-<li><p>Connect your Raspberry Pi to a screen via HDMI.</p></li>
-<li><p>Connect your Raspberry to your WiFi.</p></li>
-<li><p>Activate SSH and VNC by clicking on the raspberry on the top left <span class="math inline">\(\rightarrow\)</span> <strong>Preferences</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Raspberry-Pi-Configuration</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Interfaces</strong>, change SSH and VNC to activated.</p></li>
+<li><p>Connect your Raspberry Pi to a screen via HDMI</p></li>
+<li><p>Connect your Raspberry to your WiFi</p></li>
+<li><p>Activate SSH and VNC by clicking on the raspberry on the top left -&gt; Preferences -&gt; Raspberry-Pi-Configuration-&gt;Interfaces, change SSH and VNC to activated</p></li>
 </ol>
 <p><img src="gfx/org/Raspberry_setup1.PNG" /></p>
 <p><img src="gfx/org/Raspberry_setup2.PNG" /></p>
 <ol start="4" style="list-style-type: decimal">
 <li><p>On your PC, download PuTTY (<a href="https://www.putty.org/" class="uri">https://www.putty.org/</a>)</p></li>
-<li><p>Get your Raspberry’s IP-Adress by opening a command line on your PC and and type:</p></li>
-</ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="getting-started.html#cb1-1"></a><span class="fu">ping</span> raspberrypi.local</span></code></pre></div>
-<ol start="6" style="list-style-type: decimal">
+<li><p>Get your Raspberry’s IP-Adress by opening a command line on your PC and and type “ping raspberrypi.local”.</p></li>
 <li><p>Open PuTTY, type the IP-Adress into the Host Name field. You can save it by entering a name into the “Saved Sessions” field and pressing “save”. Afterwards select “open”.</p></li>
-<li><p>When asked for the username type <code>pi</code> and afterwards enter your password. If you did not change it on Raspberry’s startup it should be <code>raspberry</code>.</p></li>
+<li><p>When asked for the username type “pi” and afterwards enter your password. If you did not change it on Raspberry’s startup it should be “raspberry”.</p></li>
 <li><p>To clone the Gateway repository (<a href="https://github.com/bchwtz-fhswf/gateway" class="uri">https://github.com/bchwtz-fhswf/gateway</a>) onto your pi, you need a SSH Key which is connected to your account. Generate it by following the instructions in <a href="https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" class="uri">https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a> for Linux (you dont have to pass it to a key agent) and add it to your account by following the instructions in <a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account" class="uri">https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account</a></p></li>
-<li><p>Clone the gateway repository to your raspberry by typing the folowing into the remote console window connected to your raspberry. When asked, enter the SSH Key password you initiated while generating the key.</p></li>
-</ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="getting-started.html#cb2-1"></a><span class="fu">git</span> clone git@github.com:bchwtz-fhswf/gateway.git </span></code></pre></div>
-<ol start="10" style="list-style-type: decimal">
-<li>Before you are able to execute some of the scripts, you have to install some Python modules by typing or pasting the following commands. (You can paste into a PuTTY window by right-clicking)</li>
-</ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="getting-started.html#cb3-1"></a><span class="ex">pip3</span> install ruuvitag_sensor</span>
-<span id="cb3-2"><a href="getting-started.html#cb3-2"></a><span class="ex">pip3</span> install crcmod</span>
-<span id="cb3-3"><a href="getting-started.html#cb3-3"></a><span class="ex">pip3</span> install pygatt</span>
-<span id="cb3-4"><a href="getting-started.html#cb3-4"></a><span class="ex">pip3</span> install interruptingcow</span>
-<span id="cb3-5"><a href="getting-started.html#cb3-5"></a><span class="fu">sudo</span> apt-get install bluez bluez-hcidump</span></code></pre></div>
-<ol start="11" style="list-style-type: decimal">
-<li><p>To try if your setup is working, navigate to the cloned repo and type <code>python3 GetConfigFromSensor.py</code>. You should see something like this:
+<li><p>Clone the gateway repository to your raspberry by typing “git clone <a href="mailto:git@github.com" class="email">git@github.com</a>:bchwtz-fhswf/gateway.git “ into the PuTTY window connected to your raspberry. When asked, enter the SSH Key password you initiated while generating the key.</p></li>
+<li><p>Before you are able to execute some of the scripts, you have to install some Python modules by typing or pasting the following commands. (You can paste into a PuTTY window by right-clicking)
+pip3 install ruuvitag_sensor
+pip3 install crcmod
+pip3 install pygatt
+pip3 install interruptingcow
+sudo apt-get install bluez bluez-hcidump</p></li>
+<li><p>To try if your setup is working, navigate to the cloned repo and type “python3 GetConfigFromSensor.py”. You should see something like this:
 <img src="gfx/org/Test.png" /></p></li>
-<li><p>To properly use the gateway library, type <code>python3</code> into the remote console window. This activates an interactive python session.</p></li>
+<li><p>To properly use the gateway library, type “python3” into the putty command window. This activates an interactive python session. Type “import SensorGatewayCommunication“. Afterwards you can type
+test=SensorGatewayCommunication.RuuviTagAccelerometerCommunication()
+test.activate_logging_at_sensor()
+Wait a few seconds and type
+test.get_last_sample_acceleration_data()
+Wait 2 minutes and type
+abc=test. get_acceleration_data ()
+You should see some x,y and z acceleration data after executing the get_last_sample_acceleration_data function. After get_acceleration_data, you should see a lot of hex data flooding through your screen. They get saved inside a .csv file for further analysis.</p></li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="getting-started.html#cb4-1"></a><span class="im">import</span> SensorGatewayCommunication</span>
-<span id="cb4-2"><a href="getting-started.html#cb4-2"></a>test <span class="op">=</span> SensorGatewayCommunication.RuuviTagAccelerometerCommunication()</span>
-<span id="cb4-3"><a href="getting-started.html#cb4-3"></a>test.activate_logging_at_sensor()</span>
-<span id="cb4-4"><a href="getting-started.html#cb4-4"></a></span>
-<span id="cb4-5"><a href="getting-started.html#cb4-5"></a><span class="co"># Wait a few seconds and type</span></span>
-<span id="cb4-6"><a href="getting-started.html#cb4-6"></a>test.get_last_sample_acceleration_data()</span>
-<span id="cb4-7"><a href="getting-started.html#cb4-7"></a></span>
-<span id="cb4-8"><a href="getting-started.html#cb4-8"></a><span class="co"># Wait 2 minutes and type</span></span>
-<span id="cb4-9"><a href="getting-started.html#cb4-9"></a>abc <span class="op">=</span> test.get_acceleration_data() </span></code></pre></div>
-<p>You should see some x,y and z acceleration data after executing the <code>get_last_sample_acceleration_data</code> function. After <code>get_acceleration_data</code>, you should see a lot of hex data flooding through your screen. They get saved inside a <code>*.csv</code> file for further analysis.</p>
-<p><strong>CONGRATULATIONS! YOUR SETUP IS READY!!!</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="getting-started.html#cb5-1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: Add Explanation</span></span>
-<span id="cb5-2"><a href="getting-started.html#cb5-2"></a><span class="fu">sudo</span> apt-get install libatlas-base-dev</span>
-<span id="cb5-3"><a href="getting-started.html#cb5-3"></a><span class="fu">sudo</span> apt-get install python3-pandas</span>
-<span id="cb5-4"><a href="getting-started.html#cb5-4"></a><span class="fu">sudo</span> apt-get install python3-numpy</span></code></pre></div>
-<p>If you are constanly testing gateway-sensor interactions that it may be more convenient to do so via a webbrowser and not via a SSH remote shell. For this you can install a jupyter hub on the Pi <a href="https://towardsdatascience.com/setup-your-home-jupyterhub-on-a-raspberry-pi-7ad32e20eed" class="uri">https://towardsdatascience.com/setup-your-home-jupyterhub-on-a-raspberry-pi-7ad32e20eed</a></p>
-</div>
-</div>
-<div id="gateway-development-environment" class="section level2">
-<h2><span class="header-section-number">2.2</span> Gateway Development Environment</h2>
+<p>CONGRATULATIONS! YOUR SETUP IS READY!!!</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="getting-started.html#cb1-1"></a><span class="fu">sudo</span> apt-get install libatlas-base-dev</span>
+<span id="cb1-2"><a href="getting-started.html#cb1-2"></a><span class="fu">sudo</span> apt-get install python3-pandas</span>
+<span id="cb1-3"><a href="getting-started.html#cb1-3"></a><span class="fu">sudo</span> apt-get install python3-numpy</span></code></pre></div>
 
 </div>
 </div>

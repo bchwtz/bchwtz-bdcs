@@ -1,10 +1,9 @@
 introduction
 getting-started
-sensor-development-environment
+sensor-dev-env
 software-setup
 hardware-setup
-testing-the-gateway-connection
-gateway-development-environment
+gateway-dev-env
 sensor
 initializing-acceleration-logging
 retrieving-data-from-fifo
