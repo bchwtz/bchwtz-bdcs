@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 2 Getting Started | Big Data Case Studies</title>
-  <meta name="description" content="Chapter 2 Getting Started | Big Data Case Studies" />
+  <title>Page not found | Big Data Case Studies</title>
+  <meta name="description" content="Page not found | Big Data Case Studies" />
   <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 2 Getting Started | Big Data Case Studies" />
+  <meta property="og:title" content="Page not found | Big Data Case Studies" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Chapter 2 Getting Started | Big Data Case Studies" />
+  <meta property="og:description" content="Page not found | Big Data Case Studies" />
   <meta name="github-repo" content="bchwtz/bchwtz-bdcs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 2 Getting Started | Big Data Case Studies" />
+  <meta name="twitter:title" content="Page not found | Big Data Case Studies" />
   
-  <meta name="twitter:description" content="Chapter 2 Getting Started | Big Data Case Studies" />
+  <meta name="twitter:description" content="Page not found | Big Data Case Studies" />
   
 
 <meta name="author" content="Benjamin Buchwitz" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="sensor.html"/>
+
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -264,96 +264,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="getting-started" class="section level1">
-<h1><span class="header-section-number">Chapter 2</span> Getting Started</h1>
-<p>Wow content</p>
-<p><img src="gfx/org/systemarchitecture-highlevel.png" />
-Move on</p>
-<div id="sensor-dev-env" class="section level2">
-<h2><span class="header-section-number">2.1</span> Sensor Dev Env</h2>
-<p>This Chapter is a short guide for setting up your development environment. Until you receive your hardware you can start with installing the necessary software.</p>
-<div id="software-setup" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> Software Setup</h3>
-<ol style="list-style-type: decimal">
-<li><p>Download “Segger Embedded Studio for ARM 5.10d” (<a href="https://www.segger.com/downloads/embedded-studio" class="uri">https://www.segger.com/downloads/embedded-studio</a>)</p></li>
-<li><p>Download nRF5_SDK_15.3.0_59ac345.zip (<a href="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/" class="uri">https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/</a>)</p></li>
-<li><p>Clone <a href="https://github.com/bchwtz-fhswf/ruuvi.firmware.c" class="uri">https://github.com/bchwtz-fhswf/ruuvi.firmware.c</a>. Copy the extracted ZIP from 2. Inside the cloned folder (If you don’t know how to clone a git repository look at <a href="https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository" class="uri">https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository</a> or search on google/youtube)
-It should look like this:</p></li>
-</ol>
-<p><img src="gfx/org/nRF_in_Ruuvi_folder.png" /></p>
-<ol start="4" style="list-style-type: decimal">
-<li><p>Open SEGGER and click “File” -&gt; “Open Solution”, navigate to the cloned repository and open “ruuvi.firmware.c”. The project should now be inside SEGGER.</p></li>
-<li><p>Search “Project ‘ruuvitag_b’” on the left inside SEGGER, right-click and choose “Set as Active Project”.</p></li>
-</ol>
-</div>
-<div id="hardware-setup" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> Hardware Setup</h3>
-<ol start="6" style="list-style-type: decimal">
-<li>Open your ruuvi tag, take PCB &amp; battery out (you can do so with a little screwdriver or by gently pulling on the battery clip)</li>
-</ol>
-<p><img src="gfx/org/Tag_Demontage.jpg" /></p>
-<ol start="7" style="list-style-type: decimal">
-<li><p>Connect the “Tag Connector” cable + plug to your ruuvi tag
-<img src="gfx/org/Tag_connector.jpg" /></p></li>
-<li><p>Connect the other side of the tag connector to the Debug out slot on the Nordic SDK</p></li>
-<li><p>Connect your SDK over USB with your PC
-<img src="gfx/org/SDK_SetUp.jpg" /></p></li>
-<li><p>To test if everything is right, open SEGGER and click “Target”-&gt;”Connect J-Link”. SEGGER should connect to your SDK</p></li>
-<li><p>To flash your ruuvi tag with the cloned firmware, click “Target”-&gt;”Erase All”, afterwards click “Build”-&gt;”Build and Run”.</p></li>
-</ol>
-</div>
-</div>
-<div id="gateway-dev-env" class="section level2">
-<h2><span class="header-section-number">2.2</span> Gateway Dev Env</h2>
-<ol style="list-style-type: decimal">
-<li><p>Connect your Raspberry Pi to a screen via HDMI</p></li>
-<li><p>Connect your Raspberry to your WiFi</p></li>
-<li><p>Activate SSH and VNC by clicking on the raspberry on the top left -&gt; Preferences -&gt; Raspberry-Pi-Configuration-&gt;Interfaces, change SSH and VNC to activated</p></li>
-</ol>
-<p><img src="gfx/org/Raspberry_setup1.PNG" /></p>
-<p><img src="gfx/org/Raspberry_setup2.PNG" /></p>
-<ol start="4" style="list-style-type: decimal">
-<li><p>On your PC, download PuTTY (<a href="https://www.putty.org/" class="uri">https://www.putty.org/</a>)</p></li>
-<li><p>Get your Raspberry’s IP-Adress by opening a command line on your PC and and type “ping raspberrypi.local”.</p></li>
-<li><p>Open PuTTY, type the IP-Adress into the Host Name field. You can save it by entering a name into the “Saved Sessions” field and pressing “save”. Afterwards select “open”.</p></li>
-<li><p>When asked for the username type “pi” and afterwards enter your password. If you did not change it on Raspberry’s startup it should be “raspberry”.</p></li>
-<li><p>To clone the Gateway repository (<a href="https://github.com/bchwtz-fhswf/gateway" class="uri">https://github.com/bchwtz-fhswf/gateway</a>) onto your pi, you need a SSH Key which is connected to your account. Generate it by following the instructions in <a href="https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent" class="uri">https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent</a> for Linux (you dont have to pass it to a key agent) and add it to your account by following the instructions in <a href="https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account" class="uri">https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account</a></p></li>
-<li><p>Clone the gateway repository to your raspberry by typing “git clone <a href="mailto:git@github.com" class="email">git@github.com</a>:bchwtz-fhswf/gateway.git “ into the PuTTY window connected to your raspberry. When asked, enter the SSH Key password you initiated while generating the key.</p></li>
-<li><p>Before you are able to execute some of the scripts, you have to install some Python modules by typing or pasting the following commands. (You can paste into a PuTTY window by right-clicking)
-pip3 install ruuvitag_sensor
-pip3 install crcmod
-pip3 install pygatt
-pip3 install interruptingcow
-sudo apt-get install bluez bluez-hcidump</p></li>
-<li><p>To try if your setup is working, navigate to the cloned repo and type “python3 GetConfigFromSensor.py”. You should see something like this:
-<img src="gfx/org/Test.png" /></p></li>
-<li><p>To properly use the gateway library, type “python3” into the putty command window. This activates an interactive python session. Type “import SensorGatewayCommunication“. Afterwards you can type
-test=SensorGatewayCommunication.RuuviTagAccelerometerCommunication()
-test.activate_logging_at_sensor()
-Wait a few seconds and type
-test.get_last_sample_acceleration_data()
-Wait 2 minutes and type
-abc=test. get_acceleration_data ()
-You should see some x,y and z acceleration data after executing the get_last_sample_acceleration_data function. After get_acceleration_data, you should see a lot of hex data flooding through your screen. They get saved inside a .csv file for further analysis.</p></li>
-</ol>
-<p>CONGRATULATIONS! YOUR SETUP IS READY!!!</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="getting-started.html#cb1-1"></a><span class="fu">sudo</span> apt-get install libatlas-base-dev</span>
-<span id="cb1-2"><a href="getting-started.html#cb1-2"></a><span class="fu">sudo</span> apt-get install python3-pandas</span>
-<span id="cb1-3"><a href="getting-started.html#cb1-3"></a><span class="fu">sudo</span> apt-get install python3-numpy</span></code></pre></div>
-
-</div>
-</div>
-
-
-
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="sensor.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -385,7 +308,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/01-org.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/%s",
 "text": "Edit"
 },
 "history": {
