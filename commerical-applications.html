@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Commerical Applications | Big Data Case Studies</title>
   <meta name="description" content="Commerical Applications | Big Data Case Studies" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Commerical Applications | Big Data Case Studies" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-08-23" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="prev" href="contributors.html"/>
 <link rel="next" href="system-info.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -151,23 +151,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>3.2</b> Retrieving data from FIFO</a></li>
 <li class="chapter" data-level="3.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>3.3</b> Using the data by hearbeat</a></li>
 <li class="chapter" data-level="3.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>3.4</b> Initialization during boot</a></li>
-<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.5</b> Implementation</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.5.1</b> app_accelerometer_logging.c</a></li>
-<li class="chapter" data-level="3.5.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.5.2</b> app_comms.c</a></li>
-<li class="chapter" data-level="3.5.3" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.5.3</b> app_config.h</a></li>
-<li class="chapter" data-level="3.5.4" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.5.4</b> app_sensor.c</a></li>
-<li class="chapter" data-level="3.5.5" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.5.5</b> main.c</a></li>
-<li class="chapter" data-level="3.5.6" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.5.6</b> ruuvi_interface_lis2dh12.c</a></li>
-<li class="chapter" data-level="3.5.7" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.5.7</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#streaming-of-acceleration-data"><i class="fa fa-check"></i><b>3.5</b> Streaming of acceleration data</a></li>
+<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.6</b> Implementation</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.6.1</b> app_accelerometer_logging.c</a></li>
+<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.6.2</b> app_comms.c</a></li>
+<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_communication_ble_gatt.c"><i class="fa fa-check"></i><b>3.6.3</b> ruuvi_nrf5_sdk15_communication_ble_gatt.c</a></li>
+<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.6.4</b> app_config.h</a></li>
+<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.6.5</b> app_sensor.c</a></li>
+<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.6.6</b> main.c</a></li>
+<li class="chapter" data-level="3.6.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.6.7</b> ruuvi_interface_lis2dh12.c</a></li>
+<li class="chapter" data-level="3.6.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.6.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>3.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
+<li class="chapter" data-level="3.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>3.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#ringbuffer-module"><i class="fa fa-check"></i><b>3.6</b> Ringbuffer module</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#general-functionality"><i class="fa fa-check"></i><b>3.6.1</b> General functionality</a></li>
-<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#project-related-use-case"><i class="fa fa-check"></i><b>3.6.2</b> Project-related use case</a></li>
-<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#implemented-functions"><i class="fa fa-check"></i><b>3.6.3</b> Implemented functions</a></li>
-<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash.c"><i class="fa fa-check"></i><b>3.6.4</b> ruuvi_task_flash.c</a></li>
-<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_flash.c"><i class="fa fa-check"></i><b>3.6.5</b> ruuvi_nrf5_sdk15_flash.c</a></li>
-<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#exemplary-use"><i class="fa fa-check"></i><b>3.6.6</b> Exemplary use</a></li>
-</ul></li>
+<li class="chapter" data-level="3.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>3.7</b> Energy consumption</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
 <li class="chapter" data-level="4.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>4.1</b> Sensor Gateway Communication Library</a><ul>
@@ -198,20 +195,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time"><i class="fa fa-check"></i><b>6.2.5</b> Read system time</a></li>
 <li class="chapter" data-level="6.2.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging"><i class="fa fa-check"></i><b>6.2.6</b> Control acceleration logging</a></li>
 <li class="chapter" data-level="6.2.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging"><i class="fa fa-check"></i><b>6.2.7</b> Query status of acceleration logging</a></li>
+<li class="chapter" data-level="6.2.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-flash-statistic"><i class="fa fa-check"></i><b>6.2.8</b> Query flash statistic</a></li>
+<li class="chapter" data-level="6.2.9" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-boot-counter"><i class="fa fa-check"></i><b>6.2.9</b> Query boot counter</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.3</b> Response messages</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response"><i class="fa fa-check"></i><b>6.3.1</b> Status response</a></li>
 <li class="chapter" data-level="6.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message"><i class="fa fa-check"></i><b>6.3.2</b> End of data message</a></li>
 <li class="chapter" data-level="6.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response"><i class="fa fa-check"></i><b>6.3.3</b> Configuration response</a></li>
 <li class="chapter" data-level="6.3.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response"><i class="fa fa-check"></i><b>6.3.4</b> Timestamp response</a></li>
+<li class="chapter" data-level="6.3.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic-response"><i class="fa fa-check"></i><b>6.3.5</b> Flash statistic response</a></li>
+<li class="chapter" data-level="6.3.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#boot-counter-response"><i class="fa fa-check"></i><b>6.3.6</b> boot counter response</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.4</b> Data message</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>6.4.1</b> 12 bit data format</a></li>
 <li class="chapter" data-level="6.4.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>6.4.2</b> 10 bit data format</a></li>
 <li class="chapter" data-level="6.4.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>6.4.3</b> 8 bit data format</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic"><i class="fa fa-check"></i><b>6.5</b> Flash statistic</a></li>
-<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.6</b> Communication example</a></li>
+<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.5</b> Communication example</a></li>
+<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#streaming"><i class="fa fa-check"></i><b>6.6</b> Streaming</a></li>
 </ul></li>
 <li class="part"><span><b>To Do</b></span></li>
 <li class="chapter" data-level="7" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>7</b> Sensor</a><ul>
@@ -316,7 +317,6 @@ Solar asset tracker: <a href="https://www.nordicsemi.com/News/2020/11/SODAQ-cell
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -357,7 +357,7 @@ gitbook.start({
 },
 "download": ["bchwtz-bdcs.pdf", "bchwtz-bdcs.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Sensor | Big Data Case Studies</title>
   <meta name="description" content="Chapter 3 Sensor | Big Data Case Studies" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Sensor | Big Data Case Studies" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-08-23" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="prev" href="getting-started.html"/>
 <link rel="next" href="gateway.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -151,23 +151,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>3.2</b> Retrieving data from FIFO</a></li>
 <li class="chapter" data-level="3.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>3.3</b> Using the data by hearbeat</a></li>
 <li class="chapter" data-level="3.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>3.4</b> Initialization during boot</a></li>
-<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.5</b> Implementation</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.5.1</b> app_accelerometer_logging.c</a></li>
-<li class="chapter" data-level="3.5.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.5.2</b> app_comms.c</a></li>
-<li class="chapter" data-level="3.5.3" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.5.3</b> app_config.h</a></li>
-<li class="chapter" data-level="3.5.4" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.5.4</b> app_sensor.c</a></li>
-<li class="chapter" data-level="3.5.5" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.5.5</b> main.c</a></li>
-<li class="chapter" data-level="3.5.6" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.5.6</b> ruuvi_interface_lis2dh12.c</a></li>
-<li class="chapter" data-level="3.5.7" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.5.7</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#streaming-of-acceleration-data"><i class="fa fa-check"></i><b>3.5</b> Streaming of acceleration data</a></li>
+<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.6</b> Implementation</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.6.1</b> app_accelerometer_logging.c</a></li>
+<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.6.2</b> app_comms.c</a></li>
+<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_communication_ble_gatt.c"><i class="fa fa-check"></i><b>3.6.3</b> ruuvi_nrf5_sdk15_communication_ble_gatt.c</a></li>
+<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.6.4</b> app_config.h</a></li>
+<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.6.5</b> app_sensor.c</a></li>
+<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.6.6</b> main.c</a></li>
+<li class="chapter" data-level="3.6.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.6.7</b> ruuvi_interface_lis2dh12.c</a></li>
+<li class="chapter" data-level="3.6.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.6.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>3.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
+<li class="chapter" data-level="3.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>3.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#ringbuffer-module"><i class="fa fa-check"></i><b>3.6</b> Ringbuffer module</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#general-functionality"><i class="fa fa-check"></i><b>3.6.1</b> General functionality</a></li>
-<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#project-related-use-case"><i class="fa fa-check"></i><b>3.6.2</b> Project-related use case</a></li>
-<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#implemented-functions"><i class="fa fa-check"></i><b>3.6.3</b> Implemented functions</a></li>
-<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash.c"><i class="fa fa-check"></i><b>3.6.4</b> ruuvi_task_flash.c</a></li>
-<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_flash.c"><i class="fa fa-check"></i><b>3.6.5</b> ruuvi_nrf5_sdk15_flash.c</a></li>
-<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#exemplary-use"><i class="fa fa-check"></i><b>3.6.6</b> Exemplary use</a></li>
-</ul></li>
+<li class="chapter" data-level="3.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>3.7</b> Energy consumption</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
 <li class="chapter" data-level="4.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>4.1</b> Sensor Gateway Communication Library</a><ul>
@@ -198,20 +195,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time"><i class="fa fa-check"></i><b>6.2.5</b> Read system time</a></li>
 <li class="chapter" data-level="6.2.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging"><i class="fa fa-check"></i><b>6.2.6</b> Control acceleration logging</a></li>
 <li class="chapter" data-level="6.2.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging"><i class="fa fa-check"></i><b>6.2.7</b> Query status of acceleration logging</a></li>
+<li class="chapter" data-level="6.2.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-flash-statistic"><i class="fa fa-check"></i><b>6.2.8</b> Query flash statistic</a></li>
+<li class="chapter" data-level="6.2.9" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-boot-counter"><i class="fa fa-check"></i><b>6.2.9</b> Query boot counter</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.3</b> Response messages</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response"><i class="fa fa-check"></i><b>6.3.1</b> Status response</a></li>
 <li class="chapter" data-level="6.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message"><i class="fa fa-check"></i><b>6.3.2</b> End of data message</a></li>
 <li class="chapter" data-level="6.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response"><i class="fa fa-check"></i><b>6.3.3</b> Configuration response</a></li>
 <li class="chapter" data-level="6.3.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response"><i class="fa fa-check"></i><b>6.3.4</b> Timestamp response</a></li>
+<li class="chapter" data-level="6.3.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic-response"><i class="fa fa-check"></i><b>6.3.5</b> Flash statistic response</a></li>
+<li class="chapter" data-level="6.3.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#boot-counter-response"><i class="fa fa-check"></i><b>6.3.6</b> boot counter response</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.4</b> Data message</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>6.4.1</b> 12 bit data format</a></li>
 <li class="chapter" data-level="6.4.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>6.4.2</b> 10 bit data format</a></li>
 <li class="chapter" data-level="6.4.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>6.4.3</b> 8 bit data format</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic"><i class="fa fa-check"></i><b>6.5</b> Flash statistic</a></li>
-<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.6</b> Communication example</a></li>
+<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.5</b> Communication example</a></li>
+<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#streaming"><i class="fa fa-check"></i><b>6.6</b> Streaming</a></li>
 </ul></li>
 <li class="part"><span><b>To Do</b></span></li>
 <li class="chapter" data-level="7" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>7</b> Sensor</a><ul>
@@ -272,13 +273,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="initializing-acceleration-logging" class="section level2">
 <h2><span class="header-section-number">3.1</span> Initializing acceleration logging</h2>
 <p>The initialization is shown with blue arrows and numbers in black circles until #4.</p>
-<p>To activate acceleration logging the gateway sends the <a href="ble-gatt-messages.html#control-acceleration-logging">control acceleration logging message</a>. In general GATT messages are handled by the function <a href="sensor.html#void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_comms()</code></a> inside the module <a href="sensor.html#app_comms.c">app_comm.c</a>. Messages regarding acceleration logging are delegated to the function <a href="sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_lis2dh12_comms()</code></a> inside the same module. After receiving the message to activate acceleration logging the function <a href="sensor.html#rd_status_t-app_enable_sensor_loggingvoid"><code>app_enable_sensor_logging()</code></a> inside the module <a href="sensor.html#app_accelerometer_logging.c">app_accelerometer_logging.c</a> in called (1).</p>
+<p>To activate acceleration logging the gateway sends the <a href="ble-gatt-messages.html#control-acceleration-logging">control acceleration logging message</a>. In general GATT messages are handled by the function <a href="sensor.html#void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_comms()</code></a> inside the module <a href="sensor.html#app_comms.c">app_comm.c</a>. Messages regarding acceleration logging are delegated to the function <a href="sensor.html#rd_status_t-handle_lis2dh12_comms_v2-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_lis2dh12_comms_v2()</code></a> inside the same module. After receiving the message to activate acceleration logging the function <a href="sensor.html#rd_status_t-app_enable_sensor_loggingconst-bool-use_ram_db-const-bool-format_db"><code>app_enable_sensor_logging()</code></a> inside the module <a href="sensor.html#app_accelerometer_logging.c">app_accelerometer_logging.c</a> in called (1).</p>
 <p>The first step in activation is to check if all conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling <a href="sensor.html#rt_sensor_ctx_t-app_sensor_find-const-char-name"><code>find_sensor()</code></a> inside of <a href="sensor.html#app_sensor.c">app_sensor.c</a> (2). This function returns the sensor context. The sensor context consists of several information about the sensor. The next step associates the function <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a> from <a href="sensor.html#app_accelerometer_logging.c">app_accelerometer_logging.c</a> with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At last the function pointer to <code>data_get()</code> inside the sensor context is replaced by the pointer to the function <a href="sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data"><code>lis2dh12_logged_data_get()</code></a>.</p>
 </div>
 <div id="retrieving-data-from-fifo" class="section level2">
 <h2><span class="header-section-number">3.2</span> Retrieving data from FIFO</h2>
 <p>When FIFO is full inside LIS2DH12 the interrupt starts the function <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a>. This function does not directly handle the new data. It schedules a call to <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a>. Instead of <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a> this is called in the main thread of the application. If processing is done inside a function inside an interrupt context this prevents processing of another interrupt. This should be avoided.</p>
-<p>Inside <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a> the FIFO from LIS2DH12 is read (5). The values are store in memory in raw format to be ready to present them to the function <a href="sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data"><code>lis2dh12_logged_data_get()</code></a> which is important for heartbeat. In parallel the raw values are compacted by removing all unused bits. This is done by the functions <a href="sensor.html#void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata"><code>pack8/10/12()</code></a>. A timestamp is added to the compacted values. These values are handover to the ringbuffer which writes them to flash (6).</p>
+<p>Inside <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a> the FIFO from LIS2DH12 is read (5). The values are store in memory in raw format to be ready to present them to the function <a href="sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data"><code>lis2dh12_logged_data_get()</code></a> which is important for heartbeat. In parallel the raw values are compacted by removing all unused bits. This is done by the function <a href="sensor.html#void-packconst-uint8_t-resolution-const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata"><code>pack()</code></a>. These values are handover to the FlashDB which writes them to flash (6).</p>
 </div>
 <div id="using-the-data-by-hearbeat" class="section level2">
 <h2><span class="header-section-number">3.3</span> Using the data by hearbeat</h2>
@@ -290,13 +291,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.4</span> Initialization during boot</h2>
 <p>All sensor initialization is done inside <a href="sensor.html#void-setup-void"><code>setup()</code></a> from <a href="sensor.html#main.c">main.c</a>. This function calls <a href="sensor.html#rd_status_t-app_acc_logging_initvoid"><code>app_acc_logging_init()</code></a> inside <a href="sensor.html#app_accelerometer_logging.c">app_accelerometer_logging.c</a>. The function checks if the ringbuffer exists. If this is true it activates acceleration logging as described earlier.</p>
 </div>
+<div id="streaming-of-acceleration-data" class="section level2">
+<h2><span class="header-section-number">3.5</span> Streaming of acceleration data</h2>
+<p>In case of sampling acceleration data at high sampling frequencies than storing them in flash memory may be not possible because of latency of the memory or limitations by available size of memory. As an alternative the data can be streamed. In this mode, data from the acceleration sensor will not be written to flash. Instead the data is cached in RAM. The following figure shows the difference between logging of acceleration data and streaming.</p>
+<p><img src="gfx/org/streaming_of_acceleration_data.png" />
+When logging is active, the acceleration sensor LIS2DH12 generated an interrupt every time its FIFO is full. The interrupt causes the execution of <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a>. This function schedules the execution of <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a> outside interrupt context (grey). The following process was described <a href="sensor.html#retrieving-data-from-fifo">earlier</a>.</p>
+<p>When streaming is active, the process is started by the same condition. But the FIFO is read by <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a>. Instead of scheduling <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a> the function hands over the data to FlashDB which stores them in RAM. This is done inside interrupt context (blue). In case of streaming there is no explicit command to read the data by the gateway. Instead, if connected to Bluetooth GATT service, the data is automatically send. This is done by scheduling <a href="sensor.html#void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size"><code>app_acc_log_transfer_ram_db()</code></a>. <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a> schedules execution of this function if <code>rt_gatt_nus_is_connected()</code> returns true.</p>
+</div>
 <div id="implementation" class="section level2">
-<h2><span class="header-section-number">3.5</span> Implementation</h2>
+<h2><span class="header-section-number">3.6</span> Implementation</h2>
 <div id="app_accelerometer_logging.c" class="section level3">
-<h3><span class="header-section-number">3.5.1</span> app_accelerometer_logging.c</h3>
-<div id="rd_status_t-app_enable_sensor_loggingvoid" class="section level4">
-<h4><span class="header-section-number">3.5.1.1</span> <code>rd_status_t app_enable_sensor_logging(void)</code></h4>
+<h3><span class="header-section-number">3.6.1</span> app_accelerometer_logging.c</h3>
+<div id="rd_status_t-app_enable_sensor_loggingconst-bool-use_ram_db-const-bool-format_db" class="section level4">
+<h4><span class="header-section-number">3.6.1.1</span> <code>rd_status_t app_enable_sensor_logging(const bool use_ram_db, const bool format_db)</code></h4>
 <p>Enables the logging of acceleration data.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameters</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>use_ram_db</td>
+<td>in</td>
+<td>Database in RAM is used in case of streaming of acceleration data.</td>
+</tr>
+<tr class="even">
+<td>format_db</td>
+<td>in</td>
+<td>This parameter is set to true if logging is enabled by gateway to ensure the database is cleared. When re-enabling logging after reboot it is set to false.</td>
+</tr>
+</tbody>
+</table>
 <table>
 <thead>
 <tr class="header">
@@ -320,7 +354,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-app_disable_sensor_loggingvoid" class="section level4">
-<h4><span class="header-section-number">3.5.1.2</span> <code>rd_status_t app_disable_sensor_logging(void)</code></h4>
+<h4><span class="header-section-number">3.6.1.2</span> <code>rd_status_t app_disable_sensor_logging(void)</code></h4>
 <p>Disables the logging of acceleration data.</p>
 <table>
 <thead>
@@ -342,16 +376,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="void-on_fifo_full-const-ri_gpio_evt_t-evt" class="section level4">
-<h4><span class="header-section-number">3.5.1.3</span> <code>void on_fifo_full (const ri_gpio_evt_t evt)</code></h4>
-<p>Callback function when FIFO full interrupt occurs at LIS2DH12. This functions schedules the execution of <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>void fifo_full_handler (void * p_event_data, uint16_t event_size)</code></a>. See ruuvi_interface_scheduler.h for parameters used in this function.</p>
+<h4><span class="header-section-number">3.6.1.3</span> <code>void on_fifo_full (const ri_gpio_evt_t evt)</code></h4>
+<p>Callback function when FIFO full interrupt occurs at LIS2DH12. If using streaming this function reads the FIFO and writes the values to RAMDB.</p>
+<p>Without streaming it schedules the execution of <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>void fifo_full_handler (void * p_event_data, uint16_t event_size)</code></a> to read the FIFO outside interrupt context. See ruuvi_interface_scheduler.h for parameters used in this function.</p>
 </div>
 <div id="void-fifo_full_handler-void-p_event_data-uint16_t-event_size" class="section level4">
-<h4><span class="header-section-number">3.5.1.4</span> <code>void fifo_full_handler (void * p_event_data, uint16_t event_size)</code></h4>
-<p>This function reads the FIFO and stores the data inside the ringbuffer. See ruuvi_interface_scheduler.h for parameters used in this function.</p>
+<h4><span class="header-section-number">3.6.1.4</span> <code>void fifo_full_handler (void * p_event_data, uint16_t event_size)</code></h4>
+<p>This function reads the FIFO and stores the data inside the timeseries database. See ruuvi_interface_scheduler.h for parameters used in this function.</p>
 </div>
-<div id="void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata" class="section level4">
-<h4><span class="header-section-number">3.5.1.5</span> <code>void pack8/10/12(const uint16_t sizeData, const uint8_t* const data, uint8_t* const packeddata)</code></h4>
-<p>These functions remove unused bits from the raw accelerometer values in 8/10/12 bit format and store them in compact form.</p>
+<div id="void-packconst-uint8_t-resolution-const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata" class="section level4">
+<h4><span class="header-section-number">3.6.1.5</span> <code>void pack(const uint8_t resolution, const uint16_t sizeData, const uint8_t* const data, uint8_t* const packeddata)</code></h4>
+<p>This function stores raw accelerometer values in 8/10/12 Bit format in compact form (without unused bits). It is a frontend to the functions pack8/10/12().</p>
 <table>
 <thead>
 <tr class="header">
@@ -362,16 +397,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
+<td>resolution</td>
+<td>in</td>
+<td>Resolution of the samples.</td>
+</tr>
+<tr class="even">
 <td>sizeData</td>
 <td>in</td>
 <td>Size of input data.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>data</td>
 <td>in</td>
 <td>Input data.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>packeddata</td>
 <td>in/out</td>
 <td>Memory for storing compacted data.</td>
@@ -380,7 +420,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data" class="section level4">
-<h4><span class="header-section-number">3.5.1.6</span> <code>rd_status_t lis2dh12_logged_data_get (rd_sensor_data_t * const data)</code></h4>
+<h4><span class="header-section-number">3.6.1.6</span> <code>rd_status_t lis2dh12_logged_data_get (rd_sensor_data_t * const data)</code></h4>
 <p>This function retrieves raw accelerometer values from memory. The values are parsed and returned inside data. It is called by <code>app_sensor_get()</code> inside <a href="sensor.html#app_sensor.c">app_sensor.c</a> if accelerometer logging is active.</p>
 <table>
 <thead>
@@ -399,9 +439,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-app_acc_logging_send_eofapp_acc_logging_send_eof_v2const-ri_comm_xfer_fp_t-reply_fp-const-rd_status_t-status_code-const-uint16_t-crc" class="section level4">
-<h4><span class="header-section-number">3.5.1.7</span> <code>rd_status_t app_acc_logging_send_eof/app_acc_logging_send_eof_v2(const ri_comm_xfer_fp_t reply_fp, const rd_status_t status_code, const uint16_t crc)</code></h4>
-<p>This function is called by <a href="sensor.html#rd_status_t-app_acc_logging_send_last_sampleconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2"><code>app_acc_logging_send_last_sample()</code></a> and <a href="sensor.html#rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2"><code>app_acc_logging_send_logged_data()</code></a> after all data is sent to the requestor. This function builds the <a href="ble-gatt-messages.html#end-of-data-message">end of data message</a> and sends it.</p>
+<div id="rd_status_t-app_acc_logging_send_eof_v2const-ri_comm_xfer_fp_t-reply_fp-const-rd_status_t-status_code-const-uint16_t-crc" class="section level4">
+<h4><span class="header-section-number">3.6.1.7</span> <code>rd_status_t app_acc_logging_send_eof_v2(const ri_comm_xfer_fp_t reply_fp, const rd_status_t status_code, const uint16_t crc)</code></h4>
+<p>This function is called by <a href="sensor.html#rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2"><code>app_acc_logging_send_logged_data()</code></a> after all data is sent to the requestor. This function builds the <a href="ble-gatt-messages.html#end-of-data-message">end of data message</a> and sends it.</p>
 <table>
 <colgroup>
 <col width="33%" />
@@ -434,9 +474,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-app_acc_logging_send_last_sampleconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2" class="section level4">
-<h4><span class="header-section-number">3.5.1.8</span> <code>rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp, const bool is_v2)</code></h4>
-<p>This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from memory, does the compacting of the bits by calling <a href="sensor.html#void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata"><code>pack8/10/12()</code></a> and sends the data to the requester.</p>
+<div id="rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp" class="section level4">
+<h4><span class="header-section-number">3.6.1.8</span> <code>rd_status_t app_acc_logging_send_logged_data(const ri_comm_xfer_fp_t reply_fp)</code></h4>
+<p>This function is called when a request to send the logged acceleration data is received by GATT/UART. The function triggers FlashDB to read data. Data from the database is read via the callback function <a href="sensor.html#bool-callback_send_data_blockfdb_tsl_t-tsl-void-arg"><code>callback_send_data_block()</code></a>. Inside the callback function the data is send to the requestor.</p>
 <table>
 <thead>
 <tr class="header">
@@ -450,50 +490,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>reply_fp</td>
 <td>in</td>
 <td>Function pointer to reply function.</td>
-</tr>
-<tr class="even">
-<td>is_v2</td>
-<td>in</td>
-<td>Specify format of response messages.</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr class="header">
-<th>Special error codes</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>RD_ERROR_INVALID_STATE</td>
-<td>If logging is not active.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2" class="section level4">
-<h4><span class="header-section-number">3.5.1.9</span> <code>rd_status_t app_acc_logging_send_logged_data(const ri_comm_xfer_fp_t reply_fp, const bool is_v2)</code></h4>
-<p>This function is called when a request to send the logged acceleration data is received by GATT/UART. It retrieves the data from ringbuffer and sends it to the requester.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameters</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>reply_fp</td>
-<td>in</td>
-<td>Function pointer to reply function.</td>
-</tr>
-<tr class="even">
-<td>is_v2</td>
-<td>in</td>
-<td>Specify format of response messages.</td>
 </tr>
 </tbody>
 </table>
@@ -513,8 +509,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-app_acc_logging_statevoid" class="section level4">
-<h4><span class="header-section-number">3.5.1.10</span> <code>rd_status_t app_acc_logging_state(void)</code></h4>
-<p>This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller.</p>
+<h4><span class="header-section-number">3.6.1.9</span> <code>rd_status_t app_acc_logging_state(void)</code></h4>
+<p>This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller. If streaming is active, this will not be reported as active logging by this function.</p>
 <table>
 <thead>
 <tr class="header">
@@ -535,7 +531,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-app_acc_logging_configuration_set-rt_sensor_ctx_t-sensor-rd_sensor_configuration_t-new_config" class="section level4">
-<h4><span class="header-section-number">3.5.1.11</span> <code>rd_status_t app_acc_logging_configuration_set (rt_sensor_ctx_t* sensor, rd_sensor_configuration_t* new_config)</code></h4>
+<h4><span class="header-section-number">3.6.1.10</span> <code>rd_status_t app_acc_logging_configuration_set (rt_sensor_ctx_t* sensor, rd_sensor_configuration_t* new_config)</code></h4>
 <p>This function is called when a request to update the sensor configuration is received by GATT/UART. It checks every configuration parameter if it should be changed. It also checks if the value is different than actual value. If a change is detected it clears the ringbuffer, updates the configuration and stores the configuration in flash.</p>
 <table>
 <colgroup>
@@ -565,24 +561,115 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-app_acc_logging_initvoid" class="section level4">
-<h4><span class="header-section-number">3.5.1.12</span> <code>rd_status_t app_acc_logging_init(void)</code></h4>
+<h4><span class="header-section-number">3.6.1.11</span> <code>rd_status_t app_acc_logging_init(void)</code></h4>
 <p>Initialize acceleration logging during boot. If logging was active before reboot it will be activated. If logging was not active before reboot this function return <code>RD_SUCCESS</code> without activating acceleration logging.</p>
-<p>The state if logging was active before reboot is detected by looking for the ringbuffer. If the ringbuffer exists, the logging must be active before reboot.</p>
 <p>This function is called from <a href="sensor.html#void-setup-void"><code>setup()</code></a>.</p>
 </div>
 <div id="rd_status_t-app_acc_logging_uninitvoid" class="section level4">
-<h4><span class="header-section-number">3.5.1.13</span> <code>rd_status_t app_acc_logging_uninit(void)</code></h4>
+<h4><span class="header-section-number">3.6.1.12</span> <code>rd_status_t app_acc_logging_uninit(void)</code></h4>
 <p>The uninitialization of acceleration logging disables the logging if it is actually active. If logging is not active this function return RD_SUCCESS without doing anything.</p>
+</div>
+<div id="void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size" class="section level4">
+<h4><span class="header-section-number">3.6.1.13</span> <code>void app_acc_log_transfer_ram_db (void * p_event_data, uint16_t event_size)</code></h4>
+<p>Execution of this function is scheduled if “streaming” is active and <code>rt_gatt_nus_is_connected()</code> returns true. It starts reading currently logged data from the FlashDB and transferring the data to the gateway.</p>
+<p>Scheduling of this function is done inside <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a> using <code>ri_scheduler_event_put()</code>.</p>
+</div>
+<div id="int64_t-fdb_timestamp_get-void" class="section level4">
+<h4><span class="header-section-number">3.6.1.14</span> <code>int64_t fdb_timestamp_get (void)</code></h4>
+<p>Callback for use by FlashDB to retrieve the timestamp of the current new entry.</p>
+</div>
+<div id="bool-callback_send_data_blockfdb_tsl_t-tsl-void-arg" class="section level4">
+<h4><span class="header-section-number">3.6.1.15</span> <code>bool callback_send_data_block(fdb_tsl_t tsl, void *arg)</code></h4>
+<p>Callback function for use with FlashDB. When reading the database this function will be called for every entry.</p>
+<p>This function calls <code>app_comms_blocking_send()</code> to send the data to the gateway.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameters</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>tsl</td>
+<td>in</td>
+<td>Pointer to current entry in the database.</td>
+</tr>
+<tr class="even">
+<td>arg</td>
+<td>in/out</td>
+<td>Pointer to context. See following table. The array consists of the following elements.</td>
+</tr>
+</tbody>
+</table>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Context parameters by <code>*arg</code></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>((void**)arg)[0]</code></td>
+<td>in</td>
+<td>Pointer to database of type <code>fdb_tsdb*</code>.</td>
+</tr>
+<tr class="even">
+<td><code>((void**)arg)[1]</code></td>
+<td>in</td>
+<td>Pointer to transfer function <code>app_comms_blocking_send()</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>((void**)arg)[2]</code></td>
+<td>in/out</td>
+<td>Pointer to CRC value.</td>
+</tr>
+</tbody>
+</table>
+<p>If this functions returns <code>true</code> iterating over the following entries will by aborted.</p>
+</div>
+<div id="rd_status_t-app_acc_logging_statistic-uint8_t-const-statistic" class="section level4">
+<h4><span class="header-section-number">3.6.1.16</span> <code>rd_status_t app_acc_logging_statistic (uint8_t* const statistic)</code></h4>
+<p>This function is called from <code>handle_lis2dh12_comms()</code> after the gateway sends the message to retrieve flash statistics.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameters</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>statistic</td>
+<td>in/out</td>
+<td>Memory to store the statistic values.</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 <div id="app_comms.c" class="section level3">
-<h3><span class="header-section-number">3.5.2</span> app_comms.c</h3>
+<h3><span class="header-section-number">3.6.2</span> app_comms.c</h3>
 <div id="void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len" class="section level4">
-<h4><span class="header-section-number">3.5.2.1</span> <code>void handle_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
+<h4><span class="header-section-number">3.6.2.1</span> <code>void handle_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
 <p>Added new switch/case which forwards messages regarding configuration and control of acceleration logging to the function <a href="sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_lis2dh12_comms()</code></a>, <a href="sensor.html#rd_status_t-handle_lis2dh12_comms_v2-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_lis2dh12_comms_v2()</code></a>, <a href="sensor.html#rd_status_t-handle_rtc_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len"><code>handle_rtc_comms()</code></a>.</p>
 </div>
 <div id="rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len" class="section level4">
-<h4><span class="header-section-number">3.5.2.2</span> <code>rd_status_t handle_lis2dh12_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
+<h4><span class="header-section-number">3.6.2.2</span> <code>rd_status_t handle_lis2dh12_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
 <p>This function handles messages using the proprietary message format by GATT/UART communication needed to control the functionality of acceleration logging.</p>
 <table>
 <thead>
@@ -630,7 +717,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-handle_lis2dh12_comms_v2-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len" class="section level4">
-<h4><span class="header-section-number">3.5.2.3</span> <code>rd_status_t handle_lis2dh12_comms_v2 (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
+<h4><span class="header-section-number">3.6.2.3</span> <code>rd_status_t handle_lis2dh12_comms_v2 (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
 <p>This function handles messages using version 2 message format by GATT/UART communication needed to control the functionality of acceleration logging.</p>
 <table>
 <thead>
@@ -678,7 +765,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-handle_rtc_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len" class="section level4">
-<h4><span class="header-section-number">3.5.2.4</span> <code>rd_status_t handle_rtc_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
+<h4><span class="header-section-number">3.6.2.4</span> <code>rd_status_t handle_rtc_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)</code></h4>
 <p>This function handles messages using version 2 message format by GATT/UART communication needed to control the RTC clock.</p>
 <table>
 <thead>
@@ -721,19 +808,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
+<div id="rd_status_t-dis_init-ri_comm_dis_init_t-const-p_dis-const-bool-secure" class="section level4">
+<h4><span class="header-section-number">3.6.2.5</span> <code>rd_status_t dis_init (ri_comm_dis_init_t * const p_dis, const bool secure)</code></h4>
+<p>This function is called during initialization of the Bluetooth protocol stack.</p>
+<p>Our extension to this function is executed if <code>app_sensor_ctx_get()</code> from app_sensors.c is available. It sets the hardware revision string inside <code>ri_comm_dis_init_t</code> to the list of available and initialized sensors.</p>
+</div>
+</div>
+<div id="ruuvi_nrf5_sdk15_communication_ble_gatt.c" class="section level3">
+<h3><span class="header-section-number">3.6.3</span> ruuvi_nrf5_sdk15_communication_ble_gatt.c</h3>
+<div id="rd_status_t-ri_gatt_dis_init-const-ri_comm_dis_init_t-const-p_dis" class="section level4">
+<h4><span class="header-section-number">3.6.3.1</span> <code>rd_status_t ri_gatt_dis_init (const ri_comm_dis_init_t * const p_dis)</code></h4>
+<p>This function is called during initialization of the Bluetooth protocol stack. Our extension to this function adds a buildnumber to the former unused property <code>sw_rev_str</code> of <code>ble_dis_init_t</code>. The buildnumber is generated by a pre-build script <code>buildnum.js</code> which is executed by Segger Embedded Studio before compiling the software. The pre-buold script generated <code>buildnum.h</code> which includes the buildnumber.</p>
+</div>
 </div>
 <div id="app_config.h" class="section level3">
-<h3><span class="header-section-number">3.5.3</span> app_config.h</h3>
+<h3><span class="header-section-number">3.6.4</span> app_config.h</h3>
 <ul>
 <li>Added macro APP_SENSOR_LOGGING to control compilation of app_accelerometer_logging.*</li>
 <li>If APP_SENSOR_LOGGING is not defined or is defined as 0 the functionality of logging of acceleration data is not available in the application.</li>
 <li>Changed the definition of APP_FLASH_PAGES to include the flash pages used for acceleration logging.</li>
+<li>This module also contains macros for memory separation between acceleration logging and environmental logging. The relevant macros are APP_FLASH_LOG_DATA_RECORDS_NUM and RT_FLASH_RINGBUFFER_MAXSIZE.</li>
 </ul>
 </div>
 <div id="app_sensor.c" class="section level3">
-<h3><span class="header-section-number">3.5.4</span> app_sensor.c</h3>
+<h3><span class="header-section-number">3.6.5</span> app_sensor.c</h3>
 <div id="rt_sensor_ctx_t-app_sensor_find-const-char-name" class="section level4">
-<h4><span class="header-section-number">3.5.4.1</span> <code>rt_sensor_ctx_t* app_sensor_find (const char *name)</code></h4>
+<h4><span class="header-section-number">3.6.5.1</span> <code>rt_sensor_ctx_t* app_sensor_find (const char *name)</code></h4>
 <p>Find sensor by its name. Works only with initialized sensors, will not return a sensor which is supported in firmware but not initialized.</p>
 <p>This function is called by <a href="sensor.html#rd_status_t-app_enable_sensor_loggingvoid"><code>app_enable_sensor_logging()</code></a> and <a href="sensor.html#rd_status_t-app_disable_sensor_loggingvoid"><code>app_disable_sensor_logging()</code></a> to retrieve the sensor context.</p>
 <table>
@@ -755,16 +855,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="main.c" class="section level3">
-<h3><span class="header-section-number">3.5.5</span> main.c</h3>
+<h3><span class="header-section-number">3.6.6</span> main.c</h3>
 <div id="void-setup-void" class="section level4">
-<h4><span class="header-section-number">3.5.5.1</span> <code>void setup (void)</code></h4>
+<h4><span class="header-section-number">3.6.6.1</span> <code>void setup (void)</code></h4>
 <p>Added call to <a href="sensor.html#rd_status_t-app_acc_logging_initvoid"><code>app_acc_logging_init()</code></a> to initialize acceleration logging.</p>
 </div>
 </div>
 <div id="ruuvi_interface_lis2dh12.c" class="section level3">
-<h3><span class="header-section-number">3.5.6</span> ruuvi_interface_lis2dh12.c</h3>
+<h3><span class="header-section-number">3.6.7</span> ruuvi_interface_lis2dh12.c</h3>
 <div id="rd_status_t-ri_lis2dh12_acceleration_raw_get-uint8_t-const-raw_data" class="section level4">
-<h4><span class="header-section-number">3.5.6.1</span> <code>rd_status_t ri_lis2dh12_acceleration_raw_get (uint8_t * const raw_data)</code></h4>
+<h4><span class="header-section-number">3.6.7.1</span> <code>rd_status_t ri_lis2dh12_acceleration_raw_get (uint8_t * const raw_data)</code></h4>
 <p>This function reads raw acceleration values from the registers of LIS2DH12. It is called from the <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size">interrupt handler</a> inside <a href="sensor.html#app_accelerometer_logging.c">app_accelerometer_logging.c</a> and from <a href="sensor.html#rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data"><code>ri_lis2dh12_data_get()</code></a>.</p>
 <table>
 <thead>
@@ -784,7 +884,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-ri_lis2dh12_temperature_raw_get-uint8_t-const-raw_temperature" class="section level4">
-<h4><span class="header-section-number">3.5.6.2</span> <code>rd_status_t ri_lis2dh12_temperature_raw_get (uint8_t * const raw_temperature)</code></h4>
+<h4><span class="header-section-number">3.6.7.2</span> <code>rd_status_t ri_lis2dh12_temperature_raw_get (uint8_t * const raw_temperature)</code></h4>
 <p>This function reads raw temperature value from the registers of LIS2DH12. It is called <a href="sensor.html#rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data"><code>ri_lis2dh12_data_get()</code></a> and <a href="sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data"><code>lis2dh12_logged_data_get()</code></a>.</p>
 <table>
 <thead>
@@ -804,7 +904,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data" class="section level4">
-<h4><span class="header-section-number">3.5.6.3</span> <code>rd_status_t ri_lis2dh12_data_get (rd_sensor_data_t * const data)</code></h4>
+<h4><span class="header-section-number">3.6.7.3</span> <code>rd_status_t ri_lis2dh12_data_get (rd_sensor_data_t * const data)</code></h4>
 <p>The original function <code>ri_lis2dh12_data_get()</code> is split into retrieving raw values from the sensor and parsing these data. Parsing is done by <a href="sensor.html#rd_status_t-ri_lis2dh12_raw_data_parse-rd_sensor_data_t-const-data-axis3bit16_t-raw_acceleration-uint8_t-raw_temperature"><code>ri_lis2dh12_raw_data_parse()</code></a>.</p>
 <p>This function is used if the acceleration logging is not active. If acceleration logging is active this function is replaced by <a href="sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data"><code>lis2dh12_logged_data_get()</code></a>.</p>
 <table>
@@ -825,7 +925,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 <div id="rd_status_t-ri_lis2dh12_raw_data_parse-rd_sensor_data_t-const-data-axis3bit16_t-raw_acceleration-uint8_t-raw_temperature" class="section level4">
-<h4><span class="header-section-number">3.5.6.4</span> <code>rd_status_t ri_lis2dh12_raw_data_parse (rd_sensor_data_t * const data, axis3bit16_t *raw_acceleration, uint8_t *raw_temperature)</code></h4>
+<h4><span class="header-section-number">3.6.7.4</span> <code>rd_status_t ri_lis2dh12_raw_data_parse (rd_sensor_data_t * const data, axis3bit16_t *raw_acceleration, uint8_t *raw_temperature)</code></h4>
 <p>This function parses raw values from the sensor and stores the values inside data. It is called from <a href="sensor.html#rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data"><code>ri_lis2dh12_data_get()</code></a> and from <a href="sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data"><code>lis2dh12_logged_data_get()</code></a>.</p>
 <table>
 <thead>
@@ -856,9 +956,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div id="ruuvi_nrf5_sdk_rtc_mcu.c" class="section level3">
-<h3><span class="header-section-number">3.5.7</span> ruuvi_nrf5_sdk_rtc_mcu.c</h3>
+<h3><span class="header-section-number">3.6.8</span> ruuvi_nrf5_sdk_rtc_mcu.c</h3>
 <div id="rd_status_t-ri_set_rtc_millisuint64_t-millis" class="section level4">
-<h4><span class="header-section-number">3.5.7.1</span> <code>rd_status_t ri_set_rtc_millis(uint64_t millis)</code></h4>
+<h4><span class="header-section-number">3.6.8.1</span> <code>rd_status_t ri_set_rtc_millis(uint64_t millis)</code></h4>
 <p>Set system time by external source. Set RTC to zero.</p>
 <table>
 <thead>
@@ -878,88 +978,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table>
 </div>
 </div>
-</div>
-<div id="ringbuffer-module" class="section level2">
-<h2><span class="header-section-number">3.6</span> Ringbuffer module</h2>
-<hr />
-<p><code>ruuvi.firmware.c\src\ruuvi.drivers.c\src\tasks\ruuvi_task_flash_ringbuffer.h</code>
-<code>ruuvi.firmware.c\src\ruuvi.drivers.c\src\tasks\ruuvi_task_flash_ringbuffer.c</code></p>
-<hr />
-<div id="general-functionality" class="section level3">
-<h3><span class="header-section-number">3.6.1</span> General functionality</h3>
-<p>A ringbuffer is a data structure that represents a fixed-sized queue. As the following figure shows, the current read or write position is indicated by the two attributes start and end. After every read or write, the corresponding value points to the next area.</p>
-<center>
-<img src="gfx/org/ringbuffer.png" />
-</center>
-</div>
-<div id="project-related-use-case" class="section level3">
-<h3><span class="header-section-number">3.6.2</span> Project-related use case</h3>
-<p>In the use case of the Ruuvi Tag the data of the ringbuffer should be stored in the flash memory of the sensor. This flash memory is structured in flashpages, each consisting of several records.</p>
-<p>The implemented ringbuffer reserves a selected number of flashpages and stores its current state (size, start and end attribute, reserved pages) in the following struct at a previously defined memory address. The maximum size of the ringbuffer is defined by the property <code>RT_FLASH_RINGBUFFER_MAXSIZE</code>. For the memory access the FDS library is used.</p>
-<table>
-<thead>
-<tr class="header">
-<th>rt_flash_ringbuffer_state_t</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>size</td>
-<td>uint8_t</td>
-<td>Number of pages</td>
-</tr>
-<tr class="even">
-<td>start</td>
-<td>uint8_t</td>
-<td>Start position</td>
-</tr>
-<tr class="odd">
-<td>end</td>
-<td>uint8_t</td>
-<td>End position</td>
-</tr>
-<tr class="even">
-<td>reserved_pages[]</td>
-<td>fds_reserve_token_t</td>
-<td>Array of fds_reserve_token</td>
-</tr>
-</tbody>
-</table>
-<p>The following struct makes it possible to buffer the accumulating accelerometer data until the amount of data for an entire flashpage is reached.</p>
-<table>
-<thead>
-<tr class="header">
-<th>rt_flash_ringbuffer_flashpage_t</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>max_size</td>
-<td>uint16_t</td>
-<td>Maximum size of the flashpage</td>
-</tr>
-<tr class="even">
-<td>actual_size</td>
-<td>uint16_t</td>
-<td>Actual size of the flashpage</td>
-</tr>
-<tr class="odd">
-<td>packeddata[4073]</td>
-<td>uint8_t</td>
-<td>Actual packed data</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="implemented-functions" class="section level3">
-<h3><span class="header-section-number">3.6.3</span> Implemented functions</h3>
-<div id="rd_status_t-rt_flash_ringbuffer_createconst-uint32_t-page_id-const-uint32_t-record_id-const-uint8_t-number_of_pages-const-uint16_t-page_size" class="section level4">
-<h4><span class="header-section-number">3.6.3.1</span> <code>rd_status_t rt_flash_ringbuffer_create(const uint32_t page_id, const uint32_t record_id, const uint8_t number_of_pages, const uint16_t page_size)</code></h4>
-<p>This function creates a new ringbuffer, reserves the pages in flash and initializes the ringbuffer state.</p>
+<div id="ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h" class="section level3">
+<h3><span class="header-section-number">3.6.9</span> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</h3>
+<div id="rd_status_t-ri_power_read_boot_count-uint32_t-boot_count" class="section level4">
+<h4><span class="header-section-number">3.6.9.1</span> <code>rd_status_t ri_power_read_boot_count (uint32_t *boot_count)</code></h4>
+<p>This function return the boot counter.</p>
 <table>
 <thead>
 <tr class="header">
@@ -970,32 +993,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>page_id</td>
-<td>in</td>
-<td>PageID of the ringbuffer state</td>
-</tr>
-<tr class="even">
-<td>record_id</td>
-<td>in</td>
-<td>RecordID of the ringbuffer state</td>
-</tr>
-<tr class="odd">
-<td>number_of_pages</td>
-<td>in</td>
-<td>Number of pages in the ringbuffer</td>
-</tr>
-<tr class="even">
-<td>page_size</td>
-<td>in</td>
-<td>Size of each page in the ringbuffer</td>
+<td>boot_count</td>
+<td>out</td>
+<td>Memory for storing the boot counter.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-rt_flash_ringbuffer_collect_flashpageconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-uint8_t-packeddata-rt_flash_ringbuffer_flashpage_t-flashpage" class="section level4">
-<h4><span class="header-section-number">3.6.3.2</span> <code>rd_status_t rt_flash_ringbuffer_collect_flashpage(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const uint8_t* packeddata, rt_flash_ringbuffer_flashpage_t* flashpage)</code></h4>
-<p>This function collects data to store in ringbuffer. After the amount of data of an entire flashpage is reached, the write operation is called.</p>
+</div>
+<div id="ruuvi_task_flash_ringbuffer.c" class="section level3">
+<h3><span class="header-section-number">3.6.10</span> ruuvi_task_flash_ringbuffer.c</h3>
+<p>The ringbuffer module acts as a frontend to FlashDB. The ringbuffer functionality is provided by the timeseries database of FlashDB.</p>
+<div id="rd_status_t-rt_flash_ringbuffer_createconst-char-partition-fdb_get_time-get_time-const-bool-format_db" class="section level4">
+<h4><span class="header-section-number">3.6.10.1</span> <code>rd_status_t rt_flash_ringbuffer_create(const char *partition, fdb_get_time get_time, const bool format_db)</code></h4>
+<p>This function initializes an instance of timeseries database.</p>
 <table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameters</th>
@@ -1005,36 +1022,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>page_id</td>
+<td>partition</td>
 <td>in</td>
-<td>PageID of the ringbuffer state</td>
+<td>Name of the partition of the FAL device where the database will be stored.</td>
 </tr>
 <tr class="even">
-<td>record_id</td>
+<td>get_time</td>
 <td>in</td>
-<td>RecordID of the ringbuffer state</td>
+<td>Function pointer to callback function. This function is used by timeseries database to retrieve the current timestamp.</td>
 </tr>
 <tr class="odd">
-<td>size</td>
+<td>format_db</td>
 <td>in</td>
-<td>Size of packeddata</td>
-</tr>
-<tr class="even">
-<td>packeddata</td>
-<td>in</td>
-<td>Data to collect for flashpage</td>
-</tr>
-<tr class="odd">
-<td>flashpage</td>
-<td>in/out</td>
-<td>Flashpage struct</td>
+<td>Wether to force to create a empty database.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-rt_flash_ringbuffer_writeconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-void-data" class="section level4">
-<h4><span class="header-section-number">3.6.3.3</span> <code>rd_status_t rt_flash_ringbuffer_write(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const void* data)</code></h4>
-<p>This function writes data to the ringbuffer.</p>
+<div id="rd_status_t-rt_flash_ringbuffer_writeconst-uint16_t-size-const-void-data" class="section level4">
+<h4><span class="header-section-number">3.6.10.2</span> <code>rd_status_t rt_flash_ringbuffer_write(const uint16_t size, const void* data)</code></h4>
+<p>This function writes data to FlashDB.</p>
 <table>
 <thead>
 <tr class="header">
@@ -1044,16 +1051,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td>page_id</td>
-<td>in</td>
-<td>PageID of the ringbuffer state</td>
-</tr>
-<tr class="even">
-<td>record_id</td>
-<td>in</td>
-<td>RecordID of the ringbuffer state</td>
-</tr>
 <tr class="odd">
 <td>size</td>
 <td>in</td>
@@ -1067,10 +1064,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-rt_flash_ringbuffer_readconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-void-data" class="section level4">
-<h4><span class="header-section-number">3.6.3.4</span> <code>rd_status_t rt_flash_ringbuffer_read(const uint32_t page_id, const uint32_t record_id, const uint16_t size, void* data)</code></h4>
-<p>This functiion reads data from the ringbuffer.</p>
+<div id="rd_status_t-rt_flash_ringbuffer_readconst-fdb_tsl_cb-callback-const-ri_comm_xfer_fp_t-reply_fp-uint16_t-crc" class="section level4">
+<h4><span class="header-section-number">3.6.10.3</span> <code>rd_status_t rt_flash_ringbuffer_read(const fdb_tsl_cb callback, const ri_comm_xfer_fp_t reply_fp, uint16_t* crc)</code></h4>
+<p>This function starts reading the timeseries database. Reading data from timeseries database is done by iterating all entries. For every entry a callback function is called.</p>
 <table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th>Parameters</th>
@@ -1080,31 +1082,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>page_id</td>
+<td>callback</td>
 <td>in</td>
-<td>PageID of the ringbuffer state</td>
+<td>Callback function which would be called for every entry.</td>
 </tr>
 <tr class="even">
-<td>record_id</td>
+<td>reply_fp</td>
 <td>in</td>
-<td>RecordID of the ringbuffer state</td>
+<td>Callback function which sends the data to the requestor.</td>
 </tr>
 <tr class="odd">
-<td>size</td>
-<td>in</td>
-<td>Size of data</td>
-</tr>
-<tr class="even">
-<td>data</td>
+<td>crc</td>
 <td>in/out</td>
-<td>Data to be read</td>
+<td>CRC16 value which gets calculated over all data send to the requestor.</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-rt_flash_ringbuffer_clearconst-uint32_t-page_id-const-uint32_t-record_id" class="section level4">
-<h4><span class="header-section-number">3.6.3.5</span> <code>rd_status_t rt_flash_ringbuffer_clear(const uint32_t page_id, const uint32_t record_id)</code></h4>
-<p>This function clears the contents of the ringbuffer (start/end attribute of the ringbuffer state are set to 0).</p>
+<div id="rd_status_t-rt_flash_ringbuffer_clearvoid" class="section level4">
+<h4><span class="header-section-number">3.6.10.4</span> <code>rd_status_t rt_flash_ringbuffer_clear(void)</code></h4>
+<p>This function clears the contents of the timeseries database.</p>
+</div>
+<div id="rd_status_t-rt_flash_ringbuffer_drop-void" class="section level4">
+<h4><span class="header-section-number">3.6.10.5</span> <code>rd_status_t rt_flash_ringbuffer_drop (void)</code></h4>
+<p>This function de-initializes the timeseries database.</p>
+</div>
+<div id="rd_status_t-rt_flash_ringbuffer_statistic-uint8_t-const-statistic" class="section level4">
+<h4><span class="header-section-number">3.6.10.6</span> <code>rd_status_t rt_flash_ringbuffer_statistic (uint8_t* const statistic)</code></h4>
+<p>This function reads some statistics about the usage of the internal Nordic Flash memory and returns them.</p>
 <table>
 <thead>
 <tr class="header">
@@ -1115,198 +1120,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>page_id</td>
-<td>in</td>
-<td>PageID of the ringbuffer state</td>
-</tr>
-<tr class="even">
-<td>record_id</td>
-<td>in</td>
-<td>RecordID of the ringbuffer state</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rd_status_t-rt_flash_ringbuffer_deleteconst-uint32_t-page_id-const-uint32_t-record_id" class="section level4">
-<h4><span class="header-section-number">3.6.3.6</span> <code>rd_status_t rt_flash_ringbuffer_delete(const uint32_t page_id, const uint32_t record_id)</code></h4>
-<p>This function deletes the entire ringbuffer.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameters</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>page_id</td>
-<td>in</td>
-<td>PageID of the ringbuffer state</td>
-</tr>
-<tr class="even">
-<td>record_id</td>
-<td>in</td>
-<td>RecordID of the ringbuffer state</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rd_status_t-rt_flash_ringbuffer_free_flash-rt_flash_ringbuffer_state_t-state" class="section level4">
-<h4><span class="header-section-number">3.6.3.7</span> <code>rd_status_t rt_flash_ringbuffer_free_flash (rt_flash_ringbuffer_state_t *state)</code></h4>
-<p>This function frees the flash pages used by the ringbuffer. It is called from <a href="sensor.html#rd_status_t-rt_flash_ringbuffer_deleteconst-uint32_t-page_id-const-uint32_t-record_id"><code>rt_flash_ringbuffer_delete()</code></a> or <a href="sensor.html#rd_status_t-rt_flash_ringbuffer_createconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-uint8_t-packeddata-rt_flash_ringbuffer_flashpage_t-flashpage"><code>rt_flash_ringbuffer_create()</code></a>. Depending of the state of the individual flash page it cancels the reservation or deletes the flash page.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameters</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>state</td>
-<td>in</td>
-<td>Structure which contains the list of flash pages.</td>
+<td>statistic</td>
+<td>in/out</td>
+<td>Memory for storing statistics.</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="ruuvi_task_flash.c" class="section level3">
-<h3><span class="header-section-number">3.6.4</span> ruuvi_task_flash.c</h3>
-<p>This module acts as a proxy for ruuvi_nrf5_sdk15_flash.c. Three functions were added regarding reservation of flash pages.</p>
-<table>
-<thead>
-<tr class="header">
-<th>function</th>
-<th>forward to</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>rt_flash_write_reserved()</td>
-<td><a href="sensor.html#rd_status_t-ri_flash_write_reserved-const-fds_reserve_token_t-const-reserve_token-const-uint32_t-record_id-const-size_t-data_size-const-void-const-data"><code>ri_flash_write_reserved()</code></a></td>
-</tr>
-<tr class="even">
-<td>rt_flash_reserve()</td>
-<td><a href="sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size"><code>ri_flash_reserve()</code></a></td>
-</tr>
-<tr class="odd">
-<td>rt_flash_write_reserved()</td>
-<td><a href="sensor.html#rd_status_t-ri_flash_reserve_cancel-fds_reserve_token_t-const-reserve_token"><code>ri_flash_reserve_cancel()</code></a></td>
-</tr>
-</tbody>
-</table>
 </div>
-<div id="ruuvi_nrf5_sdk15_flash.c" class="section level3">
-<h3><span class="header-section-number">3.6.5</span> ruuvi_nrf5_sdk15_flash.c</h3>
-<div id="rd_status_t-ri_flash_write_reserved-const-fds_reserve_token_t-const-reserve_token-const-uint32_t-record_id-const-size_t-data_size-const-void-const-data" class="section level4">
-<h4><span class="header-section-number">3.6.5.1</span> rd_status_t ri_flash_write_reserved (const fds_reserve_token_t* const reserve_token, const uint32_t record_id, const size_t data_size, const void * const data)</h4>
-<p>This function writes data to a formerly reserved flash page. This function write data asynchronous.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameters</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>reserve_token</td>
-<td>in</td>
-<td>Token received from <a href="sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size"><code>ri_flash_reserve()</code></a>.</td>
-</tr>
-<tr class="even">
-<td>record_id</td>
-<td>in</td>
-<td>ID of a record. Can be a random number.</td>
-</tr>
-<tr class="odd">
-<td>data_size</td>
-<td>in</td>
-<td>Size of data.</td>
-</tr>
-<tr class="even">
-<td>data</td>
-<td>in</td>
-<td>Data to write.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size" class="section level4">
-<h4><span class="header-section-number">3.6.5.2</span> rd_status_t ri_flash_reserve (fds_reserve_token_t* const reserve_token, const uint16_t size)</h4>
-<p>This function reserves a flash page.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameters</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>reserve_token</td>
-<td>out</td>
-<td>Pointer to reserve tocken.</td>
-</tr>
-<tr class="even">
-<td>size</td>
-<td>in</td>
-<td>Size of data.</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="rd_status_t-ri_flash_reserve_cancel-fds_reserve_token_t-const-reserve_token" class="section level4">
-<h4><span class="header-section-number">3.6.5.3</span> rd_status_t ri_flash_reserve_cancel (fds_reserve_token_t* const reserve_token)</h4>
-<p>This function cancels a reservation of a formerly reserved flash page.</p>
-<table>
-<thead>
-<tr class="header">
-<th>Parameters</th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>reserve_token</td>
-<td>in</td>
-<td>Token received from <a href="sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size"><code>ri_flash_reserve()</code></a>.</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div id="exemplary-use" class="section level3">
-<h3><span class="header-section-number">3.6.6</span> Exemplary use</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb2-1"><a href="sensor.html#cb2-1"></a><span class="pp">#include </span><span class="im">&quot;ruuvi_task_flash_ringbuffer.h&quot;</span></span>
-<span id="cb2-2"><a href="sensor.html#cb2-2"></a></span>
-<span id="cb2-3"><a href="sensor.html#cb2-3"></a><span class="co">// create ringbuffer</span></span>
-<span id="cb2-4"><a href="sensor.html#cb2-4"></a>rd_status_t error = rt_flash_ringbuffer_create(FILE_ID, RECORD_KEY, RT_FLASH_RINGBUFFER_MAXSIZE, <span class="dv">4073</span>);</span>
-<span id="cb2-5"><a href="sensor.html#cb2-5"></a></span>
-<span id="cb2-6"><a href="sensor.html#cb2-6"></a><span class="co">// create flashpage struct</span></span>
-<span id="cb2-7"><a href="sensor.html#cb2-7"></a>rt_flash_ringbuffer_flashpage_t flashpage;</span>
-<span id="cb2-8"><a href="sensor.html#cb2-8"></a>flashpage.actual_size = <span class="dv">0</span>;</span>
-<span id="cb2-9"><a href="sensor.html#cb2-9"></a>flashpage.max_size = <span class="dv">4073</span>;</span>
-<span id="cb2-10"><a href="sensor.html#cb2-10"></a></span>
-<span id="cb2-11"><a href="sensor.html#cb2-11"></a><span class="co">// write data </span></span>
-<span id="cb2-12"><a href="sensor.html#cb2-12"></a><span class="dt">int</span> i=<span class="dv">1</span>;</span>
-<span id="cb2-13"><a href="sensor.html#cb2-13"></a><span class="cf">while</span>(i &lt;= <span class="dv">1500</span>) {</span>
-<span id="cb2-14"><a href="sensor.html#cb2-14"></a>    rt_flash_ringbuffer_collect_flashpage(FILE_ID, RECORD_KEY, <span class="kw">sizeof</span>(i),  &amp;i, &amp;flashpage); </span>
-<span id="cb2-15"><a href="sensor.html#cb2-15"></a>    <span class="co">// the collect operation calls the write operation when the data size for a flashpage is reached</span></span>
-<span id="cb2-16"><a href="sensor.html#cb2-16"></a>    i++;</span>
-<span id="cb2-17"><a href="sensor.html#cb2-17"></a>}</span>
-<span id="cb2-18"><a href="sensor.html#cb2-18"></a></span>
-<span id="cb2-19"><a href="sensor.html#cb2-19"></a><span class="co">// read data from flash</span></span>
-<span id="cb2-20"><a href="sensor.html#cb2-20"></a>rt_flash_ringbuffer_flashpage_t flashpage_read;</span>
-<span id="cb2-21"><a href="sensor.html#cb2-21"></a>error = rt_flash_ringbuffer_read(FILE_ID, RECORD_KEY, <span class="kw">sizeof</span>(flashpage_read), &amp;flashpage_read);</span></code></pre></div>
+<div id="energy-consumption" class="section level2">
+<h2><span class="header-section-number">3.7</span> Energy consumption</h2>
+<p>The following figure visualizes energy consumption of different operation states. The numbers at the measuring point equal to the duration.</p>
+<pre><code>## Installing packages into &#39;/Users/runner/work/_temp/Library&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre><code>## Warning: unable to access index for repository /src/contrib:
+##   cannot open URL &#39;/src/contrib/PACKAGES&#39;</code></pre>
+<pre><code>## also installing the dependencies &#39;bit&#39;, &#39;diffobj&#39;, &#39;lazyeval&#39;, &#39;rematch&#39;, &#39;bit64&#39;, &#39;prettyunits&#39;, &#39;brio&#39;, &#39;desc&#39;, &#39;pkgload&#39;, &#39;praise&#39;, &#39;waldo&#39;, &#39;brew&#39;, &#39;commonmark&#39;, &#39;rex&#39;, &#39;backports&#39;, &#39;generics&#39;, &#39;assertthat&#39;, &#39;blob&#39;, &#39;DBI&#39;, &#39;tidyselect&#39;, &#39;data.table&#39;, &#39;gargle&#39;, &#39;uuid&#39;, &#39;cellranger&#39;, &#39;ids&#39;, &#39;rematch2&#39;, &#39;gtable&#39;, &#39;isoband&#39;, &#39;clipr&#39;, &#39;vroom&#39;, &#39;tzdb&#39;, &#39;progress&#39;, &#39;fs&#39;, &#39;testthat&#39;, &#39;roxygen2&#39;, &#39;covr&#39;, &#39;broom&#39;, &#39;dbplyr&#39;, &#39;dplyr&#39;, &#39;dtplyr&#39;, &#39;forcats&#39;, &#39;googledrive&#39;, &#39;googlesheets4&#39;, &#39;ggplot2&#39;, &#39;haven&#39;, &#39;hms&#39;, &#39;lubridate&#39;, &#39;modelr&#39;, &#39;purrr&#39;, &#39;readr&#39;, &#39;readxl&#39;, &#39;reprex&#39;, &#39;tidyr&#39;, &#39;feather&#39;</code></pre>
+<pre><code>## Warning: unable to access index for repository /bin/macosx/contrib/4.1:
+##   cannot open URL &#39;/bin/macosx/contrib/4.1/PACKAGES&#39;</code></pre>
+<pre><code>## 
+## The downloaded binary packages are in
+##  /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpytRoNI/downloaded_packages</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.3.5     ✔ purrr   0.3.4
+## ✔ tibble  3.1.4     ✔ dplyr   1.0.7
+## ✔ tidyr   1.1.3     ✔ stringr 1.4.0
+## ✔ readr   2.0.1     ✔ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter()     masks stats::filter()
+## ✖ dplyr::group_rows() masks kableExtra::group_rows()
+## ✖ dplyr::lag()        masks stats::lag()</code></pre>
+<p><img src="bchwtz-bdcs_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 
-</div>
 </div>
 </div>
             </section>
@@ -1319,7 +1165,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -1360,7 +1205,7 @@ gitbook.start({
 },
 "download": ["bchwtz-bdcs.pdf", "bchwtz-bdcs.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {

@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 BLE GATT Messages | Big Data Case Studies</title>
   <meta name="description" content="Chapter 6 BLE GATT Messages | Big Data Case Studies" />
-  <meta name="generator" content="bookdown 0.23 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 BLE GATT Messages | Big Data Case Studies" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-08-23" />
+<meta name="date" content="2021-09-18" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -34,6 +34,7 @@
 <link rel="prev" href="backend.html"/>
 <link rel="next" href="sensor-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -41,7 +42,6 @@
 <link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
 
 
 
@@ -151,23 +151,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>3.2</b> Retrieving data from FIFO</a></li>
 <li class="chapter" data-level="3.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>3.3</b> Using the data by hearbeat</a></li>
 <li class="chapter" data-level="3.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>3.4</b> Initialization during boot</a></li>
-<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.5</b> Implementation</a><ul>
-<li class="chapter" data-level="3.5.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.5.1</b> app_accelerometer_logging.c</a></li>
-<li class="chapter" data-level="3.5.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.5.2</b> app_comms.c</a></li>
-<li class="chapter" data-level="3.5.3" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.5.3</b> app_config.h</a></li>
-<li class="chapter" data-level="3.5.4" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.5.4</b> app_sensor.c</a></li>
-<li class="chapter" data-level="3.5.5" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.5.5</b> main.c</a></li>
-<li class="chapter" data-level="3.5.6" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.5.6</b> ruuvi_interface_lis2dh12.c</a></li>
-<li class="chapter" data-level="3.5.7" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.5.7</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#streaming-of-acceleration-data"><i class="fa fa-check"></i><b>3.5</b> Streaming of acceleration data</a></li>
+<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.6</b> Implementation</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.6.1</b> app_accelerometer_logging.c</a></li>
+<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.6.2</b> app_comms.c</a></li>
+<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_communication_ble_gatt.c"><i class="fa fa-check"></i><b>3.6.3</b> ruuvi_nrf5_sdk15_communication_ble_gatt.c</a></li>
+<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.6.4</b> app_config.h</a></li>
+<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.6.5</b> app_sensor.c</a></li>
+<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.6.6</b> main.c</a></li>
+<li class="chapter" data-level="3.6.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.6.7</b> ruuvi_interface_lis2dh12.c</a></li>
+<li class="chapter" data-level="3.6.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.6.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="3.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>3.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
+<li class="chapter" data-level="3.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>3.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 </ul></li>
-<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#ringbuffer-module"><i class="fa fa-check"></i><b>3.6</b> Ringbuffer module</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#general-functionality"><i class="fa fa-check"></i><b>3.6.1</b> General functionality</a></li>
-<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#project-related-use-case"><i class="fa fa-check"></i><b>3.6.2</b> Project-related use case</a></li>
-<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#implemented-functions"><i class="fa fa-check"></i><b>3.6.3</b> Implemented functions</a></li>
-<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash.c"><i class="fa fa-check"></i><b>3.6.4</b> ruuvi_task_flash.c</a></li>
-<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_flash.c"><i class="fa fa-check"></i><b>3.6.5</b> ruuvi_nrf5_sdk15_flash.c</a></li>
-<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#exemplary-use"><i class="fa fa-check"></i><b>3.6.6</b> Exemplary use</a></li>
-</ul></li>
+<li class="chapter" data-level="3.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>3.7</b> Energy consumption</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
 <li class="chapter" data-level="4.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>4.1</b> Sensor Gateway Communication Library</a><ul>
@@ -198,20 +195,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.2.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time"><i class="fa fa-check"></i><b>6.2.5</b> Read system time</a></li>
 <li class="chapter" data-level="6.2.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging"><i class="fa fa-check"></i><b>6.2.6</b> Control acceleration logging</a></li>
 <li class="chapter" data-level="6.2.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging"><i class="fa fa-check"></i><b>6.2.7</b> Query status of acceleration logging</a></li>
+<li class="chapter" data-level="6.2.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-flash-statistic"><i class="fa fa-check"></i><b>6.2.8</b> Query flash statistic</a></li>
+<li class="chapter" data-level="6.2.9" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-boot-counter"><i class="fa fa-check"></i><b>6.2.9</b> Query boot counter</a></li>
 </ul></li>
 <li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.3</b> Response messages</a><ul>
 <li class="chapter" data-level="6.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response"><i class="fa fa-check"></i><b>6.3.1</b> Status response</a></li>
 <li class="chapter" data-level="6.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message"><i class="fa fa-check"></i><b>6.3.2</b> End of data message</a></li>
 <li class="chapter" data-level="6.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response"><i class="fa fa-check"></i><b>6.3.3</b> Configuration response</a></li>
 <li class="chapter" data-level="6.3.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response"><i class="fa fa-check"></i><b>6.3.4</b> Timestamp response</a></li>
+<li class="chapter" data-level="6.3.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic-response"><i class="fa fa-check"></i><b>6.3.5</b> Flash statistic response</a></li>
+<li class="chapter" data-level="6.3.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#boot-counter-response"><i class="fa fa-check"></i><b>6.3.6</b> boot counter response</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.4</b> Data message</a><ul>
 <li class="chapter" data-level="6.4.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>6.4.1</b> 12 bit data format</a></li>
 <li class="chapter" data-level="6.4.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>6.4.2</b> 10 bit data format</a></li>
 <li class="chapter" data-level="6.4.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>6.4.3</b> 8 bit data format</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic"><i class="fa fa-check"></i><b>6.5</b> Flash statistic</a></li>
-<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.6</b> Communication example</a></li>
+<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.5</b> Communication example</a></li>
+<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#streaming"><i class="fa fa-check"></i><b>6.6</b> Streaming</a></li>
 </ul></li>
 <li class="part"><span><b>To Do</b></span></li>
 <li class="chapter" data-level="7" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>7</b> Sensor</a><ul>
@@ -272,7 +273,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The first generation was defined in Wintersemester 2020/21. These messages are using header bytes starting at <code>0xFA</code>. Messages which use are reserved by Ruuvi for proprietary messages.</li>
 <li>Messages from the second generation use header bytes which are defined in the file ruuvi_endpoints.h.</li>
 </ol>
-<p>Most use cases can be started by both message type. In the following documentation messages from the second generation are documented where they exist. Generation one messages will be removed from the firmware in some of the next version.</p>
 <div id="general-message-structure" class="section level2">
 <h2><span class="header-section-number">6.1</span> General message structure</h2>
 <p>The general structure of a message is show in the following table.</p>
@@ -305,10 +305,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>It’s concrete content is: <code>0x4A 0x4A 0x11 P1</code>.</p>
 <p>The parameter <code>P1</code> controls the source of the data which should be returned.</p>
 <table>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
@@ -317,16 +313,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>0x00</code></td>
-<td>The last sample of acceleration data should be returned. This sample consists of 32 tuples of (X,Y,Z) values. It is taken from RAM.</td>
-</tr>
-<tr class="even">
 <td><code>0x01</code></td>
-<td>Logged acceleration data from the ringbuffer should be returned. The data includes the last page which is not complete full and is not yet written to flash.</td>
+<td>Logged acceleration data from the database should be returned.</td>
 </tr>
 </tbody>
 </table>
-<p>In every case the data is transmitted by using data messages. The transmission of the data is followed by a <a href="ble-gatt-messages.html#end-of-data-message">end of data message</a> which signals the end of the data.</p>
+<p>Data is transmitted by using data messages. The transmission of the data is followed by a <a href="ble-gatt-messages.html#end-of-data-message">end of data message</a> which signals the end of the data.</p>
 <p>If acceleration logging is not active, the Sensor responds a <a href="ble-gatt-messages.html#status-response">status response</a> containing error code <code>RD_ERROR_INVALID_STATE</code>.</p>
 </div>
 <div id="set-configuration-of-acceleration-sensor" class="section level3">
@@ -398,18 +390,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="control-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.2.6</span> Control acceleration logging</h3>
-<p>This message is used to activate or deactivate acceleration logging. It takes one parameter. The parameter is interpreted as a boolean value. If it maps to true, acceleration logging is activated. If it maps to false, acceleration logging is deactivated. The sensor responds to this message using a <a href="ble-gatt-messages.html#status-response">status response</a>. Activating acceleration logging when it is already active results in an error. Deactivating acceleration logging when it is not active results in an error.</p>
-<p>The concrete content of this message is <code>0x4A 0x4A 0x08 XX</code>. Where <code>XX</code> can be <code>0x00</code> or <code>0x01</code>.</p>
+<p>This message is used to activate or deactivate acceleration logging. It takes one parameter. The sensor responds to this message using a <a href="ble-gatt-messages.html#status-response">status response</a>. Activating acceleration logging when it is already active results in an error. Deactivating acceleration logging when it is not active results in an error.</p>
+<p>The concrete content of this message is <code>0x4A 0x4A 0x08 P1</code>. Where <code>P1</code> can be a value from the following table.</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>0x00</code></td>
+<td>Disable logging.</td>
+</tr>
+<tr class="even">
+<td><code>0x01</code></td>
+<td>Logging of acceleration data to flash.</td>
+</tr>
+<tr class="odd">
+<td><code>0x02</code></td>
+<td>Logging of acceleration data to RAM. Used for logging of high frequency sampling.</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="query-status-of-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.2.7</span> Query status of acceleration logging</h3>
 <p>This message is used to query the status of acceleration logging. The sensor responds to this message with a <a href="ble-gatt-messages.html#status-response">status response</a>. If logging is active, the response contains the status <code>RD_SUCCESS</code> if logging is not active the status is <code>RD_ERROR_NOT_INITIALIZED</code>.</p>
+<p>Streaming is not interpreted as active logging. In that case, this calls returns <code>RD_ERROR_NOT_INITIALIZED</code>.</p>
 <p>The concrete content of this message is <code>0x4A 0x4A 0x09</code>.</p>
+</div>
+<div id="query-flash-statistic" class="section level3">
+<h3><span class="header-section-number">6.2.8</span> Query flash statistic</h3>
+<p>Flash usage is an important information. It is especially useful for determining when it is needed to download logged acceleration data from the sensor. This message is used to query some statistics about the usage of the internal flash memory of the Nordic NRF52832 MCU. It is implemented as an proprietary message. The sensor responds to this message with a <a href="ble-gatt-messages.html#flash-statistic-response">flash statistic response</a>.</p>
+<p>The concrete content of this message is <code>0xFA 0xFA 0x0D</code>.</p>
+</div>
+<div id="query-boot-counter" class="section level3">
+<h3><span class="header-section-number">6.2.9</span> Query boot counter</h3>
+<p>This message is used to query the boot counter. It is implemented as an proprietary message. The sensor responds to this message with a <a href="ble-gatt-messages.html#boot-counter-response">boot counter response</a>.</p>
+<p>The concrete content of this message is <code>0xFA 0xFA 0x0E</code>.</p>
 </div>
 </div>
 <div id="response-messages" class="section level2">
 <h2><span class="header-section-number">6.3</span> Response messages</h2>
-<p>Every response message returns a status code as the result of the processing as the third byte. It must be interpreted as a bitfield. The bits represent the different error conditions. The following table show the error conditions. In case of mulpilte errors more than one bit can be set. If no bit is set the processing was successful.</p>
+<p>Every response message returns a status code as the result of the processing as the third byte. It must be interpreted as a bitfield. The bits represent the different error conditions. The following table show the error conditions. In case of multiple errors more than one bit can be set. If no bit is set the processing was successful.</p>
 <table>
 <colgroup>
 <col width="50%" />
@@ -558,6 +587,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>This message is sent to the gateway after requesting the system time. The message contains one parameter. The parameter is a 8 byte value containing the current timestamp. The bytes are transferred in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> sequence. If the status code signals an error the transmitted value is undefined.</p>
 <p>The concrete content of this message is <code>0x21 0x21 0x09 SS XX XX XX XX XX XX XX XX</code>. Where <code>SS</code> is the status code.</p>
 </div>
+<div id="flash-statistic-response" class="section level3">
+<h3><span class="header-section-number">6.3.5</span> Flash statistic response</h3>
+<p>The sensor responds to the control message for querying the flash statistic using the following response. Most values were retrived using <code>fds_stat()</code> from Nordic Softdevice. The message contains 11 parameters.</p>
+<table>
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Byte</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><code>0xFB</code></td>
+<td>Header</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><code>0x0D</code></td>
+<td>Header</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>SS</td>
+<td>Status byte regarding this operation.</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>LS</td>
+<td>Status regarding the background logging operation.</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>start</td>
+<td>Unused <code>0xFF</code>.</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>end</td>
+<td>Unused <code>0xFF</code>.</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>size</td>
+<td>Unused <code>0xFF</code>.</td>
+</tr>
+<tr class="even">
+<td>9-10</td>
+<td>valid records</td>
+<td>The number of valid records.</td>
+</tr>
+<tr class="odd">
+<td>10-11</td>
+<td>dirty records</td>
+<td>The number of deleted (“dirty”) records.</td>
+</tr>
+<tr class="even">
+<td>12-13</td>
+<td>words reserved</td>
+<td>The number of words reserved.</td>
+</tr>
+<tr class="odd">
+<td>14-15</td>
+<td>words used</td>
+<td>The number of words written to flash, including those reserved for future writes.</td>
+</tr>
+<tr class="even">
+<td>16-17</td>
+<td>largest continious</td>
+<td>The largest number of free contiguous words in the file system.</td>
+</tr>
+<tr class="odd">
+<td>18-19</td>
+<td>freeable words</td>
+<td>The largest number of words that can be reclaimed by garbage collection.</td>
+</tr>
+</tbody>
+</table>
+<p>Multi byte values are transmitted in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> byte sequence.</p>
+</div>
+<div id="boot-counter-response" class="section level3">
+<h3><span class="header-section-number">6.3.6</span> boot counter response</h3>
+<p>This message is sent to the gateway after requesting the boot counter. The message contains one parameter. The parameter is a 4 byte value containing the value. The bytes are transferred in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> sequence. If the status code signals an error the transmitted value is undefined.</p>
+<p>The concrete content of this message is <code>0xFB 0x0E SS XX XX XX XX</code>. Where <code>SS</code> is the status code.</p>
+</div>
 </div>
 <div id="data-message" class="section level2">
 <h2><span class="header-section-number">6.4</span> Data message</h2>
@@ -617,97 +737,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="gfx/org/bitpack8.png" /></p>
 </div>
 </div>
-<div id="flash-statistic" class="section level2">
-<h2><span class="header-section-number">6.5</span> Flash statistic</h2>
-<p>Flash usage is an important information. It is especially useful for determining when it is needed to download logged acceleration data from the sensor. This message is implemented as a proprietary message. To request flash usage statistic use the following control message <code>0xFA 0xFA 0x0D</code>. As every control message it must be padded to 11 bytes.</p>
-<p>The sensor responds to this control message using a flash statistic response. It has the following structure:</p>
+<div id="communication-example" class="section level2">
+<h2><span class="header-section-number">6.5</span> Communication example</h2>
+<p>The following figure shows an example communication.</p>
+<p><img src="gfx/org/GATT-communication-example.png" /></p>
+</div>
+<div id="streaming" class="section level2">
+<h2><span class="header-section-number">6.6</span> Streaming</h2>
+<p>Streaming of acceleration data can be activated to retrieve acceleration data at high sampling frequencies. To enable this operation mode logging must be currently disabled. Streaming can not be persistent enabled. It remains active until deactivation using <a href="ble-gatt-messages.html#control-acceleration-logging">Control acceleration logging</a> command or until power cycle.</p>
+<p>If streaming is active but no one is connected to BLE GATT service energy consumption is not significant higher than operating the acceleration sensor at this sampling frequency without logging the data.</p>
+<p>Transfer of sampled data is automatically startet if someone is connected to BLE GATT service. In this case, the data is immediately send to the gateway using the following structure. The concrete content of a message is the following.</p>
+<p><code>0x11 TT TT TT TT TT TT TT TT XX XX XX XX XX XX XX XX XX</code></p>
+<p>Each message contains two parameters:</p>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th>Byte</th>
-<th>Value</th>
+<th>Parameter</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>1</td>
-<td><code>0xFB</code></td>
-<td>Header</td>
+<td><code>TT TT TT TT TT TT TT TT</code></td>
+<td>Timestamp of sampling the following value.</td>
 </tr>
 <tr class="even">
-<td>2</td>
-<td><code>0x0D</code></td>
-<td>Header</td>
-</tr>
-<tr class="odd">
-<td>3</td>
-<td>SS</td>
-<td>Status byte regarding this operation.</td>
-</tr>
-<tr class="even">
-<td>4</td>
-<td>LS</td>
-<td>Status regarding the background logging operation.</td>
-</tr>
-<tr class="odd">
-<td>5</td>
-<td>start</td>
-<td>Ringbuffer start index.</td>
-</tr>
-<tr class="even">
-<td>6</td>
-<td>end</td>
-<td>Ringbuffer end index.</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>size</td>
-<td>Ringbuffer size.</td>
-</tr>
-<tr class="even">
-<td>9-10</td>
-<td>valid records</td>
-<td>The number of valid records.</td>
-</tr>
-<tr class="odd">
-<td>10-11</td>
-<td>dirty records</td>
-<td>The number of deleted (“dirty”) records.</td>
-</tr>
-<tr class="even">
-<td>12-13</td>
-<td>words reserved</td>
-<td>The number of words reserved.</td>
-</tr>
-<tr class="odd">
-<td>14-15</td>
-<td>words used</td>
-<td>The number of words written to flash, including those reserved for future writes.</td>
-</tr>
-<tr class="even">
-<td>16-17</td>
-<td>largest continious</td>
-<td>The largest number of free contiguous words in the file system.</td>
-</tr>
-<tr class="odd">
-<td>18-19</td>
-<td>freeable words</td>
-<td>The largest number of words that can be reclaimed by garbage collection.</td>
+<td><code>XX XX XX XX XX XX XX XX XX</code></td>
+<td>Acceleration values. Each message transports two tuples of X-, Y-, Z-Acceleration values in compacted format. I.e. without unused bits.</td>
 </tr>
 </tbody>
 </table>
-<p>Multi byte values are transmitted in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> byte sequence.</p>
-</div>
-<div id="communication-example" class="section level2">
-<h2><span class="header-section-number">6.6</span> Communication example</h2>
-<p>The following figure shows an example communication.</p>
-<p><img src="gfx/org/GATT-communication-example.png" /></p>
+<p>Multi byte values are transmitted in <a href="https://en.wikipedia.org/wiki/Endianness#Example">little-endian</a> byte sequence. This is relevant for timestamp and acceleration values.</p>
+<p>To decode the acceleration values one must know the current configuration of the sensor. This information is not part of this message. So, one must save this information from the setup of streaming.</p>
 
 </div>
 </div>
@@ -725,7 +790,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -766,7 +830,7 @@ gitbook.start({
 },
 "download": ["bchwtz-bdcs.pdf", "bchwtz-bdcs.epub"],
 "search": {
-"engine": "lunr",
+"engine": "fuse",
 "options": null
 },
 "toc": {
