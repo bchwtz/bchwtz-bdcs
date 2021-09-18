@@ -9,14 +9,14 @@ Three use cases are shown in this figure.
 ## Initializing acceleration logging ##
 The initialization is shown with blue arrows and numbers in black circles until #4. 
 
-To activate acceleration logging the gateway sends the [control acceleration logging message](ble-gatt-messages.html#control-acceleration-logging). In general GATT messages are handled by the function [`handle_comms()`](sensor.html#void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the module [app_comm.c](sensor.html#app_comms.c). Messages regarding acceleration logging are delegated to the function [`handle_lis2dh12_comms()`](sensor.html#rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the same module. After receiving the message to activate acceleration logging the function [`app_enable_sensor_logging()`](sensor.html#rd_status_t-app_enable_sensor_loggingvoid) inside the module [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) in called (1).
+To activate acceleration logging the gateway sends the [control acceleration logging message](ble-gatt-messages.html#control-acceleration-logging). In general GATT messages are handled by the function [`handle_comms()`](sensor.html#void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the module [app_comm.c](sensor.html#app_comms.c). Messages regarding acceleration logging are delegated to the function [`handle_lis2dh12_comms_v2()`](sensor.html#rd_status_t-handle_lis2dh12_comms_v2-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len) inside the same module. After receiving the message to activate acceleration logging the function [`app_enable_sensor_logging()`](sensor.html#rd_status_t-app_enable_sensor_loggingconst-bool-use_ram_db-const-bool-format_db) inside the module [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) in called (1).
 
 The first step in activation is to check if all conditions are fulfilled. The function returns an error code if acceleration logging is already active or if it is called on a sensor which does not include an LIS2DH12. This check is done by calling [`find_sensor()`](sensor.html#rt_sensor_ctx_t-app_sensor_find-const-char-name) inside of [app_sensor.c](sensor.html#app_sensor.c) (2). This function returns the sensor context. The sensor context consists of several information about the sensor. The next step associates the function [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) from [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c) with the interrupt pin retrieved from the sensor context (3). The last step is to activate FIFO and interrupt generation inside the LIS2DH12. This is done by calling two functions from the sensor context. At last the function pointer to `data_get()` inside the sensor context is replaced by the pointer to the function [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data). 
 
 ## Retrieving data from FIFO ##
 When FIFO is full inside LIS2DH12 the interrupt starts the function [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). This function does not directly handle the new data. It schedules a call to [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size). Instead of [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) this is called in the main thread of the application. If processing is done inside a function inside an interrupt context this prevents processing of another interrupt. This should be avoided.
 
-Inside [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) the FIFO from LIS2DH12 is read (5). The values are store in memory in raw format to be ready to present them to the function [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data) which is important for heartbeat. In parallel the raw values are compacted by removing all unused bits. This is done by the functions [`pack8/10/12()`](sensor.html#void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata). A timestamp is added to the compacted values. These values are handover to the ringbuffer which writes them to flash (6).
+Inside [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) the FIFO from LIS2DH12 is read (5). The values are store in memory in raw format to be ready to present them to the function [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data) which is important for heartbeat. In parallel the raw values are compacted by removing all unused bits. This is done by the function [`pack()`](sensor.html#void-packconst-uint8_t-resolution-const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata). These values are handover to the FlashDB which writes them to flash (6).
 
 ## Using the data by hearbeat ##
 This use case is shown with magenta arrows and numbers inside magenta circles in the figure above.
@@ -28,13 +28,28 @@ The heartbeat retrieves the values from all sensors by calling the function `app
 ## Initialization during boot ##
 All sensor initialization is done inside [`setup()`](sensor.html#void-setup-void) from [main.c](sensor.html#main.c). This function calls [`app_acc_logging_init()`](sensor.html#rd_status_t-app_acc_logging_initvoid) inside [app_accelerometer_logging.c](sensor.html#app_accelerometer_logging.c). The function checks if the ringbuffer exists. If this is true it activates acceleration logging as described earlier.
 
+## Streaming of acceleration data ##
+
+In case of sampling acceleration data at high sampling frequencies than storing them in flash memory may be not possible because of latency of the memory or limitations by available size of memory. As an alternative the data can be streamed. In this mode, data from the acceleration sensor will not be written to flash. Instead the data is cached in RAM. The following figure shows the difference between logging of acceleration data and streaming.
+
+![](./gfx/org/streaming_of_acceleration_data.png)
+When logging is active, the acceleration sensor LIS2DH12 generated an interrupt every time its FIFO is full. The interrupt causes the execution of [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). This function schedules the execution of [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) outside interrupt context (grey). The following process was described [earlier](sensor.html#retrieving-data-from-fifo).
+
+When streaming is active, the process is started by the same condition. But the FIFO is read by [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). Instead of scheduling [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) the function hands over the data to FlashDB which stores them in RAM. This is done inside interrupt context (blue). In case of streaming there is no explicit command to read the data by the gateway. Instead, if connected to Bluetooth GATT service, the data is automatically send. This is done by scheduling [`app_acc_log_transfer_ram_db()`](sensor.html#void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size). [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) schedules execution of this function if `rt_gatt_nus_is_connected()` returns true.
+
+
 ## Implementation ##
 
 ### app_accelerometer_logging.c ###
 
-#### `rd_status_t app_enable_sensor_logging(void)` ####
+#### `rd_status_t app_enable_sensor_logging(const bool use_ram_db, const bool format_db)` ####
 
 Enables the logging of acceleration data.
+
+| Parameters |||
+| - | - | - |
+| use_ram_db | in | Database in RAM is used in case of streaming of acceleration data. |
+| format_db | in | This parameter is set to true if logging is enabled by gateway to ensure the database is cleared. When re-enabling logging after reboot it is set to false. |
 
 | Special error codes |||
 | - | - | - |
@@ -52,18 +67,21 @@ Disables the logging of acceleration data.
 
 #### `void on_fifo_full (const ri_gpio_evt_t evt)` ####
 
-Callback function when FIFO full interrupt occurs at LIS2DH12. This functions schedules the execution of [`void fifo_full_handler (void * p_event_data, uint16_t event_size)`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size). See ruuvi_interface_scheduler.h for parameters used in this function.
+Callback function when FIFO full interrupt occurs at LIS2DH12. If using streaming this function reads the FIFO and writes the values to RAMDB. 
+
+Without streaming it schedules the execution of [`void fifo_full_handler (void * p_event_data, uint16_t event_size)`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) to read the FIFO outside interrupt context. See ruuvi_interface_scheduler.h for parameters used in this function.
 
 #### `void fifo_full_handler (void * p_event_data, uint16_t event_size)` ####
 
-This function reads the FIFO and stores the data inside the ringbuffer. See ruuvi_interface_scheduler.h for parameters used in this function.
+This function reads the FIFO and stores the data inside the timeseries database. See ruuvi_interface_scheduler.h for parameters used in this function.
 
-#### `void pack8/10/12(const uint16_t sizeData, const uint8_t* const data, uint8_t* const packeddata)` ####
+#### `void pack(const uint8_t resolution, const uint16_t sizeData, const uint8_t* const data, uint8_t* const packeddata)` ####
 
-These functions remove unused bits from the raw accelerometer values in 8/10/12 bit format and store them in compact form. 
+This function stores raw accelerometer values in 8/10/12 Bit format in compact form (without unused bits). It is a frontend to the functions pack8/10/12().
 
 | Parameters |||
 | - | - | - |
+| resolution | in | Resolution of the samples. |
 | sizeData | in | Size of input data. |
 | data | in | Input data. |
 | packeddata | in/out | Memory for storing compacted data. |
@@ -76,9 +94,9 @@ This function retrieves raw accelerometer values from memory. The values are par
 | - | - | - |
 | raw_data | in/out | Memory for storing accelerometer values. |
 
-#### `rd_status_t app_acc_logging_send_eof/app_acc_logging_send_eof_v2(const ri_comm_xfer_fp_t reply_fp, const rd_status_t status_code, const uint16_t crc)` ####
+#### `rd_status_t app_acc_logging_send_eof_v2(const ri_comm_xfer_fp_t reply_fp, const rd_status_t status_code, const uint16_t crc)` ####
 
-This function is called by [`app_acc_logging_send_last_sample()`](sensor.html#rd_status_t-app_acc_logging_send_last_sampleconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2) and [`app_acc_logging_send_logged_data()`](sensor.html#rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2) after all data is sent to the requestor. This function builds the [end of data message](ble-gatt-messages.html#end-of-data-message) and sends it.
+This function is called by [`app_acc_logging_send_logged_data()`](sensor.html#rd_status_t-app_acc_logging_send_logged_dataconst-ri_comm_xfer_fp_t-reply_fp-const-bool-is_v2) after all data is sent to the requestor. This function builds the [end of data message](ble-gatt-messages.html#end-of-data-message) and sends it.
 
 | Parameters |||
 | - | - | - |
@@ -86,27 +104,13 @@ This function is called by [`app_acc_logging_send_last_sample()`](sensor.html#rd
 | status_code | in | Status code of the whole operation. This code is sent to the requestor. |
 | crc | in | CRC value of the data. |
 
-#### `rd_status_t app_acc_logging_send_last_sample(const ri_comm_xfer_fp_t reply_fp, const bool is_v2)` ####
+#### `rd_status_t app_acc_logging_send_logged_data(const ri_comm_xfer_fp_t reply_fp)` ####
 
-This function is called when a request to send the last sample is received by GATT/UART. It retrieves the last sample from memory, does the compacting of the bits by calling [`pack8/10/12()`](sensor.html#void-pack81012const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata) and sends the data to the requester.
-
-| Parameters |||
-| - | - | - |
-| reply_fp | in | Function pointer to reply function. |
-| is_v2 | in | Specify format of response messages. |
-
-| Special error codes ||
-| - | - |
-| RD_ERROR_INVALID_STATE | If logging is not active. |
-
-#### `rd_status_t app_acc_logging_send_logged_data(const ri_comm_xfer_fp_t reply_fp, const bool is_v2)` ####
-
-This function is called when a request to send the logged acceleration data is received by GATT/UART. It retrieves the data from ringbuffer and sends it to the requester.
+This function is called when a request to send the logged acceleration data is received by GATT/UART. The function triggers FlashDB to read data. Data from the database is read via the callback function [`callback_send_data_block()`](sensor.html#bool-callback_send_data_blockfdb_tsl_t-tsl-void-arg). Inside the callback function the data is send to the requestor.
 
 | Parameters |||
 | - | - | - |
 | reply_fp | in | Function pointer to reply function. |
-| is_v2 | in | Specify format of response messages. |
 
 | Special error codes ||
 | - | - |
@@ -114,7 +118,7 @@ This function is called when a request to send the logged acceleration data is r
 
 #### `rd_status_t app_acc_logging_state(void)` ####
 
-This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller.
+This function is used to query the state of accelerometer logging. It is called when a control message is received by GATT/UART to return this state to the caller. If streaming is active, this will not be reported as active logging by this function.
 
 | Special error codes ||
 | - | - |
@@ -134,14 +138,48 @@ This function is called when a request to update the sensor configuration is rec
 
 Initialize acceleration logging during boot. If logging was active before reboot it will be activated. If logging was not active before reboot this function return `RD_SUCCESS` without activating acceleration logging.
 
-The state if logging was active before reboot is detected by looking for the ringbuffer. If the ringbuffer exists, the logging must be active before reboot.
-
 This function is called from [`setup()`](sensor.html#void-setup-void).
 
 #### `rd_status_t app_acc_logging_uninit(void)` ####
 
 The uninitialization of acceleration logging disables the logging if it is actually active. If logging is not active this function return RD_SUCCESS without doing anything.
 
+#### `void app_acc_log_transfer_ram_db (void * p_event_data, uint16_t event_size)` ####
+
+Execution of this function is scheduled if “streaming” is active and `rt_gatt_nus_is_connected()` returns true. It starts reading currently logged data from the FlashDB and transferring the data to the gateway.
+
+Scheduling of this function is done inside [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) using `ri_scheduler_event_put()`.
+
+#### `int64_t fdb_timestamp_get (void)` ####
+
+Callback for use by FlashDB to retrieve the timestamp of the current new entry.
+
+#### `bool callback_send_data_block(fdb_tsl_t tsl, void *arg)` ####
+
+Callback function for use with FlashDB. When reading the database this function will be called for every entry.
+
+This function calls `app_comms_blocking_send()` to send the data to the gateway.
+
+| Parameters |||
+| - | - | - |
+| tsl | in | Pointer to current entry in the database. |
+| arg | in/out | Pointer to context. See following table. The array consists of the following elements. |
+
+| Context parameters by `*arg` |||
+| - | - | - |
+| `((void**)arg)[0]` | in | Pointer to database of type `fdb_tsdb*`. |
+| `((void**)arg)[1]` | in | Pointer to transfer function `app_comms_blocking_send()`. |
+| `((void**)arg)[2]` | in/out | Pointer to CRC value. |
+
+If this functions returns `true` iterating over the following entries will by aborted.
+
+#### `rd_status_t app_acc_logging_statistic (uint8_t* const statistic)` ####
+
+This function is called from `handle_lis2dh12_comms()` after the gateway sends the message to retrieve flash statistics.
+
+| Parameters |||
+| - | - | - |
+| statistic | in/out | Memory to store the statistic values. |
 
 ### app_comms.c ####
 
@@ -193,11 +231,24 @@ This function handles messages using version 2 message format by GATT/UART commu
 | - | - |
 | RD_ERROR_INVALID_PARAM | If unknown or invalid message was received. |
 
+#### `rd_status_t dis_init (ri_comm_dis_init_t * const p_dis, const bool secure)` ####
+
+This function is called during initialization of the Bluetooth protocol stack. 
+
+Our extension to this function is executed if `app_sensor_ctx_get()` from app_sensors.c is available. It sets the hardware revision string inside `ri_comm_dis_init_t` to the list of available and initialized sensors.
+
+### ruuvi_nrf5_sdk15_communication_ble_gatt.c ###
+
+#### `rd_status_t ri_gatt_dis_init (const ri_comm_dis_init_t * const p_dis)` ####
+
+This function is called during initialization of the Bluetooth protocol stack. Our extension to this function adds a buildnumber to the former unused property `sw_rev_str` of `ble_dis_init_t`. The buildnumber is generated by a pre-build script `buildnum.js` which is executed by Segger Embedded Studio before compiling the software. The pre-buold script generated `buildnum.h` which includes the buildnumber.
+
 ### app_config.h ###
 
 - Added macro APP_SENSOR_LOGGING to control compilation of app_accelerometer_logging.*
 - If APP_SENSOR_LOGGING is not defined or is defined as 0 the functionality of logging of acceleration data is not available in the application.
 - Changed the definition of APP_FLASH_PAGES to include the flash pages used for acceleration logging.
+- This module also contains macros for memory separation between acceleration logging and environmental logging. The relevant macros are APP_FLASH_LOG_DATA_RECORDS_NUM and RT_FLASH_RINGBUFFER_MAXSIZE.
 
 ### app_sensor.c ###
 
@@ -265,181 +316,96 @@ Set system time by external source. Set RTC to zero.
 | - | - | - |
 | millis | in | External time. |
 
+### ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h ###
 
+#### `rd_status_t ri_power_read_boot_count (uint32_t *boot_count)` ####
 
-## Ringbuffer module ##
-
-***
-`ruuvi.firmware.c\src\ruuvi.drivers.c\src\tasks\ruuvi_task_flash_ringbuffer.h`
-`ruuvi.firmware.c\src\ruuvi.drivers.c\src\tasks\ruuvi_task_flash_ringbuffer.c`
-
-***
-
-### General functionality ###
-
-A ringbuffer is a data structure that represents a fixed-sized queue. As the following figure shows, the current read or write position is indicated by the two attributes start and end. After every read or write, the corresponding value points to the next area.
-
-<center>
-![](./gfx/org/ringbuffer.PNG)
-</center>
-
-
-### Project-related use case ###
-
-In the use case of the Ruuvi Tag the data of the ringbuffer should be stored in the flash memory of the sensor. This flash memory is structured in flashpages, each consisting of several records. 
-
-The implemented ringbuffer reserves a selected number of flashpages and stores its current state (size, start and end attribute, reserved pages) in the following struct at a previously defined memory address. The maximum size of the ringbuffer is defined by the property `RT_FLASH_RINGBUFFER_MAXSIZE`. For the memory access the FDS library is used.
-
-| rt_flash_ringbuffer_state_t |||
-| - | - | - |
-| size | uint8_t | Number of pages |
-| start | uint8_t | Start position |
-| end | uint8_t | End position  |
-| reserved_pages[] | fds_reserve_token_t | Array of fds_reserve_token |
-
-The following struct makes it possible to buffer the accumulating accelerometer data until the amount of data for an entire flashpage is reached. 
-
-| rt_flash_ringbuffer_flashpage_t |||
-| - | - | - |
-| max_size | uint16_t | Maximum size of the flashpage |
-| actual_size | uint16_t | Actual size of the flashpage |
-| packeddata[4073] | uint8_t | Actual packed data  |
-
-### Implemented functions ###
-
-#### `rd_status_t rt_flash_ringbuffer_create(const uint32_t page_id, const uint32_t record_id, const uint8_t number_of_pages, const uint16_t page_size)` ####
-
-This function creates a new ringbuffer, reserves the pages in flash and initializes the ringbuffer state.
+This function return the boot counter.
 
 | Parameters |||
 | - | - | - |
-| page_id | in | PageID of the ringbuffer state |
-| record_id | in | RecordID of the ringbuffer state |
-| number_of_pages | in | Number of pages in the ringbuffer |
-| page_size | in | Size of each page in the ringbuffer |
+| boot_count | out | Memory for storing the boot counter. |
 
-#### `rd_status_t rt_flash_ringbuffer_collect_flashpage(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const uint8_t* packeddata, rt_flash_ringbuffer_flashpage_t* flashpage)` ####
+### ruuvi_task_flash_ringbuffer.c ###
 
-This function collects data to store in ringbuffer. After the amount of data of an entire flashpage is reached, the write operation is called.
+The ringbuffer module acts as a frontend to FlashDB. The ringbuffer functionality is provided by the timeseries database of FlashDB.
 
-| Parameters |||
-| - | - | - |
-| page_id | in | PageID of the ringbuffer state |
-| record_id | in | RecordID of the ringbuffer state |
-| size | in | Size of packeddata |
-| packeddata | in | Data to collect for flashpage  |
-| flashpage | in/out | Flashpage struct  |
+#### `rd_status_t rt_flash_ringbuffer_create(const char *partition, fdb_get_time get_time, const bool format_db)` ####
 
-#### `rd_status_t rt_flash_ringbuffer_write(const uint32_t page_id, const uint32_t record_id, const uint16_t size, const void* data)` ####
-
- This function writes data to the ringbuffer.
+This function initializes an instance of timeseries database. 
 
 | Parameters |||
 | - | - | - |
-| page_id | in | PageID of the ringbuffer state |
-| record_id | in | RecordID of the ringbuffer state |
+| partition | in | Name of the partition of the FAL device where the database will be stored. |
+| get_time | in | Function pointer to callback function. This function is used by timeseries database to retrieve the current timestamp. |
+| format_db | in | Wether to force to create a empty database. |
+
+#### `rd_status_t rt_flash_ringbuffer_write(const uint16_t size, const void* data)` ####
+
+ This function writes data to FlashDB.
+
+| Parameters |||
+| - | - | - |
 | size | in | Size of data |
 | data | in | Data to be written  |
 
-#### `rd_status_t rt_flash_ringbuffer_read(const uint32_t page_id, const uint32_t record_id, const uint16_t size, void* data)` ####
+#### `rd_status_t rt_flash_ringbuffer_read(const fdb_tsl_cb callback, const ri_comm_xfer_fp_t reply_fp, uint16_t* crc)` ####
 
-This functiion reads data from the ringbuffer.
-
-| Parameters |||
-| - | - | - |
-| page_id | in | PageID of the ringbuffer state |
-| record_id | in | RecordID of the ringbuffer state |
-| size | in | Size of data |
-| data | in/out | Data to be read  |
-
-#### `rd_status_t rt_flash_ringbuffer_clear(const uint32_t page_id, const uint32_t record_id)` ####
-
-This function clears the contents of the ringbuffer (start/end attribute of the ringbuffer state are set to 0). 
+This function starts reading the timeseries database. Reading data from timeseries database is done by iterating all entries. For every entry a callback function is called.
 
 | Parameters |||
 | - | - | - |
-| page_id | in | PageID of the ringbuffer state |
-| record_id | in | RecordID of the ringbuffer state |
+| callback | in | Callback function which would be called for every entry. |
+| reply_fp | in | Callback function which sends the data to the requestor. |
+| crc | in/out | CRC16 value which gets calculated over all data send to the requestor. |
 
-#### `rd_status_t rt_flash_ringbuffer_delete(const uint32_t page_id, const uint32_t record_id)` ####
+#### `rd_status_t rt_flash_ringbuffer_clear(void)` ####
 
-This function deletes the entire ringbuffer.
+This function clears the contents of the timeseries database. 
 
-| Parameters |||
-| - | - | - |
-| page_id | in | PageID of the ringbuffer state |
-| record_id | in | RecordID of the ringbuffer state |
+#### `rd_status_t rt_flash_ringbuffer_drop (void)` ####
 
-#### `rd_status_t rt_flash_ringbuffer_free_flash (rt_flash_ringbuffer_state_t *state)` ####
+This function de-initializes the timeseries database.
 
-This function frees the flash pages used by the ringbuffer. It is called from [`rt_flash_ringbuffer_delete()`](sensor.html#rd_status_t-rt_flash_ringbuffer_deleteconst-uint32_t-page_id-const-uint32_t-record_id) or [`rt_flash_ringbuffer_create()`](sensor.html#rd_status_t-rt_flash_ringbuffer_createconst-uint32_t-page_id-const-uint32_t-record_id-const-uint16_t-size-const-uint8_t-packeddata-rt_flash_ringbuffer_flashpage_t-flashpage). Depending of the state of the individual flash page it cancels the reservation or deletes the flash page.
+#### `rd_status_t rt_flash_ringbuffer_statistic (uint8_t* const statistic)` ####
 
-| Parameters |||
-| - | - | - |
-| state | in | Structure which contains the list of flash pages. |
-
-### ruuvi_task_flash.c ###
-
-This module acts as a proxy for ruuvi_nrf5_sdk15_flash.c. Three functions were added regarding reservation of flash pages.
-
-| function | forward to |
-|-|-|
-| rt_flash_write_reserved() | [`ri_flash_write_reserved()`](sensor.html#rd_status_t-ri_flash_write_reserved-const-fds_reserve_token_t-const-reserve_token-const-uint32_t-record_id-const-size_t-data_size-const-void-const-data) |
-| rt_flash_reserve() | [`ri_flash_reserve()`](sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size) |
-| rt_flash_write_reserved() | [`ri_flash_reserve_cancel()`](sensor.html#rd_status_t-ri_flash_reserve_cancel-fds_reserve_token_t-const-reserve_token) |
-
-### ruuvi_nrf5_sdk15_flash.c ###
-
-#### rd_status_t ri_flash_write_reserved (const fds_reserve_token_t* const reserve_token, const uint32_t record_id, const size_t data_size, const void * const data) ####
-
-This function writes data to a formerly reserved flash page. This function write data asynchronous.
+This function reads some statistics about the usage of the internal Nordic Flash memory and returns them.
 
 | Parameters |||
 | - | - | - |
-| reserve_token | in | Token received from [`ri_flash_reserve()`](sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size). |
-| record_id | in | ID of a record. Can be a random number. |
-| data_size | in | Size of data. |
-| data | in | Data to write. |
+| statistic | in/out | Memory for storing statistics. |
 
-#### rd_status_t ri_flash_reserve (fds_reserve_token_t* const reserve_token, const uint16_t size) ####
+## Energy consumption ##
+The following figure visualizes energy consumption of different operation states. The numbers at the measuring point equal to the duration.
 
-This function reserves a flash page.
+```{r echo=FALSE}
+# install required packages
+list.of.packages <- c("openxlsx","zip","tidyverse")
+new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages, dependencies = TRUE)
 
-| Parameters |||
-| - | - | - |
-| reserve_token | out | Pointer to reserve tocken. |
-| size | in | Size of data. |
+library(tidyverse)
+library(openxlsx)
 
-#### rd_status_t ri_flash_reserve_cancel (fds_reserve_token_t* const reserve_token) ####
+energymeasurement <- read.xlsx("Energiemessung.xlsx", sheet="Tabelle1")
 
-This function cancels a reservation of a formerly reserved flash page.
+energymeasurement <- as_tibble(energymeasurement)
 
-| Parameters |||
-| - | - | - |
-| reserve_token | in | Token received from [`ri_flash_reserve()`](sensor.html#rd_status_t-ri_flash_reserve-fds_reserve_token_t-const-reserve_token-const-uint16_t-size). |
+energymeasurement <- energymeasurement %>% rename(action=Aktion, 
+                              flash=Flash, 
+                              resolution_bit="Resolution./.Bit", 
+                              samplingrate_hz="Samplingrate./.Hz",
+                              duration_s="Dauer./.s",
+                              voltage_v="Spannung./.V",
+                              current_uA="Average.Current./.µA",
+                              energy_mJ="Energie./.mJ")
 
-### Exemplary use ###
-
-```c
-#include "ruuvi_task_flash_ringbuffer.h"
-
-// create ringbuffer
-rd_status_t error = rt_flash_ringbuffer_create(FILE_ID, RECORD_KEY, RT_FLASH_RINGBUFFER_MAXSIZE, 4073);
-
-// create flashpage struct
-rt_flash_ringbuffer_flashpage_t flashpage;
-flashpage.actual_size = 0;
-flashpage.max_size = 4073;
-
-// write data 
-int i=1;
-while(i <= 1500) {
-    rt_flash_ringbuffer_collect_flashpage(FILE_ID, RECORD_KEY, sizeof(i),  &i, &flashpage); 
-    // the collect operation calls the write operation when the data size for a flashpage is reached
-    i++;
-}
-
-// read data from flash
-rt_flash_ringbuffer_flashpage_t flashpage_read;
-error = rt_flash_ringbuffer_read(FILE_ID, RECORD_KEY, sizeof(flashpage_read), &flashpage_read);
+energymeasurement %>% ggplot() +
+  aes(x=samplingrate_hz, y=energy_mJ, color=flash) +
+  geom_line() +
+  geom_point(aes(shape=action), size=3) +
+  geom_text(aes(label=duration_s), nudge_y=70, color="black") +
+  theme_bw() +
+  ylab("energy / mJ") +
+  xlab("samplingrate / Hz")
 ```
