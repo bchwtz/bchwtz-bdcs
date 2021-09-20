@@ -378,7 +378,7 @@ This function reads some statistics about the usage of the internal Nordic Flash
 ## Energy consumption ##
 The following figure visualizes energy consumption of different operation states. The numbers at the measuring point equal to the duration.
 
-```{r echo=FALSE}
+```{r echo=FALSE,warning=FALSE}
 # install required packages
 list.of.packages <- c("openxlsx","zip","tidyverse")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
