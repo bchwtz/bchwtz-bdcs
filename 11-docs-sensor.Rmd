@@ -384,14 +384,11 @@ list.of.packages <- c("openxlsx","zip","tidyverse")
 new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages, dependencies = TRUE)
 
-library(tidyverse)
-library(openxlsx)
+energymeasurement <- openxlsx::read.xlsx("Energiemessung.xlsx", sheet="Tabelle1")
 
-energymeasurement <- read.xlsx("Energiemessung.xlsx", sheet="Tabelle1")
+energymeasurement <- tibble::as_tibble(energymeasurement)
 
-energymeasurement <- as_tibble(energymeasurement)
-
-energymeasurement <- energymeasurement %>% rename(action=Aktion, 
+energymeasurement <- energymeasurement %>% dplyr::rename(action=Aktion, 
                               flash=Flash, 
                               resolution_bit="Resolution./.Bit", 
                               samplingrate_hz="Samplingrate./.Hz",
@@ -400,12 +397,12 @@ energymeasurement <- energymeasurement %>% rename(action=Aktion,
                               current_uA="Average.Current./.µA",
                               energy_mJ="Energie./.mJ")
 
-energymeasurement %>% ggplot() +
-  aes(x=samplingrate_hz, y=energy_mJ, color=flash) +
-  geom_line() +
-  geom_point(aes(shape=action), size=3) +
-  geom_text(aes(label=duration_s), nudge_y=70, color="black") +
-  theme_bw() +
-  ylab("energy / mJ") +
-  xlab("samplingrate / Hz")
+energymeasurement %>% ggplot2::ggplot() +
+  ggplot2::aes(x=samplingrate_hz, y=energy_mJ, color=flash) +
+  ggplot2::geom_line() +
+  ggplot2::geom_point(ggplot2::aes(shape=action), size=3) +
+  ggplot2::geom_text(ggplot2::aes(label=duration_s), nudge_y=70, color="black") +
+  ggplot2::theme_bw() +
+  ggplot2::ylab("energy / mJ") +
+  ggplot2::xlab("samplingrate / Hz")
 ```
