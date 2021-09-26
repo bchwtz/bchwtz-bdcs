@@ -109,33 +109,33 @@ The concrete content of this message is `0xFA 0xFA 0x0E`.
 
 ## Response messages ##
 
-Every response message returns a status code as the result of the processing as the third byte. It must be interpreted as a bitfield. The bits represent the different error conditions. The following table show the error conditions. In case of multiple errors more than one bit can be set. If no bit is set the processing was successful.
+Every response message returns a status code as the result of the processing as the third byte. The following table shows the error conditions. 
 
 | Value | Error |
 |-|-|
-| status==0 | RD_SUCCESS: No error
-| 1         | RD_ERROR_INTERNAL: Internal Error
-| 2         | RD_ERROR_NO_MEM: No Memory for operation
-| 4         | RD_ERROR_NOT_FOUND: Not found
-| 8         | RD_ERROR_NOT_SUPPORTED: Not supported
-| 16        | RD_ERROR_INVALID_PARAM: Invalid Parameter
-| 32        | RD_ERROR_INVALID_status: Invalid status, operation disallowed in this status
-| 64        | RD_ERROR_INVALID_LENGTH: Invalid Length
-| 128       | RD_ERROR_INVALID_FLAGS: Invalid Flags
-| 256       | RD_ERROR_INVALID_DATA: Invalid Data
-| 512       | RD_ERROR_DATA_SIZE: Invalid Data size
-| 1024      | RD_ERROR_TIMEOUT: Operation timed out
-| 2048      | RD_ERROR_NULL: Null Pointer
-| 4096      | RD_ERROR_FORBIDDEN: Forbidden Operation
-| 8192      | RD_ERROR_INVALID_ADDR: Bad Memory Address
-| 16384     | RD_ERROR_BUSY: Flash Busy
-| 32768     | RD_ERROR_RESOURCES: Not enough resources for operation
-| 65535     | RD_ERROR_NOT_IMPLEMENTED: Not implemented yet
-| 131072    | RD_ERROR_SELFTEST: Self-test fail
-| 262144    | RD_STATUS_MORE_AVAILABLE: Driver has more data queued
-| 524288    | RD_ERROR_NOT_INITIALIZED: Driver is not initialized.
-| 1048576   | RD_ERROR_NOT_ACKNOWLEDGED: Ack was expected but not received
-| 2097152   | RD_ERROR_NOT_ENABLED: Driver is not enabled
+| 0  | RD_SUCCESS: No error
+| 1  | RD_ERROR_INTERNAL: Internal Error
+| 2  | RD_ERROR_NO_MEM: No Memory for operation
+| 4  | RD_ERROR_NOT_FOUND: Not found
+| 4  | RD_ERROR_NOT_SUPPORTED: Not supported
+| 5  | RD_ERROR_INVALID_PARAM: Invalid Parameter
+| 6  | RD_ERROR_INVALID_status: Invalid status, operation disallowed in this status
+| 7  | RD_ERROR_INVALID_LENGTH: Invalid Length
+| 8  | RD_ERROR_INVALID_FLAGS: Invalid Flags
+| 9  | RD_ERROR_INVALID_DATA: Invalid Data
+| 10 | RD_ERROR_DATA_SIZE: Invalid Data size
+| 11 | RD_ERROR_TIMEOUT: Operation timed out
+| 12 | RD_ERROR_NULL: Null Pointer
+| 13 | RD_ERROR_FORBIDDEN: Forbidden Operation
+| 14 | RD_ERROR_INVALID_ADDR: Bad Memory Address
+| 15 | RD_ERROR_BUSY: Flash Busy
+| 16 | RD_ERROR_RESOURCES: Not enough resources for operation
+| 17 | RD_ERROR_NOT_IMPLEMENTED: Not implemented yet
+| 18 | RD_ERROR_SELFTEST: Self-test fail
+| 19 | RD_STATUS_MORE_AVAILABLE: Driver has more data queued
+| 20 | RD_ERROR_NOT_INITIALIZED: Driver is not initialized.
+| 21 | RD_ERROR_NOT_ACKNOWLEDGED: Ack was expected but not received
+| 22 | RD_ERROR_NOT_ENABLED: Driver is not enabled
 
 ### Status response ###
 

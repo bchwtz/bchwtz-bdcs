@@ -181,6 +181,15 @@ This function is called from `handle_lis2dh12_comms()` after the gateway sends t
 | - | - | - |
 | statistic | in/out | Memory to store the statistic values. |
 
+#### `uint8_t ruuvi_error_code_to_uint8(rd_status_t err_code)` ####
+
+This function converts an Ruuvi error code to a one byte value. It returns the bit index of first error it finds. It cannot return a set of multiple errors as the input value supports.
+
+| Parameters |||
+| - | - | - |
+| err_code | in | Ruuvi error code. |
+
+
 ### app_comms.c ####
 
 #### `void handle_comms (const ri_comm_xfer_fp_t reply_fp, const uint8_t * const raw_message, size_t data_len)` ####
@@ -376,7 +385,7 @@ This function reads some statistics about the usage of the internal Nordic Flash
 | statistic | in/out | Memory for storing statistics. |
 
 ## Energy consumption ##
-The following figure visualizes energy consumption of different operation states. The numbers at the measuring point equal to the duration.
+The following figure visualizes energy consumption of different operation states. The numbers at the measuring point are equal to the duration. All measurements are done with 3V supply voltage.
 
 ```{r echo=FALSE}
 energymeasurement <- openxlsx::read.xlsx("Energiemessung.xlsx", sheet="Tabelle1")
@@ -400,4 +409,33 @@ energymeasurement %>% ggplot2::ggplot() +
   ggplot2::theme_bw() +
   ggplot2::ylab("energy / mJ") +
   ggplot2::xlab("samplingrate / Hz")
+```
+
+## Firmware packaging ##
+
+To create a File which is suitable for [DFU](https://ruuvi.com/software-update/) you need [nrfutil](https://www.nordicsemi.com/Products/Development-tools/nRF-Util) from Nordic Semiconductor. The DFU Package must be signed. The [private key](https://github.com/ruuvi/ruuvi.nrf5_sdk15_bootloader.c/blob/master/ruuvi_open_private.pem) can be obtained from Ruuvi's Github repository.
+
+The following script to create a DFU package assumes this directory structure.
+```
+dfu-package
+ \
+  | ruuvi_open_private.pem
+ruuvi.firmware.c
+ \
+  | nRF5_SDK_15.3.0_59ac345
+  | src
+  | \
+  |  | output
+  |  | \
+  |  |  | debug
+  |  |  | \
+  |  |  |  | exe
+```
+
+To create a DFU package execute the following commands inside directory dfu-package.
+```
+nrfutil settings generate --family NRF52 --application ..\ruuvi.firmware.c\src\Output\Debug\Exe\ruuvitag_b.hex --application-version 1  --bootloader-version 1 --bl-settings-version 1 output\settings.hex
+mergehex -m ..\ruuvi.firmware.c\nRF5_SDK_15.3.0_59ac345\components\softdevice\s132\hex\s132_nrf52_6.1.1_softdevice.hex ruuvitag_b_s132_6.1.1_bootloader_3.1.0.hex output\settings.hex -o output\sbc.hex
+mergehex -m output\sbc.hex ..\ruuvi.firmware.c\src\Output\Debug\Exe\ruuvitag_b.hex -o output\packet.hex
+nrfutil pkg generate --application ..\ruuvi.firmware.c\src\Output\Debug\Exe\ruuvitag_b.hex --application-version 1 --hw-version 0xB0 --sd-req 0xB7 --key-file ruuvi_open_private.pem dfu_app.zip
 ```
