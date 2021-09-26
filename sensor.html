@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-09-21" />
+<meta name="date" content="2021-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,6 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>3.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>3.7</b> Energy consumption</a></li>
+<li class="chapter" data-level="3.8" data-path="sensor.html"><a href="sensor.html#firmware-packaging"><i class="fa fa-check"></i><b>3.8</b> Firmware packaging</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
 <li class="chapter" data-level="4.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>4.1</b> Sensor Gateway Communication Library</a><ul>
@@ -661,6 +662,26 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 </tbody>
 </table>
 </div>
+<div id="uint8_t-ruuvi_error_code_to_uint8rd_status_t-err_code" class="section level4">
+<h4><span class="header-section-number">3.6.1.17</span> <code>uint8_t ruuvi_error_code_to_uint8(rd_status_t err_code)</code></h4>
+<p>This function converts an Ruuvi error code to a one byte value. It returns the bit index of first error it finds. It cannot return a set of multiple errors as the input value supports.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameters</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>err_code</td>
+<td>in</td>
+<td>Ruuvi error code.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="app_comms.c" class="section level3">
 <h3><span class="header-section-number">3.6.2</span> app_comms.c</h3>
@@ -1131,8 +1152,31 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 </div>
 <div id="energy-consumption" class="section level2">
 <h2><span class="header-section-number">3.7</span> Energy consumption</h2>
-<p>The following figure visualizes energy consumption of different operation states. The numbers at the measuring point equal to the duration.</p>
+<p>The following figure visualizes energy consumption of different operation states. The numbers at the measuring point are equal to the duration. All measurements are done with 3V supply voltage.</p>
 <p><img src="bchwtz-bdcs_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="firmware-packaging" class="section level2">
+<h2><span class="header-section-number">3.8</span> Firmware packaging</h2>
+<p>To create a File which is suitable for <a href="https://ruuvi.com/software-update/">DFU</a> you need <a href="https://www.nordicsemi.com/Products/Development-tools/nRF-Util">nrfutil</a> from Nordic Semiconductor. The DFU Package must be signed. The <a href="https://github.com/ruuvi/ruuvi.nrf5_sdk15_bootloader.c/blob/master/ruuvi_open_private.pem">private key</a> can be obtained from Ruuvi’s Github repository.</p>
+<p>The following script to create a DFU package assumes this directory structure.</p>
+<pre><code>dfu-package
+ \
+  | ruuvi_open_private.pem
+ruuvi.firmware.c
+ \
+  | nRF5_SDK_15.3.0_59ac345
+  | src
+  | \
+  |  | output
+  |  | \
+  |  |  | debug
+  |  |  | \
+  |  |  |  | exe</code></pre>
+<p>To create a DFU package execute the following commands inside directory dfu-package.</p>
+<pre><code>nrfutil settings generate --family NRF52 --application ..\ruuvi.firmware.c\src\Output\Debug\Exe\ruuvitag_b.hex --application-version 1  --bootloader-version 1 --bl-settings-version 1 output\settings.hex
+mergehex -m ..\ruuvi.firmware.c\nRF5_SDK_15.3.0_59ac345\components\softdevice\s132\hex\s132_nrf52_6.1.1_softdevice.hex ruuvitag_b_s132_6.1.1_bootloader_3.1.0.hex output\settings.hex -o output\sbc.hex
+mergehex -m output\sbc.hex ..\ruuvi.firmware.c\src\Output\Debug\Exe\ruuvitag_b.hex -o output\packet.hex
+nrfutil pkg generate --application ..\ruuvi.firmware.c\src\Output\Debug\Exe\ruuvitag_b.hex --application-version 1 --hw-version 0xB0 --sd-req 0xB7 --key-file ruuvi_open_private.pem dfu_app.zip</code></pre>
 
 </div>
 </div>

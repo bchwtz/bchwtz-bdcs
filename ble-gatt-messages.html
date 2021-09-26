@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-09-21" />
+<meta name="date" content="2021-09-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -165,6 +165,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>3.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 </ul></li>
 <li class="chapter" data-level="3.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>3.7</b> Energy consumption</a></li>
+<li class="chapter" data-level="3.8" data-path="sensor.html"><a href="sensor.html#firmware-packaging"><i class="fa fa-check"></i><b>3.8</b> Firmware packaging</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
 <li class="chapter" data-level="4.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>4.1</b> Sensor Gateway Communication Library</a><ul>
@@ -438,7 +439,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="response-messages" class="section level2">
 <h2><span class="header-section-number">6.3</span> Response messages</h2>
-<p>Every response message returns a status code as the result of the processing as the third byte. It must be interpreted as a bitfield. The bits represent the different error conditions. The following table show the error conditions. In case of multiple errors more than one bit can be set. If no bit is set the processing was successful.</p>
+<p>Every response message returns a status code as the result of the processing as the third byte. The following table shows the error conditions.</p>
 <table>
 <colgroup>
 <col width="50%" />
@@ -452,7 +453,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </thead>
 <tbody>
 <tr class="odd">
-<td>status==0</td>
+<td>0</td>
 <td>RD_SUCCESS: No error</td>
 </tr>
 <tr class="even">
@@ -468,79 +469,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <td>RD_ERROR_NOT_FOUND: Not found</td>
 </tr>
 <tr class="odd">
-<td>8</td>
+<td>4</td>
 <td>RD_ERROR_NOT_SUPPORTED: Not supported</td>
 </tr>
 <tr class="even">
-<td>16</td>
+<td>5</td>
 <td>RD_ERROR_INVALID_PARAM: Invalid Parameter</td>
 </tr>
 <tr class="odd">
-<td>32</td>
+<td>6</td>
 <td>RD_ERROR_INVALID_status: Invalid status, operation disallowed in this status</td>
 </tr>
 <tr class="even">
-<td>64</td>
+<td>7</td>
 <td>RD_ERROR_INVALID_LENGTH: Invalid Length</td>
 </tr>
 <tr class="odd">
-<td>128</td>
+<td>8</td>
 <td>RD_ERROR_INVALID_FLAGS: Invalid Flags</td>
 </tr>
 <tr class="even">
-<td>256</td>
+<td>9</td>
 <td>RD_ERROR_INVALID_DATA: Invalid Data</td>
 </tr>
 <tr class="odd">
-<td>512</td>
+<td>10</td>
 <td>RD_ERROR_DATA_SIZE: Invalid Data size</td>
 </tr>
 <tr class="even">
-<td>1024</td>
+<td>11</td>
 <td>RD_ERROR_TIMEOUT: Operation timed out</td>
 </tr>
 <tr class="odd">
-<td>2048</td>
+<td>12</td>
 <td>RD_ERROR_NULL: Null Pointer</td>
 </tr>
 <tr class="even">
-<td>4096</td>
+<td>13</td>
 <td>RD_ERROR_FORBIDDEN: Forbidden Operation</td>
 </tr>
 <tr class="odd">
-<td>8192</td>
+<td>14</td>
 <td>RD_ERROR_INVALID_ADDR: Bad Memory Address</td>
 </tr>
 <tr class="even">
-<td>16384</td>
+<td>15</td>
 <td>RD_ERROR_BUSY: Flash Busy</td>
 </tr>
 <tr class="odd">
-<td>32768</td>
+<td>16</td>
 <td>RD_ERROR_RESOURCES: Not enough resources for operation</td>
 </tr>
 <tr class="even">
-<td>65535</td>
+<td>17</td>
 <td>RD_ERROR_NOT_IMPLEMENTED: Not implemented yet</td>
 </tr>
 <tr class="odd">
-<td>131072</td>
+<td>18</td>
 <td>RD_ERROR_SELFTEST: Self-test fail</td>
 </tr>
 <tr class="even">
-<td>262144</td>
+<td>19</td>
 <td>RD_STATUS_MORE_AVAILABLE: Driver has more data queued</td>
 </tr>
 <tr class="odd">
-<td>524288</td>
+<td>20</td>
 <td>RD_ERROR_NOT_INITIALIZED: Driver is not initialized.</td>
 </tr>
 <tr class="even">
-<td>1048576</td>
+<td>21</td>
 <td>RD_ERROR_NOT_ACKNOWLEDGED: Ack was expected but not received</td>
 </tr>
 <tr class="odd">
-<td>2097152</td>
+<td>22</td>
 <td>RD_ERROR_NOT_ENABLED: Driver is not enabled</td>
 </tr>
 </tbody>

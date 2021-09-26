@@ -28,6 +28,7 @@ void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size
 int64_t-fdb_timestamp_get-void
 bool-callback_send_data_blockfdb_tsl_t-tsl-void-arg
 rd_status_t-app_acc_logging_statistic-uint8_t-const-statistic
+uint8_t-ruuvi_error_code_to_uint8rd_status_t-err_code
 app_comms.c
 void-handle_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len
 rd_status_t-handle_lis2dh12_comms-const-ri_comm_xfer_fp_t-reply_fp-const-uint8_t-const-raw_message-size_t-data_len
@@ -58,6 +59,7 @@ rd_status_t-rt_flash_ringbuffer_clearvoid
 rd_status_t-rt_flash_ringbuffer_drop-void
 rd_status_t-rt_flash_ringbuffer_statistic-uint8_t-const-statistic
 energy-consumption
+firmware-packaging
 gateway
 sensor-gateway-communication-library
 activate-acceleration-logging
