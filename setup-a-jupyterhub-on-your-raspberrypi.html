@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies</title>
-  <meta name="description" content="Chapter 10 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
+  <title>Chapter 3 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies</title>
+  <meta name="description" content="Chapter 3 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
+  <meta property="og:title" content="Chapter 3 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Chapter 10 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
+  <meta property="og:description" content="Chapter 3 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
   <meta name="github-repo" content="bchwtz/bchwtz-bdcs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
+  <meta name="twitter:title" content="Chapter 3 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
   
-  <meta name="twitter:description" content="Chapter 10 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
+  <meta name="twitter:description" content="Chapter 3 Setup a Jupyterhub on your RaspberryPi | Big Data Case Studies" />
   
 
 <meta name="author" content="Benjamin Buchwitz" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="system-info.html"/>
-
+<link rel="prev" href="getting-started.html"/>
+<link rel="next" href="sensor.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -145,98 +145,103 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a></li>
 </ul></li>
+<li class="chapter" data-level="3" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html"><i class="fa fa-check"></i><b>3</b> Setup a Jupyterhub on your RaspberryPi</a><ul>
+<li class="chapter" data-level="3.1" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#prepare-python-environment"><i class="fa fa-check"></i><b>3.1</b> Prepare Python environment</a></li>
+<li class="chapter" data-level="3.2" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#install-jupyterhub"><i class="fa fa-check"></i><b>3.2</b> Install JupyterHub</a></li>
+<li class="chapter" data-level="3.3" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#configure-jupyterhub-as-a-system-service"><i class="fa fa-check"></i><b>3.3</b> Configure JupyterHub as a system service</a></li>
+</ul></li>
 <li class="part"><span><b>Documentation</b></span></li>
-<li class="chapter" data-level="3" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>3</b> Sensor</a><ul>
-<li class="chapter" data-level="3.1" data-path="sensor.html"><a href="sensor.html#initializing-acceleration-logging"><i class="fa fa-check"></i><b>3.1</b> Initializing acceleration logging</a></li>
-<li class="chapter" data-level="3.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>3.2</b> Retrieving data from FIFO</a></li>
-<li class="chapter" data-level="3.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>3.3</b> Using the data by hearbeat</a></li>
-<li class="chapter" data-level="3.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>3.4</b> Initialization during boot</a></li>
-<li class="chapter" data-level="3.5" data-path="sensor.html"><a href="sensor.html#streaming-of-acceleration-data"><i class="fa fa-check"></i><b>3.5</b> Streaming of acceleration data</a></li>
-<li class="chapter" data-level="3.6" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>3.6</b> Implementation</a><ul>
-<li class="chapter" data-level="3.6.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>3.6.1</b> app_accelerometer_logging.c</a></li>
-<li class="chapter" data-level="3.6.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>3.6.2</b> app_comms.c</a></li>
-<li class="chapter" data-level="3.6.3" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_communication_ble_gatt.c"><i class="fa fa-check"></i><b>3.6.3</b> ruuvi_nrf5_sdk15_communication_ble_gatt.c</a></li>
-<li class="chapter" data-level="3.6.4" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>3.6.4</b> app_config.h</a></li>
-<li class="chapter" data-level="3.6.5" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>3.6.5</b> app_sensor.c</a></li>
-<li class="chapter" data-level="3.6.6" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>3.6.6</b> main.c</a></li>
-<li class="chapter" data-level="3.6.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>3.6.7</b> ruuvi_interface_lis2dh12.c</a></li>
-<li class="chapter" data-level="3.6.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>3.6.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
-<li class="chapter" data-level="3.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>3.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
-<li class="chapter" data-level="3.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>3.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
+<li class="chapter" data-level="4" data-path="sensor.html"><a href="sensor.html"><i class="fa fa-check"></i><b>4</b> Sensor</a><ul>
+<li class="chapter" data-level="4.1" data-path="sensor.html"><a href="sensor.html#initializing-acceleration-logging"><i class="fa fa-check"></i><b>4.1</b> Initializing acceleration logging</a></li>
+<li class="chapter" data-level="4.2" data-path="sensor.html"><a href="sensor.html#retrieving-data-from-fifo"><i class="fa fa-check"></i><b>4.2</b> Retrieving data from FIFO</a></li>
+<li class="chapter" data-level="4.3" data-path="sensor.html"><a href="sensor.html#using-the-data-by-hearbeat"><i class="fa fa-check"></i><b>4.3</b> Using the data by hearbeat</a></li>
+<li class="chapter" data-level="4.4" data-path="sensor.html"><a href="sensor.html#initialization-during-boot"><i class="fa fa-check"></i><b>4.4</b> Initialization during boot</a></li>
+<li class="chapter" data-level="4.5" data-path="sensor.html"><a href="sensor.html#streaming-of-acceleration-data"><i class="fa fa-check"></i><b>4.5</b> Streaming of acceleration data</a></li>
+<li class="chapter" data-level="4.6" data-path="sensor.html"><a href="sensor.html#implementation"><i class="fa fa-check"></i><b>4.6</b> Implementation</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="sensor.html"><a href="sensor.html#app_accelerometer_logging.c"><i class="fa fa-check"></i><b>4.6.1</b> app_accelerometer_logging.c</a></li>
+<li class="chapter" data-level="4.6.2" data-path="sensor.html"><a href="sensor.html#app_comms.c"><i class="fa fa-check"></i><b>4.6.2</b> app_comms.c</a></li>
+<li class="chapter" data-level="4.6.3" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_communication_ble_gatt.c"><i class="fa fa-check"></i><b>4.6.3</b> ruuvi_nrf5_sdk15_communication_ble_gatt.c</a></li>
+<li class="chapter" data-level="4.6.4" data-path="sensor.html"><a href="sensor.html#app_config.h"><i class="fa fa-check"></i><b>4.6.4</b> app_config.h</a></li>
+<li class="chapter" data-level="4.6.5" data-path="sensor.html"><a href="sensor.html#app_sensor.c"><i class="fa fa-check"></i><b>4.6.5</b> app_sensor.c</a></li>
+<li class="chapter" data-level="4.6.6" data-path="sensor.html"><a href="sensor.html#main.c"><i class="fa fa-check"></i><b>4.6.6</b> main.c</a></li>
+<li class="chapter" data-level="4.6.7" data-path="sensor.html"><a href="sensor.html#ruuvi_interface_lis2dh12.c"><i class="fa fa-check"></i><b>4.6.7</b> ruuvi_interface_lis2dh12.c</a></li>
+<li class="chapter" data-level="4.6.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>4.6.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
+<li class="chapter" data-level="4.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>4.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
+<li class="chapter" data-level="4.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>4.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 </ul></li>
-<li class="chapter" data-level="3.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>3.7</b> Energy consumption</a></li>
-<li class="chapter" data-level="3.8" data-path="sensor.html"><a href="sensor.html#firmware-packaging"><i class="fa fa-check"></i><b>3.8</b> Firmware packaging</a></li>
+<li class="chapter" data-level="4.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>4.7</b> Energy consumption</a></li>
+<li class="chapter" data-level="4.8" data-path="sensor.html"><a href="sensor.html#firmware-packaging"><i class="fa fa-check"></i><b>4.8</b> Firmware packaging</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>4</b> Gateway</a><ul>
-<li class="chapter" data-level="4.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>4.1</b> Sensor Gateway Communication Library</a><ul>
-<li class="chapter" data-level="4.1.1" data-path="gateway.html"><a href="gateway.html#activate-acceleration-logging"><i class="fa fa-check"></i><b>4.1.1</b> Activate acceleration logging</a></li>
-<li class="chapter" data-level="4.1.2" data-path="gateway.html"><a href="gateway.html#deactivate-acceleration-logging"><i class="fa fa-check"></i><b>4.1.2</b> Deactivate acceleration logging</a></li>
-<li class="chapter" data-level="4.1.3" data-path="gateway.html"><a href="gateway.html#set-sensor-configuration"><i class="fa fa-check"></i><b>4.1.3</b> Set sensor configuration</a></li>
-<li class="chapter" data-level="4.1.4" data-path="gateway.html"><a href="gateway.html#set-sensor-time"><i class="fa fa-check"></i><b>4.1.4</b> Set sensor time</a></li>
-<li class="chapter" data-level="4.1.5" data-path="gateway.html"><a href="gateway.html#get-sensor-configuratin"><i class="fa fa-check"></i><b>4.1.5</b> Get sensor configuratin</a></li>
-<li class="chapter" data-level="4.1.6" data-path="gateway.html"><a href="gateway.html#get-sensor-time"><i class="fa fa-check"></i><b>4.1.6</b> Get sensor time</a></li>
-<li class="chapter" data-level="4.1.7" data-path="gateway.html"><a href="gateway.html#get-last-sample"><i class="fa fa-check"></i><b>4.1.7</b> Get last sample</a></li>
-<li class="chapter" data-level="4.1.8" data-path="gateway.html"><a href="gateway.html#get-acceleration-data"><i class="fa fa-check"></i><b>4.1.8</b> Get acceleration data</a></li>
-<li class="chapter" data-level="4.1.9" data-path="gateway.html"><a href="gateway.html#find-macs"><i class="fa fa-check"></i><b>4.1.9</b> Find Macs</a></li>
+<li class="chapter" data-level="5" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>5</b> Gateway</a><ul>
+<li class="chapter" data-level="5.1" data-path="gateway.html"><a href="gateway.html#sensor-gateway-communication-library"><i class="fa fa-check"></i><b>5.1</b> Sensor Gateway Communication Library</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="gateway.html"><a href="gateway.html#activate-acceleration-logging"><i class="fa fa-check"></i><b>5.1.1</b> Activate acceleration logging</a></li>
+<li class="chapter" data-level="5.1.2" data-path="gateway.html"><a href="gateway.html#deactivate-acceleration-logging"><i class="fa fa-check"></i><b>5.1.2</b> Deactivate acceleration logging</a></li>
+<li class="chapter" data-level="5.1.3" data-path="gateway.html"><a href="gateway.html#set-sensor-configuration"><i class="fa fa-check"></i><b>5.1.3</b> Set sensor configuration</a></li>
+<li class="chapter" data-level="5.1.4" data-path="gateway.html"><a href="gateway.html#set-sensor-time"><i class="fa fa-check"></i><b>5.1.4</b> Set sensor time</a></li>
+<li class="chapter" data-level="5.1.5" data-path="gateway.html"><a href="gateway.html#get-sensor-configuratin"><i class="fa fa-check"></i><b>5.1.5</b> Get sensor configuratin</a></li>
+<li class="chapter" data-level="5.1.6" data-path="gateway.html"><a href="gateway.html#get-sensor-time"><i class="fa fa-check"></i><b>5.1.6</b> Get sensor time</a></li>
+<li class="chapter" data-level="5.1.7" data-path="gateway.html"><a href="gateway.html#get-last-sample"><i class="fa fa-check"></i><b>5.1.7</b> Get last sample</a></li>
+<li class="chapter" data-level="5.1.8" data-path="gateway.html"><a href="gateway.html#get-acceleration-data"><i class="fa fa-check"></i><b>5.1.8</b> Get acceleration data</a></li>
+<li class="chapter" data-level="5.1.9" data-path="gateway.html"><a href="gateway.html#find-macs"><i class="fa fa-check"></i><b>5.1.9</b> Find Macs</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="gateway.html"><a href="gateway.html#advertisement-logging"><i class="fa fa-check"></i><b>4.2</b> Advertisement logging</a></li>
-<li class="chapter" data-level="4.3" data-path="gateway.html"><a href="gateway.html#data-storage-format"><i class="fa fa-check"></i><b>4.3</b> Data storage format</a><ul>
-<li class="chapter" data-level="4.3.1" data-path="gateway.html"><a href="gateway.html#csv-file-acceleration-logging"><i class="fa fa-check"></i><b>4.3.1</b> Csv file acceleration Logging</a></li>
-<li class="chapter" data-level="4.3.2" data-path="gateway.html"><a href="gateway.html#csv-file-advertisement-logging"><i class="fa fa-check"></i><b>4.3.2</b> Csv file advertisement Logging</a></li>
+<li class="chapter" data-level="5.2" data-path="gateway.html"><a href="gateway.html#advertisement-logging"><i class="fa fa-check"></i><b>5.2</b> Advertisement logging</a></li>
+<li class="chapter" data-level="5.3" data-path="gateway.html"><a href="gateway.html#data-storage-format"><i class="fa fa-check"></i><b>5.3</b> Data storage format</a><ul>
+<li class="chapter" data-level="5.3.1" data-path="gateway.html"><a href="gateway.html#csv-file-acceleration-logging"><i class="fa fa-check"></i><b>5.3.1</b> Csv file acceleration Logging</a></li>
+<li class="chapter" data-level="5.3.2" data-path="gateway.html"><a href="gateway.html#csv-file-advertisement-logging"><i class="fa fa-check"></i><b>5.3.2</b> Csv file advertisement Logging</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>5</b> Backend</a></li>
-<li class="chapter" data-level="6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html"><i class="fa fa-check"></i><b>6</b> BLE GATT Messages</a><ul>
-<li class="chapter" data-level="6.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#general-message-structure"><i class="fa fa-check"></i><b>6.1</b> General message structure</a></li>
-<li class="chapter" data-level="6.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-messages"><i class="fa fa-check"></i><b>6.2</b> Control messages</a><ul>
-<li class="chapter" data-level="6.2.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#start-transmitting-acceleration-data"><i class="fa fa-check"></i><b>6.2.1</b> Start transmitting acceleration data</a></li>
-<li class="chapter" data-level="6.2.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor"><i class="fa fa-check"></i><b>6.2.2</b> Set configuration of acceleration sensor</a></li>
-<li class="chapter" data-level="6.2.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-configuration-of-acceleration-sensor"><i class="fa fa-check"></i><b>6.2.3</b> Read configuration of acceleration sensor</a></li>
-<li class="chapter" data-level="6.2.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-system-time"><i class="fa fa-check"></i><b>6.2.4</b> Set system time</a></li>
-<li class="chapter" data-level="6.2.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time"><i class="fa fa-check"></i><b>6.2.5</b> Read system time</a></li>
-<li class="chapter" data-level="6.2.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging"><i class="fa fa-check"></i><b>6.2.6</b> Control acceleration logging</a></li>
-<li class="chapter" data-level="6.2.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging"><i class="fa fa-check"></i><b>6.2.7</b> Query status of acceleration logging</a></li>
-<li class="chapter" data-level="6.2.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-flash-statistic"><i class="fa fa-check"></i><b>6.2.8</b> Query flash statistic</a></li>
-<li class="chapter" data-level="6.2.9" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-boot-counter"><i class="fa fa-check"></i><b>6.2.9</b> Query boot counter</a></li>
+<li class="chapter" data-level="6" data-path="backend.html"><a href="backend.html"><i class="fa fa-check"></i><b>6</b> Backend</a></li>
+<li class="chapter" data-level="7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html"><i class="fa fa-check"></i><b>7</b> BLE GATT Messages</a><ul>
+<li class="chapter" data-level="7.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#general-message-structure"><i class="fa fa-check"></i><b>7.1</b> General message structure</a></li>
+<li class="chapter" data-level="7.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-messages"><i class="fa fa-check"></i><b>7.2</b> Control messages</a><ul>
+<li class="chapter" data-level="7.2.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#start-transmitting-acceleration-data"><i class="fa fa-check"></i><b>7.2.1</b> Start transmitting acceleration data</a></li>
+<li class="chapter" data-level="7.2.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor"><i class="fa fa-check"></i><b>7.2.2</b> Set configuration of acceleration sensor</a></li>
+<li class="chapter" data-level="7.2.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-configuration-of-acceleration-sensor"><i class="fa fa-check"></i><b>7.2.3</b> Read configuration of acceleration sensor</a></li>
+<li class="chapter" data-level="7.2.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#set-system-time"><i class="fa fa-check"></i><b>7.2.4</b> Set system time</a></li>
+<li class="chapter" data-level="7.2.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#read-system-time"><i class="fa fa-check"></i><b>7.2.5</b> Read system time</a></li>
+<li class="chapter" data-level="7.2.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#control-acceleration-logging"><i class="fa fa-check"></i><b>7.2.6</b> Control acceleration logging</a></li>
+<li class="chapter" data-level="7.2.7" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-status-of-acceleration-logging"><i class="fa fa-check"></i><b>7.2.7</b> Query status of acceleration logging</a></li>
+<li class="chapter" data-level="7.2.8" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-flash-statistic"><i class="fa fa-check"></i><b>7.2.8</b> Query flash statistic</a></li>
+<li class="chapter" data-level="7.2.9" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#query-boot-counter"><i class="fa fa-check"></i><b>7.2.9</b> Query boot counter</a></li>
 </ul></li>
-<li class="chapter" data-level="6.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>6.3</b> Response messages</a><ul>
-<li class="chapter" data-level="6.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response"><i class="fa fa-check"></i><b>6.3.1</b> Status response</a></li>
-<li class="chapter" data-level="6.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message"><i class="fa fa-check"></i><b>6.3.2</b> End of data message</a></li>
-<li class="chapter" data-level="6.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response"><i class="fa fa-check"></i><b>6.3.3</b> Configuration response</a></li>
-<li class="chapter" data-level="6.3.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response"><i class="fa fa-check"></i><b>6.3.4</b> Timestamp response</a></li>
-<li class="chapter" data-level="6.3.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic-response"><i class="fa fa-check"></i><b>6.3.5</b> Flash statistic response</a></li>
-<li class="chapter" data-level="6.3.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#boot-counter-response"><i class="fa fa-check"></i><b>6.3.6</b> boot counter response</a></li>
+<li class="chapter" data-level="7.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#response-messages"><i class="fa fa-check"></i><b>7.3</b> Response messages</a><ul>
+<li class="chapter" data-level="7.3.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#status-response"><i class="fa fa-check"></i><b>7.3.1</b> Status response</a></li>
+<li class="chapter" data-level="7.3.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#end-of-data-message"><i class="fa fa-check"></i><b>7.3.2</b> End of data message</a></li>
+<li class="chapter" data-level="7.3.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#configuration-response"><i class="fa fa-check"></i><b>7.3.3</b> Configuration response</a></li>
+<li class="chapter" data-level="7.3.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#timestamp-response"><i class="fa fa-check"></i><b>7.3.4</b> Timestamp response</a></li>
+<li class="chapter" data-level="7.3.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#flash-statistic-response"><i class="fa fa-check"></i><b>7.3.5</b> Flash statistic response</a></li>
+<li class="chapter" data-level="7.3.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#boot-counter-response"><i class="fa fa-check"></i><b>7.3.6</b> boot counter response</a></li>
 </ul></li>
-<li class="chapter" data-level="6.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>6.4</b> Data message</a><ul>
-<li class="chapter" data-level="6.4.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>6.4.1</b> 12 bit data format</a></li>
-<li class="chapter" data-level="6.4.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>6.4.2</b> 10 bit data format</a></li>
-<li class="chapter" data-level="6.4.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>6.4.3</b> 8 bit data format</a></li>
+<li class="chapter" data-level="7.4" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#data-message"><i class="fa fa-check"></i><b>7.4</b> Data message</a><ul>
+<li class="chapter" data-level="7.4.1" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format"><i class="fa fa-check"></i><b>7.4.1</b> 12 bit data format</a></li>
+<li class="chapter" data-level="7.4.2" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-1"><i class="fa fa-check"></i><b>7.4.2</b> 10 bit data format</a></li>
+<li class="chapter" data-level="7.4.3" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#bit-data-format-2"><i class="fa fa-check"></i><b>7.4.3</b> 8 bit data format</a></li>
 </ul></li>
-<li class="chapter" data-level="6.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>6.5</b> Communication example</a></li>
-<li class="chapter" data-level="6.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#streaming"><i class="fa fa-check"></i><b>6.6</b> Streaming</a></li>
+<li class="chapter" data-level="7.5" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#communication-example"><i class="fa fa-check"></i><b>7.5</b> Communication example</a></li>
+<li class="chapter" data-level="7.6" data-path="ble-gatt-messages.html"><a href="ble-gatt-messages.html#streaming"><i class="fa fa-check"></i><b>7.6</b> Streaming</a></li>
 </ul></li>
 <li class="part"><span><b>To Do</b></span></li>
-<li class="chapter" data-level="7" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>7</b> Sensor</a><ul>
-<li class="chapter" data-level="7.1" data-path="sensor-1.html"><a href="sensor-1.html#hardware"><i class="fa fa-check"></i><b>7.1</b> Hardware</a><ul>
-<li class="chapter" data-level="7.1.1" data-path="sensor-1.html"><a href="sensor-1.html#external-flash-memory"><i class="fa fa-check"></i><b>7.1.1</b> External Flash Memory</a></li>
-<li class="chapter" data-level="7.1.2" data-path="sensor-1.html"><a href="sensor-1.html#board-redesign"><i class="fa fa-check"></i><b>7.1.2</b> Board Redesign</a></li>
+<li class="chapter" data-level="8" data-path="sensor-1.html"><a href="sensor-1.html"><i class="fa fa-check"></i><b>8</b> Sensor</a><ul>
+<li class="chapter" data-level="8.1" data-path="sensor-1.html"><a href="sensor-1.html#hardware"><i class="fa fa-check"></i><b>8.1</b> Hardware</a><ul>
+<li class="chapter" data-level="8.1.1" data-path="sensor-1.html"><a href="sensor-1.html#external-flash-memory"><i class="fa fa-check"></i><b>8.1.1</b> External Flash Memory</a></li>
+<li class="chapter" data-level="8.1.2" data-path="sensor-1.html"><a href="sensor-1.html#board-redesign"><i class="fa fa-check"></i><b>8.1.2</b> Board Redesign</a></li>
 </ul></li>
-<li class="chapter" data-level="7.2" data-path="sensor-1.html"><a href="sensor-1.html#software"><i class="fa fa-check"></i><b>7.2</b> Software</a><ul>
-<li class="chapter" data-level="7.2.1" data-path="sensor-1.html"><a href="sensor-1.html#general-todo"><i class="fa fa-check"></i><b>7.2.1</b> General ToDo</a></li>
-<li class="chapter" data-level="7.2.2" data-path="sensor-1.html"><a href="sensor-1.html#security"><i class="fa fa-check"></i><b>7.2.2</b> Security</a></li>
+<li class="chapter" data-level="8.2" data-path="sensor-1.html"><a href="sensor-1.html#software"><i class="fa fa-check"></i><b>8.2</b> Software</a><ul>
+<li class="chapter" data-level="8.2.1" data-path="sensor-1.html"><a href="sensor-1.html#general-todo"><i class="fa fa-check"></i><b>8.2.1</b> General ToDo</a></li>
+<li class="chapter" data-level="8.2.2" data-path="sensor-1.html"><a href="sensor-1.html#security"><i class="fa fa-check"></i><b>8.2.2</b> Security</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>8</b> Gateway</a><ul>
-<li class="chapter" data-level="8.1" data-path="gateway-1.html"><a href="gateway-1.html#hardware-1"><i class="fa fa-check"></i><b>8.1</b> Hardware</a><ul>
-<li class="chapter" data-level="8.1.1" data-path="gateway-1.html"><a href="gateway-1.html#uninterruptible-power-supply"><i class="fa fa-check"></i><b>8.1.1</b> Uninterruptible Power Supply</a></li>
-<li class="chapter" data-level="8.1.2" data-path="gateway-1.html"><a href="gateway-1.html#camera"><i class="fa fa-check"></i><b>8.1.2</b> Camera</a></li>
-<li class="chapter" data-level="8.1.3" data-path="gateway-1.html"><a href="gateway-1.html#g4g5g-module"><i class="fa fa-check"></i><b>8.1.3</b> 3g/4g/5g Module</a></li>
-<li class="chapter" data-level="8.1.4" data-path="gateway-1.html"><a href="gateway-1.html#bluetooth-hardware"><i class="fa fa-check"></i><b>8.1.4</b> Bluetooth Hardware</a></li>
-<li class="chapter" data-level="8.1.5" data-path="gateway-1.html"><a href="gateway-1.html#case"><i class="fa fa-check"></i><b>8.1.5</b> Case</a></li>
+<li class="chapter" data-level="9" data-path="gateway-1.html"><a href="gateway-1.html"><i class="fa fa-check"></i><b>9</b> Gateway</a><ul>
+<li class="chapter" data-level="9.1" data-path="gateway-1.html"><a href="gateway-1.html#hardware-1"><i class="fa fa-check"></i><b>9.1</b> Hardware</a><ul>
+<li class="chapter" data-level="9.1.1" data-path="gateway-1.html"><a href="gateway-1.html#uninterruptible-power-supply"><i class="fa fa-check"></i><b>9.1.1</b> Uninterruptible Power Supply</a></li>
+<li class="chapter" data-level="9.1.2" data-path="gateway-1.html"><a href="gateway-1.html#camera"><i class="fa fa-check"></i><b>9.1.2</b> Camera</a></li>
+<li class="chapter" data-level="9.1.3" data-path="gateway-1.html"><a href="gateway-1.html#g4g5g-module"><i class="fa fa-check"></i><b>9.1.3</b> 3g/4g/5g Module</a></li>
+<li class="chapter" data-level="9.1.4" data-path="gateway-1.html"><a href="gateway-1.html#bluetooth-hardware"><i class="fa fa-check"></i><b>9.1.4</b> Bluetooth Hardware</a></li>
+<li class="chapter" data-level="9.1.5" data-path="gateway-1.html"><a href="gateway-1.html#case"><i class="fa fa-check"></i><b>9.1.5</b> Case</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="gateway-1.html"><a href="gateway-1.html#software-1"><i class="fa fa-check"></i><b>8.2</b> Software</a></li>
+<li class="chapter" data-level="9.2" data-path="gateway-1.html"><a href="gateway-1.html#software-1"><i class="fa fa-check"></i><b>9.2</b> Software</a></li>
 </ul></li>
-<li class="chapter" data-level="9" data-path="backend-1.html"><a href="backend-1.html"><i class="fa fa-check"></i><b>9</b> Backend</a></li>
+<li class="chapter" data-level="10" data-path="backend-1.html"><a href="backend-1.html"><i class="fa fa-check"></i><b>10</b> Backend</a></li>
 <li class="part"><span><b>Appendix</b></span></li>
 <li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html"><i class="fa fa-check"></i>Contributors</a><ul>
 <li class="chapter" data-level="" data-path="contributors.html"><a href="contributors.html#ws-2020-2021"><i class="fa fa-check"></i>WS 2020 / 2021</a></li>
@@ -246,11 +251,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="commerical-applications.html"><a href="commerical-applications.html#literature"><i class="fa fa-check"></i>Literature</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="system-info.html"><a href="system-info.html"><i class="fa fa-check"></i>System Info</a></li>
-<li class="chapter" data-level="10" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html"><i class="fa fa-check"></i><b>10</b> Setup a Jupyterhub on your RaspberryPi</a><ul>
-<li class="chapter" data-level="10.1" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#prepare-python-environment"><i class="fa fa-check"></i><b>10.1</b> Prepare Python environment</a></li>
-<li class="chapter" data-level="10.2" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#install-jupyterhub"><i class="fa fa-check"></i><b>10.2</b> Install JupyterHub</a></li>
-<li class="chapter" data-level="10.3" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#configure-jupyterhub-as-a-system-service"><i class="fa fa-check"></i><b>10.3</b> Configure JupyterHub as a system service</a></li>
-</ul></li>
 <li class="divider"></li>
 <li><a href="http://www.bchwtz.de" target="blank"><center>www.<b>BCHWTZ</b>.de</center></a></li>
 
@@ -272,7 +272,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="setup-a-jupyterhub-on-your-raspberrypi" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Setup a Jupyterhub on your RaspberryPi</h1>
+<h1><span class="header-section-number">Chapter 3</span> Setup a Jupyterhub on your RaspberryPi</h1>
 <p>This chapter is based on the <a href="https://towardsdatascience.com/setup-your-home-jupyterhub-on-a-raspberry-pi-7ad32e20eed">Setup-Guide</a> by Gerold Busch.
 The following steps must be followed in chronological order to ensure that the JupyterHub works properly:</p>
 <ol style="list-style-type: decimal">
@@ -288,51 +288,51 @@ to simplify a later connection via ssh. The hostname is important to address the
 dynamic IP addresses.</code></pre>
 </blockquote>
 <div id="prepare-python-environment" class="section level2">
-<h2><span class="header-section-number">10.1</span> Prepare Python environment</h2>
+<h2><span class="header-section-number">3.1</span> Prepare Python environment</h2>
 <p>Redirect the system to python3:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb12-1"></a>sudo rm <span class="op">/</span>usr<span class="op">/</span>bin<span class="op">/</span>python </span>
-<span id="cb12-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb12-2"></a>sudo ln <span class="op">-</span>s <span class="op">/</span>usr<span class="op">/</span>bin<span class="op">/</span>python3 <span class="op">/</span>usr<span class="op">/</span>bin<span class="op">/</span>python</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb3-1"></a>sudo rm <span class="op">/</span>usr<span class="op">/</span>bin<span class="op">/</span>python </span>
+<span id="cb3-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb3-2"></a>sudo ln <span class="op">-</span>s <span class="op">/</span>usr<span class="op">/</span>bin<span class="op">/</span>python3 <span class="op">/</span>usr<span class="op">/</span>bin<span class="op">/</span>python</span></code></pre></div>
 <p>Install the python package manager pip:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb13-1"></a>sudo apt<span class="op">-</span>get update </span>
-<span id="cb13-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb13-2"></a>sudo apt<span class="op">-</span>get install python3<span class="op">-</span>pip </span>
-<span id="cb13-3"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb13-3"></a>sudo pip3 install <span class="op">--</span>upgrade pip</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb4-1"></a>sudo apt<span class="op">-</span>get update </span>
+<span id="cb4-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb4-2"></a>sudo apt<span class="op">-</span>get install python3<span class="op">-</span>pip </span>
+<span id="cb4-3"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb4-3"></a>sudo pip3 install <span class="op">--</span>upgrade pip</span></code></pre></div>
 </div>
 <div id="install-jupyterhub" class="section level2">
-<h2><span class="header-section-number">10.2</span> Install JupyterHub</h2>
+<h2><span class="header-section-number">3.2</span> Install JupyterHub</h2>
 <p>Install the proxy to routes the user requests to the hub and the notebook server:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb14-1"></a>sudo apt<span class="op">-</span>get install npm </span>
-<span id="cb14-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb14-2"></a>sudo npm install <span class="op">-</span>g configurable<span class="op">-</span>http<span class="op">-</span>proxy</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb5-1"></a>sudo apt<span class="op">-</span>get install npm </span>
+<span id="cb5-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb5-2"></a>sudo npm install <span class="op">-</span>g configurable<span class="op">-</span>http<span class="op">-</span>proxy</span></code></pre></div>
 <p>Install JupyterHub and Jupyter Notebook system-wide:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb15-1"></a>sudo <span class="op">-</span>H pip3 install notebook jupyterhub</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb6-1"></a>sudo <span class="op">-</span>H pip3 install notebook jupyterhub</span></code></pre></div>
 <p>Create a JupyterHub configuration file:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb16-1"></a>jupyterhub <span class="op">--</span>generate<span class="op">-</span>config </span>
-<span id="cb16-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb16-2"></a>sudo mv jupyterhub_config.py <span class="op">/</span>root</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb7-1"></a>jupyterhub <span class="op">--</span>generate<span class="op">-</span>config </span>
+<span id="cb7-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb7-2"></a>sudo mv jupyterhub_config.py <span class="op">/</span>root</span></code></pre></div>
 <p>In order to make changes at the Jupyterhub application, modify the <code>/root/jupyterhub_config.py</code>-File.
 E.g. to change the port on which the JupyterHub runs, uncomment and modify the following line of the config file:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb17-1"></a>c.JupyterHub.bind_url =<span class="st"> &#39;http://:8888&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb8-1"></a>c.JupyterHub.bind_url =<span class="st"> &#39;http://:8888&#39;</span></span></code></pre></div>
 </div>
 <div id="configure-jupyterhub-as-a-system-service" class="section level2">
-<h2><span class="header-section-number">10.3</span> Configure JupyterHub as a system service</h2>
+<h2><span class="header-section-number">3.3</span> Configure JupyterHub as a system service</h2>
 <p>To register JupyterHub as a system service, create the file <code>/lib/systemd/system/jupyterhub.service</code> and
 fill it with:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-1"></a>[Unit] </span>
-<span id="cb18-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-2"></a>Description=JupyterHub Service </span>
-<span id="cb18-3"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-3"></a>After=multi<span class="op">-</span>user.target  </span>
-<span id="cb18-4"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-4"></a></span>
-<span id="cb18-5"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-5"></a>[Service] </span>
-<span id="cb18-6"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-6"></a>User=root </span>
-<span id="cb18-7"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-7"></a>ExecStart=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>jupyterhub <span class="op">--</span>config=<span class="er">/</span>root<span class="op">/</span>jupyterhub_config.py </span>
-<span id="cb18-8"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-8"></a>Restart=on<span class="op">-</span>failure </span>
-<span id="cb18-9"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-9"></a> </span>
-<span id="cb18-10"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-10"></a>[Install] </span>
-<span id="cb18-11"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb18-11"></a>WantedBy=multi<span class="op">-</span>user.target</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-1"></a>[Unit] </span>
+<span id="cb9-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-2"></a>Description=JupyterHub Service </span>
+<span id="cb9-3"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-3"></a>After=multi<span class="op">-</span>user.target  </span>
+<span id="cb9-4"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-4"></a></span>
+<span id="cb9-5"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-5"></a>[Service] </span>
+<span id="cb9-6"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-6"></a>User=root </span>
+<span id="cb9-7"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-7"></a>ExecStart=<span class="er">/</span>usr<span class="op">/</span>local<span class="op">/</span>bin<span class="op">/</span>jupyterhub <span class="op">--</span>config=<span class="er">/</span>root<span class="op">/</span>jupyterhub_config.py </span>
+<span id="cb9-8"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-8"></a>Restart=on<span class="op">-</span>failure </span>
+<span id="cb9-9"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-9"></a> </span>
+<span id="cb9-10"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-10"></a>[Install] </span>
+<span id="cb9-11"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb9-11"></a>WantedBy=multi<span class="op">-</span>user.target</span></code></pre></div>
 <p>Make sure that the line starting with <code>ExecStart</code> contains the correct location of the JupyterHub binary and
 the config-file.</p>
 <p>Afterwards, run the following commands:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb19-1"></a>sudo systemctl daemon<span class="op">-</span>reload </span>
-<span id="cb19-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb19-2"></a>sudo systemctl start jupyterhub </span>
-<span id="cb19-3"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb19-3"></a>sudo systemctl enable jupyterhub </span>
-<span id="cb19-4"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb19-4"></a>sudo systemctl status jupyterhub.service</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb10-1"></a>sudo systemctl daemon<span class="op">-</span>reload </span>
+<span id="cb10-2"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb10-2"></a>sudo systemctl start jupyterhub </span>
+<span id="cb10-3"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb10-3"></a>sudo systemctl enable jupyterhub </span>
+<span id="cb10-4"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#cb10-4"></a>sudo systemctl status jupyterhub.service</span></code></pre></div>
 <p>Now the JupytherHub should be accessible under the link:</p>
 <p><code>http://&lt;address of your raspi/hostname&gt;:8888</code></p>
 <blockquote>
@@ -344,13 +344,17 @@ the Pi via scp command or VNC.</code></pre>
 
 </div>
 </div>
+
+
+
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="system-info.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="getting-started.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sensor.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -381,7 +385,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/Setup_JupyterHub.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02_Setup_JupyterHub.Rmd",
 "text": "Edit"
 },
 "history": {

@@ -4,6 +4,10 @@ sensor-dev-env
 software-setup
 hardware-setup
 gateway-dev-env
+setup-a-jupyterhub-on-your-raspberrypi
+prepare-python-environment
+install-jupyterhub
+configure-jupyterhub-as-a-system-service
 sensor
 initializing-acceleration-logging
 retrieving-data-from-fifo
@@ -119,7 +123,3 @@ bluetooth-hardware
 case
 software-1
 backend-1
-setup-a-jupyterhub-on-your-raspberrypi
-prepare-python-environment
-install-jupyterhub
-configure-jupyterhub-as-a-system-service
