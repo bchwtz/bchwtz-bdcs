@@ -386,6 +386,16 @@ This function reads some statistics about the usage of the internal Nordic Flash
 | - | - | - |
 | statistic | in/out | Memory for storing statistics. |
 
+#### `rd_status_t rt_flash_ringbuffer_ext_flash_exists(void)` ####
+
+This function checks if Macronix Flash Chip is available.
+
+| Special error codes ||
+| - | - |
+| RD_SUCCESS | If Macronix Flash is available. |
+| RD_ERROR_NOT_FOUND | If Macronix Flash is not available. |
+| RD_ERROR_NOT_INITIALIZED | If the module is currently not initialzed. |
+
 ### ruuvi_task_flashdb.c ###
 
 This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.
