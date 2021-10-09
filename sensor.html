@@ -168,6 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.6.8" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk_rtc_mcu.c"><i class="fa fa-check"></i><b>4.6.8</b> ruuvi_nrf5_sdk_rtc_mcu.c</a></li>
 <li class="chapter" data-level="4.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>4.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
 <li class="chapter" data-level="4.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>4.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
+<li class="chapter" data-level="4.6.11" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flashdb.c"><i class="fa fa-check"></i><b>4.6.11</b> ruuvi_task_flashdb.c</a></li>
 </ul></li>
 <li class="chapter" data-level="4.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>4.7</b> Energy consumption</a></li>
 <li class="chapter" data-level="4.8" data-path="sensor.html"><a href="sensor.html#firmware-packaging"><i class="fa fa-check"></i><b>4.8</b> Firmware packaging</a></li>
@@ -299,7 +300,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="streaming-of-acceleration-data" class="section level2">
 <h2><span class="header-section-number">4.5</span> Streaming of acceleration data</h2>
-<p>In case of sampling acceleration data at high sampling frequencies than storing them in flash memory may be not possible because of latency of the memory or limitations by available size of memory. As an alternative the data can be streamed. In this mode, data from the acceleration sensor will not be written to flash. Instead the data is cached in RAM. The following figure shows the difference between logging of acceleration data and streaming.</p>
+<p>In case of sampling acceleration data at high sampling frequencies than storing them in flash memory may be not possible because of latency of the memory or limitations by available size of memory. As an alternative the data can be streamed. In this mode, data from the acceleration sensor will not be written to flash. Instead the data is cached in RAM. For this purpose 6k RAM are dynamically allocated using <code>malloc()</code> during enabling of streaming. At the time of writing this documentation FlashDB lacks the feature of freeing memory which is used to store a database. Because of this missing feature the only way of freeing the memory used by streaming is to reboot the firmware.</p>
+<p>The following figure shows the difference between logging of acceleration data and streaming.</p>
 <p><img src="gfx/org/streaming_of_acceleration_data.png" />
 When logging is active, the acceleration sensor LIS2DH12 generated an interrupt every time its FIFO is full. The interrupt causes the execution of <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a>. This function schedules the execution of <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a> outside interrupt context (grey). The following process was described <a href="sensor.html#retrieving-data-from-fifo">earlier</a>.</p>
 <p>When streaming is active, the process is started by the same condition. But the FIFO is read by <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a>. Instead of scheduling <a href="sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size"><code>fifo_full_handler()</code></a> the function hands over the data to FlashDB which stores them in RAM. This is done inside interrupt context (blue). In case of streaming there is no explicit command to read the data by the gateway. Instead, if connected to Bluetooth GATT service, the data is automatically send. This is done by scheduling <a href="sensor.html#void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size"><code>app_acc_log_transfer_ram_db()</code></a>. <a href="sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt"><code>on_fifo_full()</code></a> schedules execution of this function if <code>rt_gatt_nus_is_connected()</code> returns true.</p>
@@ -1149,6 +1151,30 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 <td>statistic</td>
 <td>in/out</td>
 <td>Memory for storing statistics.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="ruuvi_task_flashdb.c" class="section level3">
+<h3><span class="header-section-number">4.6.11</span> ruuvi_task_flashdb.c</h3>
+<p>This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.</p>
+<div id="rd_status_t-rt_flashdb_to_ruuvi_errorfdb_err_t-fdb_err" class="section level4">
+<h4><span class="header-section-number">4.6.11.1</span> <code>rd_status_t rt_flashdb_to_ruuvi_error(fdb_err_t fdb_err)</code></h4>
+<p>This function converts an error code of FlashDB to an Ruuvi error code. It return the Ruuvi error code which represents the state of FlashDB.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameters</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>fdb_err</td>
+<td>in</td>
+<td>Error code of FlashDB.</td>
 </tr>
 </tbody>
 </table>
