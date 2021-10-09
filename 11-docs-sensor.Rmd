@@ -30,7 +30,9 @@ All sensor initialization is done inside [`setup()`](sensor.html#void-setup-void
 
 ## Streaming of acceleration data ##
 
-In case of sampling acceleration data at high sampling frequencies than storing them in flash memory may be not possible because of latency of the memory or limitations by available size of memory. As an alternative the data can be streamed. In this mode, data from the acceleration sensor will not be written to flash. Instead the data is cached in RAM. The following figure shows the difference between logging of acceleration data and streaming.
+In case of sampling acceleration data at high sampling frequencies than storing them in flash memory may be not possible because of latency of the memory or limitations by available size of memory. As an alternative the data can be streamed. In this mode, data from the acceleration sensor will not be written to flash. Instead the data is cached in RAM. For this purpose 6k RAM are dynamically allocated using `malloc()` during enabling of streaming. At the time of writing this documentation FlashDB lacks the feature of freeing memory which is used to store a database. Because of this missing feature the only way of freeing the memory used by streaming is to reboot the firmware.
+
+The following figure shows the difference between logging of acceleration data and streaming.
 
 ![](./gfx/org/streaming_of_acceleration_data.png)
 When logging is active, the acceleration sensor LIS2DH12 generated an interrupt every time its FIFO is full. The interrupt causes the execution of [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). This function schedules the execution of [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) outside interrupt context (grey). The following process was described [earlier](sensor.html#retrieving-data-from-fifo).
@@ -383,6 +385,19 @@ This function reads some statistics about the usage of the internal Nordic Flash
 | Parameters |||
 | - | - | - |
 | statistic | in/out | Memory for storing statistics. |
+
+### ruuvi_task_flashdb.c ###
+
+This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.
+
+#### `rd_status_t rt_flashdb_to_ruuvi_error(fdb_err_t fdb_err)` ####
+
+This function converts an error code of FlashDB to an Ruuvi error code. It return the Ruuvi error code which represents the state of FlashDB.
+
+| Parameters |||
+| - | - | - |
+| fdb_err | in | Error code of FlashDB. |
+
 
 ## Energy consumption ##
 The following figure visualizes energy consumption of different operation states. The numbers at the measuring point are equal to the duration. All measurements are done with 3V supply voltage.
