@@ -65,6 +65,7 @@ rd_status_t-rt_flash_ringbuffer_readconst-fdb_tsl_cb-callback-const-ri_comm_xfer
 rd_status_t-rt_flash_ringbuffer_clearvoid
 rd_status_t-rt_flash_ringbuffer_drop-void
 rd_status_t-rt_flash_ringbuffer_statistic-uint8_t-const-statistic
+rd_status_t-rt_flash_ringbuffer_ext_flash_existsvoid
 ruuvi_task_flashdb.c
 rd_status_t-rt_flashdb_to_ruuvi_errorfdb_err_t-fdb_err
 energy-consumption

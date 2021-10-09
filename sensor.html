@@ -1159,6 +1159,32 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 </tbody>
 </table>
 </div>
+<div id="rd_status_t-rt_flash_ringbuffer_ext_flash_existsvoid" class="section level4">
+<h4><span class="header-section-number">5.6.10.7</span> <code>rd_status_t rt_flash_ringbuffer_ext_flash_exists(void)</code></h4>
+<p>This function checks if Macronix Flash Chip is available.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Special error codes</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RD_SUCCESS</td>
+<td>If Macronix Flash is available.</td>
+</tr>
+<tr class="even">
+<td>RD_ERROR_NOT_FOUND</td>
+<td>If Macronix Flash is not available.</td>
+</tr>
+<tr class="odd">
+<td>RD_ERROR_NOT_INITIALIZED</td>
+<td>If the module is currently not initialzed.</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="ruuvi_task_flashdb.c" class="section level3">
 <h3><span class="header-section-number">5.6.11</span> ruuvi_task_flashdb.c</h3>
