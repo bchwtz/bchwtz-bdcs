@@ -12,19 +12,18 @@ account with your university Email on the JetBrains website.
 ![](./gfx/org/PyCharm_1.jpg)
 
 3. Click on GitHub
-   + Click on Login via GitHub
-   + You get redirected to a JetBrains site. 
-   + Click on “Authorize in GitHub”
-   + Enter your credentials
+4. Click on Login via GitHub
+5. You get redirected to a JetBrains site. 6. Click on “Authorize in GitHub”
+6. Enter your credentials
 
 ![](./gfx/org/PyCharm_2.jpg)
 
-4. If it is successful choose the gateway repository from the list and click “clone”. 
+7. If it is successful choose the gateway repository from the list and click “clone”. 
 
 ![](./gfx/org/PyCharm_3.jpg)
 
 > If the Error message “Git is not installed” appears you can click on it to install on your machine. 
-  After git is installed you have to repeat the steps 4 to 8. 
+  After git is installed you have to repeat the steps 2. 3. 7. 
 
 Afterwards your IDE should looks like this:
 
