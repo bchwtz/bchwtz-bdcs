@@ -125,3 +125,6 @@ bluetooth-hardware
 case
 software-1
 backend-1
+pycharm
+pycharm-git-repository
+remotedeploy
