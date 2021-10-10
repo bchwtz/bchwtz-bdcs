@@ -25,43 +25,43 @@ This library is used for communication between the gateway and the sensors. It s
 
 ### Activate acceleration logging 
 
-The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging ([control-acceleration-logging] \@ref(control-acceleration-logging) ) message to the target sensor. The message content is `0x4A 0x4A 0x08 0x01`. If Logging is already activated an error message ( \@ref(status-response) ) will be received. The returned message will be saved in a message object.
+The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging (\@ref(control-acceleration-logging)) message to the target sensor. The message content is `0x4A 0x4A 0x08 0x01`. If Logging is already activated an error message (\@ref(status-response)) will be received. The returned message will be saved in a message object.
 
 ### Deactivate acceleration logging 
 
-The “deactivate_logging_at_sensor()” function deactivates logging at all sensors in Bluetooth range. With a mac address as argument, a specific sensor can be deactivated. To deactivate the logging, the gateway sends a control acceleration logging ([6.1.7](ble-gatt-messages.html#control-acceleration-logging-0x0a)) message to the target sensor. The message content is `0x4A 0x4A 0x08 0x00`. Stopping the logging cause a deletion of all flash pages. If Logging is not activated an error message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) will be received. The returned message will be saved in a status message object.
+The “deactivate_logging_at_sensor()” function deactivates logging at all sensors in Bluetooth range. With a mac address as argument, a specific sensor can be deactivated. To deactivate the logging, the gateway sends a control acceleration logging (\@ref(control-acceleration-logging)) message to the target sensor. The message content is `0x4A 0x4A 0x08 0x00`. Stopping the logging cause a deletion of all flash pages. If Logging is not activated an error message (\@ref(status-response)) will be received. The returned message will be saved in a status message object.
 
 
 ### Set sensor configuration 
 With the “set_config_sensor()” function three sensor properties can be manipulated:
 
-1. Sampling rate (sampling_rate): Measuring interval of the sensor. Allowed values can be found in Chapter ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)). 
-2. Sampling resolution (sampling_resolution): Resolution of the measured values. Allowed values can be found in Chapter ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)).
-3. Measuring range(measuring_range): Measuring range. Allowed values can be found in Chapter ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)). The returned message will be saved in a status message object.
+1. Sampling rate (sampling_rate): Measuring interval of the sensor. Allowed values can be found in Chapter (\@ref(set-configuration-of-acceleration-sensor)). 
+2. Sampling resolution (sampling_resolution): Resolution of the measured values. Allowed values can be found in Chapter (\@ref(set-configuration-of-acceleration-sensor)).
+3. Measuring range(measuring_range): Measuring range. Allowed values can be found in Chapter (\@ref(set-configuration-of-acceleration-sensor)). The returned message will be saved in a status message object.
 
 
-The configuration will be sent via a “Set configuration of acceleration sensor” ([6.1.3](ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06)) message to all sensors in Bluetooth range, if no specific mac address is passed as argument. If any of the set values isn’t allowed a warning appears.
-Only arguments with allowed values will be set. All others stay as they are. After setting the configuration all flash pages will be deleted. This can cause a loss of data. The Sensor send a status response message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) to the gateway if the configuration was set successful or not. The returned message will be saved in a status message object.
+The configuration will be sent via a “Set configuration of acceleration sensor” (\@ref(set-configuration-of-acceleration-sensor)) message to all sensors in Bluetooth range, if no specific mac address is passed as argument. If any of the set values isn’t allowed a warning appears.
+Only arguments with allowed values will be set. All others stay as they are. After setting the configuration all flash pages will be deleted. This can cause a loss of data. The Sensor send a status response message (\@ref(status-response)) to the gateway if the configuration was set successful or not. The returned message will be saved in a status message object.
 
 
 ### Set sensor time 
 
-With the “set_sensor_time() “ function all sensors in Bluetooth range will be set to the current time in UTC. Giving a specific mac address as argument will set the time at this sensor only. To set the sensor time a “Set system time” ([6.1.5](ble-gatt-messages.html#set-system-time-0x08)) message, with the current time, will be send. After setting the sensor time all flash pages will be deleted. This can cause a loss of data. The Sensor send a response message ([6.2.1](ble-gatt-messages.html#status-response-0x00)) to the gateway if the time was set successful or not. The returned message will be saved in a status message object.
+With the “set_sensor_time() “ function all sensors in Bluetooth range will be set to the current time in UTC. Giving a specific mac address as argument will set the time at this sensor only. To set the sensor time a “Set system time” (\@ref(set-system-time)) message, with the current time, will be send. After setting the sensor time all flash pages will be deleted. This can cause a loss of data. The Sensor send a response message (\@ref(ble-gatt-messages.html#status-response)) to the gateway if the time was set successful or not. The returned message will be saved in a status message object.
 
 
 ### Get sensor configuratin 
-The “get_config_from_sensor()”send a “Read configuration of acceleration sensor” ([6.1.4](ble-gatt-messages.html#read-configuration-of-acceleration-sensor-0x07)) message to the target sensor. The sensor returns with a “Configuration response” ([6.2.3](ble-gatt-messages.html#configuration-response-0x07)) message. The configuration will be displayed. If no argument is given all sensors in Bluetooth range will be messaged. To see a specific sensor configuration, use its mac address as argument. The returned message will be saved in a config message object.
+The “get_config_from_sensor()”send a “Read configuration of acceleration sensor” (\@ref(read-configuration-of-acceleration-sensor)) message to the target sensor. The sensor returns with a “Configuration response” (\@ref(configuration-response)) message. The configuration will be displayed. If no argument is given all sensors in Bluetooth range will be messaged. To see a specific sensor configuration, use its mac address as argument. The returned message will be saved in a config message object.
 
 
 ### Get sensor time 
-The “get_time_from_sensor()” function returns the current time from all sensors in Bluetooth range. To see a specific sensor time, use its mac address as argument. The function sends a “Read system time” ([6.1.6](ble-gatt-messages.html#read-system-time-0x09)) message to all targets and receives “Timestamp response” ([6.2.4](ble-gatt-messages.html#timestamp-response-0x09)) messages. The returned message will be saved in a time message object.
+The “get_time_from_sensor()” function returns the current time from all sensors in Bluetooth range. To see a specific sensor time, use its mac address as argument. The function sends a “Read system time” (\@ref(read-system-time)) message to all targets and receives “Timestamp response” (\@ref(timestamp-response)) messages. The returned message will be saved in a time message object.
 
 
 ### Get acceleration data 
-The “get_acceleration_data()” collect all samples from all sensors in Bluetooth range, parse and stores them in a Csv file. To do this, the gateway sends a “Start transmitting logged data” ([6.1.2](ble-gatt-messages.html#start-transmitting-logged-data-0x05)) Message to all targets and receives the data which are followed by an “End of data message” ([6.2.2](ble-gatt-messages.html#end-of-data-message-0x03-0x05)). The returned Message will be saved in an acceleration data message object.
+The “get_acceleration_data()” collect all samples from all sensors in Bluetooth range, parse and stores them in a Csv file. To do this, the gateway sends a “Start transmitting logged data” (\@ref(start-transmitting-logged-data) Message to all targets and receives the data which are followed by an “End of data message” (\@ref(end-of-data-message)). The returned Message will be saved in an acceleration data message object.
 
 ### Get flash statistics
-With the “get_flash_statistic()” function you can access important information from the internal flash memory of the sensor. ([6.2.2](ble-gatt-messages.html#query-flash-statistic)). The returned message will be saved in a flash statistic message object.
+With the “get_flash_statistic()” function you can access important information from the internal flash memory of the sensor. (\@ref(query-flash-statistic)). The returned message will be saved in a flash statistic message object.
 
 ### Get logging status
 The “get_logging_status()” function is used to identify if a sensor is currently logging or if logging is deactivated. It returns a status message object. 
