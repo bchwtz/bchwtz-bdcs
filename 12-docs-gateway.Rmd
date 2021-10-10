@@ -65,6 +65,7 @@ With the “get_flash_statistic()” function you can access important informati
 
 ### Get logging status
 The “get_logging_status()” function is used to identify if a sensor is currently logging or if logging is deactivated. It returns a status message object. 
+
 	1 = logging is active
 	0 = logging is not active
 
