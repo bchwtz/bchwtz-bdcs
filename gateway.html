@@ -290,16 +290,16 @@ nest_asyncio
 bleak 
 bluez 
 crcmod</code></pre>
-<p>The “AdvertisementLogging” function need the following libraries:
-ruuvitag_sensor
-bluez<br />
-pygatt</p>
+<p>The “AdvertisementLogging” function need the following libraries:</p>
+<pre><code>    ruuvitag_sensor
+    bluez    
+    pygatt</code></pre>
 <div id="sensor-gateway-communication-library" class="section level2">
 <h2><span class="header-section-number">6.1</span> Sensor Gateway Communication Library</h2>
 <p>This library is used for communication between the gateway and the sensors. It sends messages to the sensor to change their state or get their data. The library has the following functions. All messages function can be used with none, one or multiple mac addresses as argument. When no argument is used the called function will use all tags in range. If only one address is given as argument the function will process only on this ruuvi tag. The argument must be given as a string. Multiple addresses must be formatted as a list. The called function is processed on all devices in this list.</p>
 <div id="activate-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> Activate acceleration logging</h3>
-<p>The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging (@ref(ble-gatt-messages.html#control-acceleration-logging)) message to the target sensor. The message content is <code>0x4A 0x4A 0x08 0x01</code>. If Logging is already activated an error message (@ref(ble-gatt-messages.html#status-response)) will be received. The returned message will be saved in a message object.</p>
+<p>The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging ( @ref(ble-gatt-messages.html#control-acceleration-logging) ) message to the target sensor. The message content is <code>0x4A 0x4A 0x08 0x01</code>. If Logging is already activated an error message ( @ref(ble-gatt-messages.html#status-response) ) will be received. The returned message will be saved in a message object.</p>
 </div>
 <div id="deactivate-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> Deactivate acceleration logging</h3>
