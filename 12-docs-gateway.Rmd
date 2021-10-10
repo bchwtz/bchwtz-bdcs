@@ -24,7 +24,7 @@ This library is used for communication between the gateway and the sensors. It s
 
 ### Activate acceleration logging 
 
-The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging ([6.1.7](ble-gatt-messages.html#control-acceleration-logging)) message to the target sensor. The message content is `0x4A 0x4A 0x08 0x01`. If Logging is already activated an error message ([6.2.1](ble-gatt-messages.html#status-response)) will be received. The returned message will be saved in a message object.
+The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging (\@ref(ble-gatt-messages.html#control-acceleration-logging)) message to the target sensor. The message content is `0x4A 0x4A 0x08 0x01`. If Logging is already activated an error message (\@ref(ble-gatt-messages.html#status-response)) will be received. The returned message will be saved in a message object.
 
 ### Deactivate acceleration logging 
 
