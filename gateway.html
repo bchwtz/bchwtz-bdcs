@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-10-09" />
+<meta name="date" content="2021-10-10" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -185,9 +185,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.1.4" data-path="gateway.html"><a href="gateway.html#set-sensor-time"><i class="fa fa-check"></i><b>6.1.4</b> Set sensor time</a></li>
 <li class="chapter" data-level="6.1.5" data-path="gateway.html"><a href="gateway.html#get-sensor-configuratin"><i class="fa fa-check"></i><b>6.1.5</b> Get sensor configuratin</a></li>
 <li class="chapter" data-level="6.1.6" data-path="gateway.html"><a href="gateway.html#get-sensor-time"><i class="fa fa-check"></i><b>6.1.6</b> Get sensor time</a></li>
-<li class="chapter" data-level="6.1.7" data-path="gateway.html"><a href="gateway.html#get-last-sample"><i class="fa fa-check"></i><b>6.1.7</b> Get last sample</a></li>
-<li class="chapter" data-level="6.1.8" data-path="gateway.html"><a href="gateway.html#get-acceleration-data"><i class="fa fa-check"></i><b>6.1.8</b> Get acceleration data</a></li>
-<li class="chapter" data-level="6.1.9" data-path="gateway.html"><a href="gateway.html#find-macs"><i class="fa fa-check"></i><b>6.1.9</b> Find Macs</a></li>
+<li class="chapter" data-level="6.1.7" data-path="gateway.html"><a href="gateway.html#get-acceleration-data"><i class="fa fa-check"></i><b>6.1.7</b> Get acceleration data</a></li>
+<li class="chapter" data-level="6.1.8" data-path="gateway.html"><a href="gateway.html#get-flash-statistics"><i class="fa fa-check"></i><b>6.1.8</b> Get flash statistics</a></li>
+<li class="chapter" data-level="6.1.9" data-path="gateway.html"><a href="gateway.html#get-logging-status"><i class="fa fa-check"></i><b>6.1.9</b> Get logging status</a></li>
 </ul></li>
 <li class="chapter" data-level="6.2" data-path="gateway.html"><a href="gateway.html#advertisement-logging"><i class="fa fa-check"></i><b>6.2</b> Advertisement logging</a></li>
 <li class="chapter" data-level="6.3" data-path="gateway.html"><a href="gateway.html#data-storage-format"><i class="fa fa-check"></i><b>6.3</b> Data storage format</a><ul>
@@ -284,22 +284,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Receive acceleration data from one or more sensors, parse and store them</li>
 <li>Logging Bluetooth advertisements from sensors</li>
 </ol>
-<p>For the first two tasks there is the “Sensor Gateway Communication” library. An executable is used to log the advertisements. Both are written in python. To run the code, you need a few libraries which are listed below:</p>
-<pre><code>ruuvitag_sensor
-bluez
-crcmod
-pygatt
-interruptingcow</code></pre>
+<p>For the first two tasks there is the “SensorGatewayBleak” library. All Code is written in python. You need the following libraries to run the “SensorGatewayBleak” library:</p>
+<pre><code>asyncio
+nest_asyncio
+bleak 
+bluez 
+crcmod</code></pre>
+<p>The “AdvertisementLogging” function need the following libraries:
+ruuvitag_sensor
+bluez<br />
+pygatt</p>
 <div id="sensor-gateway-communication-library" class="section level2">
 <h2><span class="header-section-number">6.1</span> Sensor Gateway Communication Library</h2>
-<p>This library is used for communication between the gateway and the sensors. It sends messages to the sensor to change their state or get their data. The library has the following functions.</p>
+<p>This library is used for communication between the gateway and the sensors. It sends messages to the sensor to change their state or get their data. The library has the following functions. All messages function can be used with none, one or multiple mac addresses as argument. When no argument is used the called function will use all tags in range. If only one address is given as argument the function will process only on this ruuvi tag. The argument must be given as a string. Multiple addresses must be formatted as a list. The called function is processed on all devices in this list.</p>
 <div id="activate-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.1.1</span> Activate acceleration logging</h3>
-<p>The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging (<a href="ble-gatt-messages.html#control-acceleration-logging-0x0a">6.1.7</a>) message to the target sensor. The message content is <code>F0A 0xFA 0x0A 0x01</code>. If Logging is already activated an error message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) will be received.</p>
+<p>The “activate_logging_at_sensor()” function activates logging at all sensors in Bluetooth range of the gateway. It can also be used with a mac address as argument to activate the logging at a specific sensor. To activate the logging, the gateway sends a control acceleration logging (<a href="ble-gatt-messages.html#control-acceleration-logging">6.1.7</a>) message to the target sensor. The message content is <code>0x4A 0x4A 0x08 0x01</code>. If Logging is already activated an error message (<a href="ble-gatt-messages.html#status-response">6.2.1</a>) will be received. The returned message will be saved in a message object.</p>
 </div>
 <div id="deactivate-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.1.2</span> Deactivate acceleration logging</h3>
-<p>The “deactivate_logging_at_sensor()” function deactivates logging at all sensors in Bluetooth range. With a mac address as argument, a specific sensor can be deactivated. To deactivate the logging, the gateway sends a control acceleration logging (<a href="ble-gatt-messages.html#control-acceleration-logging-0x0a">6.1.7</a>) message to the target sensor. The message content is <code>0xFA 0xFA 0x0A 0x00</code>. Stopping the logging cause a deletion of all flash pages. If Logging is not activated an error message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) will be received.</p>
+<p>The “deactivate_logging_at_sensor()” function deactivates logging at all sensors in Bluetooth range. With a mac address as argument, a specific sensor can be deactivated. To deactivate the logging, the gateway sends a control acceleration logging (<a href="ble-gatt-messages.html#control-acceleration-logging-0x0a">6.1.7</a>) message to the target sensor. The message content is <code>0x4A 0x4A 0x08 0x00</code>. Stopping the logging cause a deletion of all flash pages. If Logging is not activated an error message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) will be received. The returned message will be saved in a status message object.</p>
 </div>
 <div id="set-sensor-configuration" class="section level3">
 <h3><span class="header-section-number">6.1.3</span> Set sensor configuration</h3>
@@ -307,34 +311,36 @@ interruptingcow</code></pre>
 <ol style="list-style-type: decimal">
 <li>Sampling rate (sampling_rate): Measuring interval of the sensor. Allowed values can be found in Chapter (<a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">6.1.3</a>).</li>
 <li>Sampling resolution (sampling_resolution): Resolution of the measured values. Allowed values can be found in Chapter (<a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">6.1.3</a>).</li>
-<li>Measuring range(measuring_range): Measuring range. Allowed values can be found in Chapter (<a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">6.1.3</a>).</li>
+<li>Measuring range(measuring_range): Measuring range. Allowed values can be found in Chapter (<a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">6.1.3</a>). The returned message will be saved in a status message object.</li>
 </ol>
-<p>The configuration will be sent via a “Set configuration of acceleration sensor” (<a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">6.1.3</a>) message to all sensors in Bluetooth range, if no specific mac address is passed as argument.
-Only arguments with allowed values will be set. All others stay as they are. After setting the configuration all flash pages will be deleted. This can cause a loss of data. The Sensor send a status response message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) to the gateway if the configuration was set successful or not.</p>
+<p>The configuration will be sent via a “Set configuration of acceleration sensor” (<a href="ble-gatt-messages.html#set-configuration-of-acceleration-sensor-0x06">6.1.3</a>) message to all sensors in Bluetooth range, if no specific mac address is passed as argument. If any of the set values isn’t allowed a warning appears.
+Only arguments with allowed values will be set. All others stay as they are. After setting the configuration all flash pages will be deleted. This can cause a loss of data. The Sensor send a status response message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) to the gateway if the configuration was set successful or not. The returned message will be saved in a status message object.</p>
 </div>
 <div id="set-sensor-time" class="section level3">
 <h3><span class="header-section-number">6.1.4</span> Set sensor time</h3>
-<p>With the “set_sensor_time() “ function all sensors in Bluetooth range will be set to the current time in UTC. Giving a specific mac address as argument will set the time at this sensor only. To set the sensor time a “Set system time” (<a href="ble-gatt-messages.html#set-system-time-0x08">6.1.5</a>) message, with the current time, will be send. After setting the sensor time all flash pages will be deleted. This can cause a loss of data. The Sensor send a response message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) to the gateway if the time was set successful or not.</p>
+<p>With the “set_sensor_time() “ function all sensors in Bluetooth range will be set to the current time in UTC. Giving a specific mac address as argument will set the time at this sensor only. To set the sensor time a “Set system time” (<a href="ble-gatt-messages.html#set-system-time-0x08">6.1.5</a>) message, with the current time, will be send. After setting the sensor time all flash pages will be deleted. This can cause a loss of data. The Sensor send a response message (<a href="ble-gatt-messages.html#status-response-0x00">6.2.1</a>) to the gateway if the time was set successful or not. The returned message will be saved in a status message object.</p>
 </div>
 <div id="get-sensor-configuratin" class="section level3">
 <h3><span class="header-section-number">6.1.5</span> Get sensor configuratin</h3>
-<p>The “get_config_from_sensor()”send a “Read configuration of acceleration sensor” (<a href="ble-gatt-messages.html#read-configuration-of-acceleration-sensor-0x07">6.1.4</a>) message to the target sensor. The sensor returns with a “Configuration response” (<a href="ble-gatt-messages.html#configuration-response-0x07">6.2.3</a>) message. The configuration will be displayed. If no argument is given all sensors in Bluetooth range will be messaged. To see a specific sensor configuration, use its mac address as argument.</p>
+<p>The “get_config_from_sensor()”send a “Read configuration of acceleration sensor” (<a href="ble-gatt-messages.html#read-configuration-of-acceleration-sensor-0x07">6.1.4</a>) message to the target sensor. The sensor returns with a “Configuration response” (<a href="ble-gatt-messages.html#configuration-response-0x07">6.2.3</a>) message. The configuration will be displayed. If no argument is given all sensors in Bluetooth range will be messaged. To see a specific sensor configuration, use its mac address as argument. The returned message will be saved in a config message object.</p>
 </div>
 <div id="get-sensor-time" class="section level3">
 <h3><span class="header-section-number">6.1.6</span> Get sensor time</h3>
-<p>The “get_time_from_sensor()” function returns the current time from all sensors in Bluetooth range. To see a specific sensor time, use its mac address as argument. The function sends a “Read system time” (<a href="ble-gatt-messages.html#read-system-time-0x09">6.1.6</a>) message to all targets and receives “Timestamp response” (<a href="ble-gatt-messages.html#timestamp-response-0x09">6.2.4</a>) messages.</p>
-</div>
-<div id="get-last-sample" class="section level3">
-<h3><span class="header-section-number">6.1.7</span> Get last sample</h3>
-<p>The “get_last_sample_acceleration_data()” collects, parse and displays the last 32 samples from all sensors in Bluetooth range. To do this, the gateway send a “Start transmitting last sample” (<a href="ble-gatt-messages.html#start-transmitting-last-sample-0x03">6.1.1</a>) Message to the targets and receives the data which are followed by an “End of data message” (<a href="ble-gatt-messages.html#end-of-data-message-0x03-0x05">6.2.2</a>). The displayed values are shown as X-, Y-, Z-Values. Use the mac address to see samples from a specific Sensor.</p>
+<p>The “get_time_from_sensor()” function returns the current time from all sensors in Bluetooth range. To see a specific sensor time, use its mac address as argument. The function sends a “Read system time” (<a href="ble-gatt-messages.html#read-system-time-0x09">6.1.6</a>) message to all targets and receives “Timestamp response” (<a href="ble-gatt-messages.html#timestamp-response-0x09">6.2.4</a>) messages. The returned message will be saved in a time message object.</p>
 </div>
 <div id="get-acceleration-data" class="section level3">
-<h3><span class="header-section-number">6.1.8</span> Get acceleration data</h3>
-<p>The “get_acceleration_data()” collect all samples from all sensors in Bluetooth range, parse and stores them in a Csv file. To do this, the gateway sends a “Start transmitting logged data” (<a href="ble-gatt-messages.html#start-transmitting-logged-data-0x05">6.1.2</a>) Message to all targets and receives the data which are followed by an “End of data message” (<a href="ble-gatt-messages.html#end-of-data-message-0x03-0x05">6.2.2</a>).</p>
+<h3><span class="header-section-number">6.1.7</span> Get acceleration data</h3>
+<p>The “get_acceleration_data()” collect all samples from all sensors in Bluetooth range, parse and stores them in a Csv file. To do this, the gateway sends a “Start transmitting logged data” (<a href="ble-gatt-messages.html#start-transmitting-logged-data-0x05">6.1.2</a>) Message to all targets and receives the data which are followed by an “End of data message” (<a href="ble-gatt-messages.html#end-of-data-message-0x03-0x05">6.2.2</a>). The returned Message will be saved in an acceleration data message object.</p>
 </div>
-<div id="find-macs" class="section level3">
-<h3><span class="header-section-number">6.1.9</span> Find Macs</h3>
-<p>The “find_tags_mac()” returns all unique mac addresses that are found.</p>
+<div id="get-flash-statistics" class="section level3">
+<h3><span class="header-section-number">6.1.8</span> Get flash statistics</h3>
+<p>With the “get_flash_statistic()” function you can access important information from the internal flash memory of the sensor. (<a href="ble-gatt-messages.html#query-flash-statistic">6.2.2</a>). The returned message will be saved in a flash statistic message object.</p>
+</div>
+<div id="get-logging-status" class="section level3">
+<h3><span class="header-section-number">6.1.9</span> Get logging status</h3>
+<p>The “get_logging_status()” function is used to identify if a sensor is currently logging or if logging is deactivated. It returns a status message object.
+1 = logging is active
+0 = logging is not active</p>
 </div>
 </div>
 <div id="advertisement-logging" class="section level2">
@@ -343,7 +349,8 @@ Only arguments with allowed values will be set. All others stay as they are. Aft
 </div>
 <div id="data-storage-format" class="section level2">
 <h2><span class="header-section-number">6.3</span> Data storage format</h2>
-<p>For an easy access, the received data is stored in csv files. Separate Files are used for the acceleration logging and the advertisement logging. They both have different structures which are shown in this chapter.</p>
+<p>For an easy access, the received advertisement data is stored in csv files.
+Acceleration data can be saved in csv as well or store the acceleration data message object. We recommend the following structure to save the files:</p>
 <div id="csv-file-acceleration-logging" class="section level3">
 <h3><span class="header-section-number">6.3.1</span> Csv file acceleration Logging</h3>
 <p>Five values will be stored in these Csv files. These values are:</p>

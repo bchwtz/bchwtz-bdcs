@@ -78,9 +78,9 @@ set-sensor-configuration
 set-sensor-time
 get-sensor-configuratin
 get-sensor-time
-get-last-sample
 get-acceleration-data
-find-macs
+get-flash-statistics
+get-logging-status
 advertisement-logging
 data-storage-format
 csv-file-acceleration-logging
