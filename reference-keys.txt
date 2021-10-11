@@ -65,9 +65,14 @@ rd_status_t-rt_flash_ringbuffer_readconst-fdb_tsl_cb-callback-const-ri_comm_xfer
 rd_status_t-rt_flash_ringbuffer_clearvoid
 rd_status_t-rt_flash_ringbuffer_drop-void
 rd_status_t-rt_flash_ringbuffer_statistic-uint8_t-const-statistic
-rd_status_t-rt_flash_ringbuffer_ext_flash_existsvoid
 ruuvi_task_flashdb.c
+rd_status_t-rt_macronix_flash_existsvoid
 rd_status_t-rt_flashdb_to_ruuvi_errorfdb_err_t-fdb_err
+rd_status_t-rt_reset_macronix_flashvoid
+rt_macronix_high_performance_switchconst-bool-enable
+void-fdb_log-const-char-const-msg-...
+app_button.c
+void-factory_reset-void-p_event_data-uint16_t-event_size
 energy-consumption
 firmware-packaging
 gateway

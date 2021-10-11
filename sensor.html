@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-10-10" />
+<meta name="date" content="2021-10-11" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -173,6 +173,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.6.9" data-path="sensor.html"><a href="sensor.html#ruuvi_nrf5_sdk15_power.c-ruuvi_nrf5_sdk15_power.h"><i class="fa fa-check"></i><b>5.6.9</b> ruuvi_nrf5_sdk15_power.c / ruuvi_nrf5_sdk15_power.h</a></li>
 <li class="chapter" data-level="5.6.10" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flash_ringbuffer.c"><i class="fa fa-check"></i><b>5.6.10</b> ruuvi_task_flash_ringbuffer.c</a></li>
 <li class="chapter" data-level="5.6.11" data-path="sensor.html"><a href="sensor.html#ruuvi_task_flashdb.c"><i class="fa fa-check"></i><b>5.6.11</b> ruuvi_task_flashdb.c</a></li>
+<li class="chapter" data-level="5.6.12" data-path="sensor.html"><a href="sensor.html#app_button.c"><i class="fa fa-check"></i><b>5.6.12</b> app_button.c</a></li>
 </ul></li>
 <li class="chapter" data-level="5.7" data-path="sensor.html"><a href="sensor.html#energy-consumption"><i class="fa fa-check"></i><b>5.7</b> Energy consumption</a></li>
 <li class="chapter" data-level="5.8" data-path="sensor.html"><a href="sensor.html#firmware-packaging"><i class="fa fa-check"></i><b>5.8</b> Firmware packaging</a></li>
@@ -1159,8 +1160,12 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 </tbody>
 </table>
 </div>
-<div id="rd_status_t-rt_flash_ringbuffer_ext_flash_existsvoid" class="section level4">
-<h4><span class="header-section-number">5.6.10.7</span> <code>rd_status_t rt_flash_ringbuffer_ext_flash_exists(void)</code></h4>
+</div>
+<div id="ruuvi_task_flashdb.c" class="section level3">
+<h3><span class="header-section-number">5.6.11</span> ruuvi_task_flashdb.c</h3>
+<p>This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.</p>
+<div id="rd_status_t-rt_macronix_flash_existsvoid" class="section level4">
+<h4><span class="header-section-number">5.6.11.1</span> <code>rd_status_t rt_macronix_flash_exists(void)</code></h4>
 <p>This function checks if Macronix Flash Chip is available.</p>
 <table>
 <thead>
@@ -1185,12 +1190,8 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 </tbody>
 </table>
 </div>
-</div>
-<div id="ruuvi_task_flashdb.c" class="section level3">
-<h3><span class="header-section-number">5.6.11</span> ruuvi_task_flashdb.c</h3>
-<p>This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.</p>
 <div id="rd_status_t-rt_flashdb_to_ruuvi_errorfdb_err_t-fdb_err" class="section level4">
-<h4><span class="header-section-number">5.6.11.1</span> <code>rd_status_t rt_flashdb_to_ruuvi_error(fdb_err_t fdb_err)</code></h4>
+<h4><span class="header-section-number">5.6.11.2</span> <code>rd_status_t rt_flashdb_to_ruuvi_error(fdb_err_t fdb_err)</code></h4>
 <p>This function converts an error code of FlashDB to an Ruuvi error code. It return the Ruuvi error code which represents the state of FlashDB.</p>
 <table>
 <thead>
@@ -1208,6 +1209,41 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 </tr>
 </tbody>
 </table>
+</div>
+<div id="rd_status_t-rt_reset_macronix_flashvoid" class="section level4">
+<h4><span class="header-section-number">5.6.11.3</span> <code>rd_status_t rt_reset_macronix_flash(void)</code></h4>
+<p>This functions sends the Chip Erase command to the macronix flash chip if the chip is available. This function is called during factory reset.</p>
+</div>
+<div id="rt_macronix_high_performance_switchconst-bool-enable" class="section level4">
+<h4><span class="header-section-number">5.6.11.4</span> <code>rt_macronix_high_performance_switch(const bool enable)</code></h4>
+<p>This function configures the high performance switch of the Macronix Flash Chip. High performance mode is used during formating the flash in order to prepare it for the database or during factory reset.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Parameters</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>enable</td>
+<td>in</td>
+<td>Desired mode of operation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="void-fdb_log-const-char-const-msg-..." class="section level4">
+<h4><span class="header-section-number">5.6.11.5</span> <code>void fdb_log (const char * const msg, ...)</code></h4>
+<p>This function acts as a proxy between the logging mechanism of FlashDB and the log writing system of Ruvvi. It converts the parameters and passes log messages to Ruuvi’s logging module.</p>
+</div>
+</div>
+<div id="app_button.c" class="section level3">
+<h3><span class="header-section-number">5.6.12</span> app_button.c</h3>
+<div id="void-factory_reset-void-p_event_data-uint16_t-event_size" class="section level4">
+<h4><span class="header-section-number">5.6.12.1</span> <code>void factory_reset (void * p_event_data, uint16_t event_size)</code></h4>
+<p>Add call to <a href="sensor.html#rd_status_t-rt_reset_macronix_flashvoid"><code>rt_reset_macronix_flash()</code></a> to delete content of Macronix Flash in case of factory reset.</p>
 </div>
 </div>
 </div>
