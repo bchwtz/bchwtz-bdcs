@@ -386,7 +386,12 @@ This function reads some statistics about the usage of the internal Nordic Flash
 | - | - | - |
 | statistic | in/out | Memory for storing statistics. |
 
-#### `rd_status_t rt_flash_ringbuffer_ext_flash_exists(void)` ####
+
+### ruuvi_task_flashdb.c ###
+
+This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.
+
+#### `rd_status_t rt_macronix_flash_exists(void)` ####
 
 This function checks if Macronix Flash Chip is available.
 
@@ -396,10 +401,6 @@ This function checks if Macronix Flash Chip is available.
 | RD_ERROR_NOT_FOUND | If Macronix Flash is not available. |
 | RD_ERROR_NOT_INITIALIZED | If the module is currently not initialzed. |
 
-### ruuvi_task_flashdb.c ###
-
-This module contains supporting functions needed to integrate FlashDB into Ruuvi Firmware.
-
 #### `rd_status_t rt_flashdb_to_ruuvi_error(fdb_err_t fdb_err)` ####
 
 This function converts an error code of FlashDB to an Ruuvi error code. It return the Ruuvi error code which represents the state of FlashDB.
@@ -407,6 +408,28 @@ This function converts an error code of FlashDB to an Ruuvi error code. It retur
 | Parameters |||
 | - | - | - |
 | fdb_err | in | Error code of FlashDB. |
+
+#### `rd_status_t rt_reset_macronix_flash(void)` ####
+
+This functions sends the Chip Erase command to the macronix flash chip if the chip is available. This function is called during factory reset.
+
+#### `rt_macronix_high_performance_switch(const bool enable)` ####
+
+This function configures the high performance switch of the Macronix Flash Chip. High performance mode is used during formating the flash in order to prepare it for the database or during factory reset. 
+
+| Parameters |||
+| - | - | - |
+| enable | in | Desired mode of operation. |
+
+#### `void fdb_log (const char * const msg, ...)` ####
+
+This function acts as a proxy between the logging mechanism of FlashDB and the log writing system of Ruvvi. It converts the parameters and passes log messages to Ruuvi's logging module.
+
+### app_button.c ###
+
+#### `void factory_reset (void * p_event_data, uint16_t event_size)` ####
+
+Add call to [`rt_reset_macronix_flash()`](sensor.html#rd_status_t-rt_reset_macronix_flashvoid) to delete content of Macronix Flash in case of factory reset.
 
 
 ## Energy consumption ##
