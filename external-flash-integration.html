@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 8 Backend | Big Data Case Studies</title>
-  <meta name="description" content="Chapter 8 Backend | Big Data Case Studies" />
+  <title>Chapter 6 External Flash Integration | Big Data Case Studies</title>
+  <meta name="description" content="Chapter 6 External Flash Integration | Big Data Case Studies" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 8 Backend | Big Data Case Studies" />
+  <meta property="og:title" content="Chapter 6 External Flash Integration | Big Data Case Studies" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Chapter 8 Backend | Big Data Case Studies" />
+  <meta property="og:description" content="Chapter 6 External Flash Integration | Big Data Case Studies" />
   <meta name="github-repo" content="bchwtz/bchwtz-bdcs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 8 Backend | Big Data Case Studies" />
+  <meta name="twitter:title" content="Chapter 6 External Flash Integration | Big Data Case Studies" />
   
-  <meta name="twitter:description" content="Chapter 8 Backend | Big Data Case Studies" />
+  <meta name="twitter:description" content="Chapter 6 External Flash Integration | Big Data Case Studies" />
   
 
 <meta name="author" content="Benjamin Buchwitz" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="gateway.html"/>
-<link rel="next" href="ble-gatt-messages.html"/>
+<link rel="prev" href="sensor.html"/>
+<link rel="next" href="gateway.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -292,18 +292,414 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="backend" class="section level1">
-<h1><span class="header-section-number">Chapter 8</span> Backend</h1>
-<p>Lorem ipsum</p>
+<div id="external-flash-integration" class="section level1">
+<h1><span class="header-section-number">Chapter 6</span> External Flash Integration</h1>
+<p>In this chapter the software architecture for implementing an external flash is described. The ruuvi sensor includes an internal flash with 56 Kbyte. To show the benefit of an external flash, the following example analyzes how long data can be recorded in each case. Using the internal FIFO that has storage space for 32 acceleration data samples and a configuration of:</p>
+<ul>
+<li>10 Hz frequency<br />
+</li>
+<li>12 bit of data resolution</li>
+</ul>
+<p>144Byte of data are written to the internal flash every 3,2s. That allows logging data for 1244 s.<br />
+Implementing the external flash from Macronix with a size of 64Mbit and the same configuration as above allows logging for 51,756 h.</p>
+<div id="macronix-flash" class="section level2">
+<h2><span class="header-section-number">6.1</span> Macronix Flash</h2>
+<p>Next, an overview on general parameters of the Macronix flash is given. The MX25R6435F is a serial NOR flash with 64Mbits. It promises a minimum of 100.000 erase/program cycles and 20 years of data retention.<br />
+Further, the flash has a status register that indicates its status and a configuration register which can change the default status of the chip. Program commands can be executed on byte, page (256 bytes), or word basis while erase commands can be executed on sector (4K-byte), block (32K-byte), block (64K-byte) or whole chip basis.<br />
+For testing the “tag connector” is used where the following pins are defined for the SPI bus:</p>
+<table>
+<thead>
+<tr class="header">
+<th>SPI</th>
+<th>PIN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MOSI</td>
+<td>30</td>
+</tr>
+<tr class="even">
+<td>MISO</td>
+<td>31</td>
+</tr>
+<tr class="odd">
+<td>SCK</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td>SS</td>
+<td>16</td>
+</tr>
+</tbody>
+</table>
+<p>When the external flash is included on the PCB, the pins for the SPI bus must change to:</p>
+<table>
+<thead>
+<tr class="header">
+<th>SPI</th>
+<th>PIN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>MOSI</td>
+<td>23</td>
+</tr>
+<tr class="even">
+<td>MISO</td>
+<td>22</td>
+</tr>
+<tr class="odd">
+<td>SCK</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td>SS</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
+<p>The following picture showes the setup:<br />
+<img src="gfx/org/Connection_to_ExternalFlash.jpg" /></p>
+</div>
+<div id="database-vs.-filesystem" class="section level2">
+<h2><span class="header-section-number">6.2</span> Database vs. Filesystem</h2>
+<p>For data management on the flash, a database is needed. An alternative is, to use a file system. For the decision, the following characteristics of each option are considered:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Database</th>
+<th>Filesystem</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Related, structured data</td>
+<td>Good with unstructured data</td>
+</tr>
+<tr class="even">
+<td>Data with defined formats</td>
+<td>Small overhead</td>
+</tr>
+<tr class="odd">
+<td>Efficient for insert, update and/or retrieval</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>As a first approach, the database FlashDB is used. The acceleration data is structured, the order of the incoming data and its timestamp is of interest. That is provided by the time series data base (TSDB). Another useful functionality is the key value data base (KVDB), supported by the FlashDB, that allows storing the configuration. Also, the KVDB provides efficient storage of pre-processed data, which is a possible requirement in future.</p>
+<div id="flashdb" class="section level3">
+<h3><span class="header-section-number">6.2.1</span> FlashDB <img src="gfx/org/flashdb.png" /></h3>
+<p>“Flash DB is an ultra-lightweight embedded database that focuses on providing data storage solutions for embedded products.” [<a href="https://github.com/armink/FlashDB" class="uri">https://github.com/armink/FlashDB</a>] The DB promotes with a strong performance and reliability including a Power-off protection function and wear balance to extend Flash life. It ensures extremely low resource occupation, ram usage of almost 0 and a very small footprint. Also, multiple partitions and multiple instances are supported. The FlashDB uses sectors which are the smallest unit for formatting. As mentioned above, there are two database modes:</p>
+<p><strong>Key-value</strong> database</p>
+<ul>
+<li>Non-relational database<br />
+</li>
+<li>Stores data as a collection of key-value pairs, with key as unique identifier<br />
+</li>
+<li>Supports two KV types: string and blob</li>
+</ul>
+<p><strong>Time Series</strong> database</p>
+<ul>
+<li>Stores data in time sequence with timestamp<br />
+</li>
+<li>Has large amount of data storage and high insertion and query performance.</li>
+</ul>
+<p>Reference: <a href="https://github.com/armink/FlashDB">FlashDB by armink</a></p>
+</div>
+</div>
+<div id="implementation-1" class="section level2">
+<h2><span class="header-section-number">6.3</span> Implementation</h2>
+<p>The following chapter is focusing on the software structure, modules and functions successfully utilized to implement the possibility to store data on the external flash by using the database FlashDB.<br />
+The following figure shows the general structure:<br />
+<img src="gfx/org/SW_Structure_FlashDB.png" />
+The data collected by the acceleration sensor are passed through several instances and finally end in the module “ruuvi_task_flash_ringbuffer.c” which is responsible for organizing the storage of the collected data through usage of the <a href="external-flash-integration.html#flashdb-api">API offered by FlashDB</a>. FlashDB itself needs some configuration, stored inside its config files, to be able to communicate with the different memory devices. Currently, FlashDB can be operated with three different target memories:<br />
+1. The internal NRF flash in case the external flash is not present, which gets checked at boot-up<br />
+2. The external flash to allow maximized data storage<br />
+3. The RAM to allow direct forwarding of acceleration data to the gateway in the use case of streaming (deprecated)<br />
+As this chapter is discusses the integration of the external Macronix flash chip, the other two devices won’t be considered from here on.<br />
+For FlashDB to be able to access the external flash, an interface to the low-level driver functions is implemented, which forwards the necessary control parameters to the actual driver functions, which communicate with the flash device via SPI bus.</p>
+<div id="flashdb-api" class="section level3">
+<h3><span class="header-section-number">6.3.1</span> FlashDB API</h3>
+<p>To administrate the storage independent from the used memory device and from a high-level view, the FlashDB API offers the following functions:</p>
+<ol style="list-style-type: decimal">
+<li>TSDB:<br />
+</li>
+</ol>
+<ul>
+<li>Initialise<br />
+</li>
+<li>Control <code>void fdb_tsdb_control(fdb_tsdb_t db, int cmd, void *arg)</code>
+Command control words e.g., Set / Get sector size, Set/ Get lock function, Get the timestamp when TSL was last appended<br />
+</li>
+<li>Append new TSL<br />
+</li>
+<li>Iterative – goes through TSDB, iterative callbacks<br />
+</li>
+<li>Query between timestamps<br />
+</li>
+<li>Set TSL status<br />
+</li>
+<li>Clear TSDB<br />
+</li>
+<li>Convert TSL to blob objects</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>KVDB:<br />
+</li>
+</ol>
+<ul>
+<li>Initialise<br />
+</li>
+<li>Control <code>void fdb_kvdb_control(fdb_kvdb_t db, int cmd, void *arg)</code>
+Command control words: Set / Get sector size, Set/ Get lock function<br />
+</li>
+<li>Set KV (add a new KV or modify existing KV)
+<ul>
+<li>Set blob type KV, Set string type KV<br />
+</li>
+</ul></li>
+<li>Get KV
+<ul>
+<li>Get blob type KV, Get KV object, Get string type KV<br />
+</li>
+</ul></li>
+<li>Initialize KV iterator, Iteration<br />
+</li>
+<li>Delete KV, Reset KV to default<br />
+</li>
+<li>Convert KV to blob objects</li>
+</ul>
+<p>For more details: <a href="https://armink.github.io/FlashDB/#/api">FlashDB API</a></p>
+</div>
+<div id="data-base-config-files" class="section level3">
+<h3><span class="header-section-number">6.3.2</span> Data Base config files</h3>
+<p>The FlashDB config files are stored in .firmware.c.libraries.c. They implement the necessary configuration to be able to access the different storage modules.</p>
+<div id="fal_cfg.h" class="section level4">
+<h4><span class="header-section-number">6.3.2.1</span> fal_cfg.h</h4>
+<p>The fal_cfg file defines the available storage partitions to be used by FlashDB inside the FAL_PART_TABLE. The following figure shows the currently defined partitions and their size, once again stressing the huge amount of more available space when using the external flash in contrast to the internal NRF memory.<br />
+<img src="gfx/org/ImplementationFlashDB_schematic.png" /><br />
+The small partitions for storing data in the KV format are used for the current sensor configuration while the larger TSDB partitions are utilized to store the acceleration data.</p>
+</div>
+<div id="fal_macronix_flash_port.c" class="section level4">
+<h4><span class="header-section-number">6.3.2.2</span> fal_macronix_flash_port.c</h4>
+<p>For each of the available memory devices, a flash_port file is defined, which implements the configuration of the device as well as the interface to the low-level driver functions. In the following, the necessary implementations for the external Macronix flash chip are described:</p>
+<div id="const-struct-fal_flash_dev-macronix_flash0" class="section level5">
+<h5><span class="header-section-number">6.3.2.2.1</span> <code>Const struct fal_flash_dev macronix_flash0</code></h5>
+<p>Defines macronix flash properties for FlashDB<br />
+1. Name (macronixflash0)<br />
+2. Offset Address (0x000000)<br />
+3. Memory size (2047*4096 Bytes = 8MB)<br />
+4. Block size (4096 Bytes)<br />
+5. Write granularity (0 –&gt; not used)<br />
+6. Available operations (init, read, write, erase)</p>
+</div>
+<div id="static-int-initvoid" class="section level5">
+<h5><span class="header-section-number">6.3.2.2.2</span> <code>Static int init(void)</code></h5>
+<p>Calls the mx_init() initialization function.<br />
+Returns the status of the initialization function.</p>
+</div>
+<div id="static-int-readlong-offset-uint8_t-buf-size_t-size" class="section level5">
+<h5><span class="header-section-number">6.3.2.2.3</span> <code>Static int read(long offset, uint8_t *buf, size_t size)</code></h5>
+<p>Forwards address (offset), the address of the target data buffer (*buf) and the amount of data to be read (size) to the according low-level driver function.<br />
+Returns the read size if successful and –1 if an error occurred.</p>
+</div>
+<div id="static-int-write-long-offset-const-uint8_t-buf-size_t-size" class="section level5">
+<h5><span class="header-section-number">6.3.2.2.4</span> <code>Static int write (long offset, const uint8_t *buf, size_t size)</code></h5>
+<p>Ensures that the flash device is ready for data transfer, by calling write enable, checking if write enable was set properly and checking the status register if the flash is still busy.<br />
+Also splits the data in multiple separate low-level write function calls if the data is separated over multiple flash pages as the Macronix flash is not supporting writing over page borders.<br />
+Returns written size if successful, -1 if an error occurred.</p>
+</div>
+<div id="static-int-erase-long-offset-size_t-size" class="section level5">
+<h5><span class="header-section-number">6.3.2.2.5</span> <code>Static int erase (long offset, size_t size)</code></h5>
+<p>Ensures that the flash device is ready for data transfer, by calling write enable, checking if write enable was set properly and checking the status register if the flash is still busy.<br />
+Forwards address to “macronix sector erase” low-level driver function.<br />
+–&gt; Database only deletes complete sectors at once<br />
+Returns written size if successful, -1 if an error occurred.</p>
+</div>
+</div>
+</div>
+<div id="macronix-low-level-driver-functions" class="section level3">
+<h3><span class="header-section-number">6.3.3</span> Macronix low level driver functions</h3>
+<p>The module “maconix_flash.c/macronix_flash.h” located at .firmware.c.drivers.cimplements all low-level driver and helper functions necessary to interact with the Macronix flash chip.</p>
+<div id="rd_status_t-mx_initvoid" class="section level4">
+<h4><span class="header-section-number">6.3.3.1</span> <code>rd_status_t mx_init(void)</code></h4>
+<p>Checks if SPI bus for macronix flash is already initialized<br />
+If not, defines<br />
+* MOSI, MISO, CLK and SS PINs<br />
+* Frequency, SPI mode and bit order<br />
+Sets all defined SS-PINs as high (not active)<br />
+Definition of SPI-Pins can be changed in macronix_flash.h.<br />
+Returns status code of executed functions, RD_ERROR_INVALID_STATE if bus is already initialized</p>
+</div>
+<div id="rd_status_t-mx_read_remsuint8_t-manufacturer_id-uint8_t-device_id" class="section level4">
+<h4><span class="header-section-number">6.3.3.2</span> <code>rd_status_t mx_read_rems(uint8_t *manufacturer_id, uint8_t *device_id)</code></h4>
+<p>Reads electronic manufacturer &amp; device ID by<br />
+1. Setting SS LOW<br />
+2. Transferring the command “0x90” via SPI<br />
+3. Receiving the answer<br />
+4. Setting SS HIGH<br />
+5. Assigning the values to the received memory<br />
+Is used to check if the macronix flash is present to decide, which device is used by FlashDB<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_read_status_registeruint8_t-status" class="section level4">
+<h4><span class="header-section-number">6.3.3.3</span> <code>rd_status_t mx_read_status_register(uint8_t *status)</code></h4>
+<p>Reads Macronix status register and assigns the status of the Write-In-Progress Bit to the received pointer<br />
+Status register also holds:<br />
+1. Write Enable Latch bit –&gt; set to “1” by “Write Enable” function and reset to “0” after program/erase function terminated<br />
+2. Block Protect 0 – 3 bits<br />
+3. Quad Enable bit<br />
+4. Status Register Write Disable bit –&gt; shows Hardware protection mode (on PIN WP#SIO2)<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_read_config_registeruint8_t-config" class="section level4">
+<h4><span class="header-section-number">6.3.3.4</span> <code>rd_status_t mx_read_config_register(uint8_t *config)</code></h4>
+<p>Reads Macronix config register and assigns the status of the Low power/High Performance switch bit to the received pointer<br />
+1. TB bit –&gt; decides whether protected area is at top or bottom of flash<br />
+2. L/H switch bit –&gt; Switch between “Ultra Low Power” and “High Performance”<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_readuint32_t-address-uint8_t-data_ptr-uint32_t-data_length" class="section level4">
+<h4><span class="header-section-number">6.3.3.5</span> <code>rd_status_t mx_read(uint32_t address, uint8_t *data_ptr, uint32_t data_length)</code></h4>
+<p>Reads from “address” the number of bytes given in “data_length” and returns them inside the “data_ptr”.<br />
+MX25R only supports reading of 256 Bytes in 1 call<br />
+–&gt; Loops over multiple read-calls and decreases “data_length” until all desired bytes are read<br />
+Alternative: FAST_READ to read out data until CS is set to high after just one spi call with command and starting address –&gt; not used as FlashDB is not supporting an option for fast read<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_write_enablevoid" class="section level4">
+<h4><span class="header-section-number">6.3.3.6</span> <code>rd_status_t mx_write_enable(void)</code></h4>
+<p>Sends Write Enable command to flash<br />
+–&gt; needs to be set before every program/erase command<br />
+–&gt; if it is “0” while program/erase command is received, MX25R will ignore the command<br />
+–&gt; can be reset by write disable command, but will be reset after finished program/erase instructions anyhow<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_programuint32_t-address-const-uint8_t-data_ptr-uint32_t-data_length" class="section level4">
+<h4><span class="header-section-number">6.3.3.7</span> <code>rd_status_t mx_program(uint32_t address, const uint8_t *data_ptr, uint32_t data_length)</code></h4>
+<p>Writes from “address” the bytes given in “data_ptr”.<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_sector_eraseuint32_t-address" class="section level4">
+<h4><span class="header-section-number">6.3.3.8</span> <code>rd_status_t mx_sector_erase(uint32_t address)</code></h4>
+<p>Erases the sector (4096 Byte) which is containing the given address<br />
+Is used by FlashDB which is always erasing whole sectors<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_chip_erasevoid" class="section level4">
+<h4><span class="header-section-number">6.3.3.9</span> <code>rd_status_t mx_chip_erase(void)</code></h4>
+<p>Erases the whole chip<br />
+Is used inside rt_reset_macronix_flash() included in ruuvi_task_flash_ringbuffer.c which is called when a ruuvi factory reset is triggered (by pressing the button on the ruuvi tag for ~10 seconds)<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-ri_spi_xfer_blocking_macronixconst-uint8_t-tx-const-size_t-tx_len-uint8_t-rx-const-size_t-rx_len" class="section level4">
+<h4><span class="header-section-number">6.3.3.10</span> <code>rd_status_t ri_spi_xfer_blocking_macronix(const uint8_t *tx, const size_t tx_len, uint8_t *rx, const size_t rx_len)</code></h4>
+<p>Base function used to pass data to or receive data from the Macronix Flash<br />
+Makes a basic NULL-check to verify that given data length is only NULL if no corresponding command is received<br />
+Only transmits data, if mx_init function is called before (by checking parameter m_spi_init_done)<br />
+–&gt; Uses nrf_drv_spi_transfer function to communicate with SPI device<br />
+Returns Status code of executed SPI functions</p>
+</div>
+<div id="rd_status_t-mx_busyvoid" class="section level4">
+<h4><span class="header-section-number">6.3.3.11</span> <code>rd_status_t mx_busy(void)</code></h4>
+<p>Reads status register and returns “RD_ERROR_BUSY” or “RD_SUCCESS” depending on Write-In-Progress bit. Is used by mx_spi_ready_for_transfer.</p>
+</div>
+<div id="rd_status_t-mx_check_write_enablevoid" class="section level4">
+<h4><span class="header-section-number">6.3.3.12</span> <code>rd_status_t mx_check_write_enable(void)</code></h4>
+<p>Read status register and return “RD_ERROR_BUSY” or “RD_SUCCESS” depending on Write-Enable-Latch bit. Is used by mx_spi_ready_for_transfer.</p>
+</div>
+<div id="void-mx_spi_ready_for_transfer-void" class="section level4">
+<h4><span class="header-section-number">6.3.3.13</span> <code>void mx_spi_ready_for_transfer (void)</code></h4>
+<ol style="list-style-type: decimal">
+<li>Waits until flash is not busy<br />
+</li>
+<li>Sends write enable command<br />
+</li>
+<li>Waits until write enable latch is set, resends write enable command if it is not<br />
+</li>
+<li>Waits until flash is not busy</li>
+</ol>
+<p>Used to prepare the flash device before write or erase commands.</p>
+</div>
+<div id="rd_status_t-mx_high_performance_switch-bool-high_power" class="section level4">
+<h4><span class="header-section-number">6.3.3.14</span> <code>rd_status_t mx_high_performance_switch (bool high_power)</code></h4>
+<p>Reads the config register and sets the Low-Power / High Performance switch to the value received (High Performance if True, Low power if False) if it is not already the expected value.<br />
+Used to change the power mode to high performance during initialization, discussed in the <a href="external-flash-integration.html#flashdb-evaluation">next chapter</a>.</p>
+</div>
+</div>
+</div>
+<div id="flashdb-evaluation" class="section level2">
+<h2><span class="header-section-number">6.4</span> FlashDB evaluation</h2>
+<p>The following analysis is done under the configuration described in the introduction ( 12 bit resolution and 10 Hz frequency).<br />
+One block of the Flash consists of 56 byte of block overhead, each time a 144 byte datapacket with acceleration data is written also 16 byte of Overhead and 8 byte for the timestamp are written. The figure below shows the memory distribution at the beginning of a sector.<br />
+<img src="gfx/org/Evaluation%E2%80%93MemoryUsage1.png" /><br />
+As the timestamp is considered useful data it is included in the acceleration data and not part of the overhead. A sector is therefore used as described visible below:<br />
+Acceleration Data: 89,06%<br />
+Overhead: 10,74%<br />
+Unused Space: 0,20%<br />
+<img src="gfx/org/Evaluation%E2%80%93MemoryUsage2.png" /><br />
+Finally for evaluating the memory usage of the FlashDB, a similar analysis as in the introduction is carried out. Here it is analyzed, how long acceleration data can be logged. The first bar is the external flash, then, 49,03 h are possible without using the FlashDB and 5,4 h are lost when using the FlashDB.<br />
+<img src="gfx/org/Evaluation%E2%80%93MemoryUsage3.png" /></p>
+<div id="energy-consumption-1" class="section level3">
+<h3><span class="header-section-number">6.4.1</span> Energy consumption</h3>
+<p>The Macronix flash can operate in two modes: high-performance and low-power. When the Flash is formatted, the high-performance mode is activated to speed up the process. After that, in regular operation mode, it is set back to low-power mode. In the following the energy consumption is analyzed.</p>
+<div id="low-power-mode" class="section level4">
+<h4><span class="header-section-number">6.4.1.1</span> Low-Power Mode</h4>
+<p>First, the energy consumption is analyzed for flash in low-power mode. Before initializing the flash, an average of 129,6 μA is consumed. The peaks are Bluetooth advertisements.<br />
+<img src="gfx/org/LP1.png" /><br />
+When initializing the falsh, the power consumption goes up:<br />
+<img src="gfx/org/LP2.png" /><br />
+And settles at an average power consumption of 4.5 mA:<br />
+<img src="gfx/org/LP3.png" /><br />
+The process of initializing takes about 2 min and 58 s.<br />
+<img src="gfx/org/LP4.png" /><br />
+While logging the energy consumption is about 20 μA higher than before.</p>
+</div>
+<div id="high-performance-mode" class="section level4">
+<h4><span class="header-section-number">6.4.1.2</span> High-Performance Mode</h4>
+<p>In high-performance mode, before initializing the flash, an average of 135,26 μA is consumed. That is 6 μA more than in low power mode.<br />
+<img src="gfx/org/HP1.png" /><br />
+When initializing the falsh, the power consumption goes up as seen before:<br />
+<img src="gfx/org/HP2.png" /><br />
+The average power consumption reached is 0,43 mA higher than in low power mode:<br />
+<img src="gfx/org/HP3.png" /><br />
+But on the other hand, the process of initializing takes about 1 min and 42 s that is 1 min and 16 s less than in low power mode.<br />
+<img src="gfx/org/HP4.png" /><br />
+To evaluate the energy consumption and time difference during flash initialization, the electric power for each mode is calculated:<br />
+Supply voltage: <span class="math inline">\(V_{cc} = 3V\)</span><br />
+Initialization time: <span class="math inline">\(t_{init\_lp}=178 s\)</span> , <span class="math inline">\(t_{init\_hp}=102 s\)</span><br />
+Current: <span class="math inline">\(I_{avg\_hp}=4,48 mA\)</span> , <span class="math inline">\(I_{avg\_hp}=4,91 mA\)</span><br />
+<em>Electric power</em><br />
+Low-Power: <span class="math inline">\(W_{lp}=3 V∙178 s∙4,43 mA=2,37 Ws\)</span><br />
+High-Performance: <span class="math inline">\(W_{hp}=3 V∙102 s∙4,91 mA=1,50 Ws\)</span></p>
+<p>To reduce the overall power consumption, in normal operation the low power mode is used. Only during flash initialization, the high-performance mode is selected.</p>
+</div>
+</div>
+<div id="github-issue-11-write-performance-on-external-flash" class="section level3">
+<h3><span class="header-section-number">6.4.2</span> GitHub Issue #11 Write Performance on External Flash</h3>
+<p>In this issue limitations due to the write performance of the flash or due to the SPI bus speed are evaluated.<br />
+<img src="gfx/org/WritePerformanceOnExternalFlashIssue11.png" /><br />
+The max. page program time is 10 ms in low power mode. Worst case - 4 write function calls:<br />
+1. New sector - sector header required<br />
+2. Data header<br />
+3. Data passing over a page border<br />
+4. rest of the data on the next page<br />
+That results in a maximum of 40ms write time.<br />
+The data sent in one SPI message is at least 144 byte, therefore 256 bytes is assumed for further calculations. That results in a transmission time of <span class="math inline">\(\frac{256\bullet8}{8 MHz} = 0,256 ms\)</span>. This time is needed for each time the write function is called, which results in an overall worst case time of ~<span class="math inline">\(41ms\)</span> Assuming data is logged with a frequency of 500 Hz, the timeperiod between two write actions is <span class="math inline">\(32\bullet\frac{1}{500 Hz}=64ms\)</span> which is 1.5 times the time consumed for writing (worst case).<br />
+A test with 100Hz and 200Hz frequency at 12Bit resolution (about 200000 byte) workes without an issue.</p>
 
+</div>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="gateway.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="ble-gatt-messages.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sensor.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gateway.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -334,7 +730,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/13-docs-backend.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/11-docs-sensor.Rmd",
 "text": "Edit"
 },
 "history": {
