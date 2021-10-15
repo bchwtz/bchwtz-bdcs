@@ -168,3 +168,6 @@ bluetooth-hardware
 case
 software-1
 backend-1
+messageobjects
+return_values_from_sensor
+send_msg_object

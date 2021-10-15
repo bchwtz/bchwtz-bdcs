@@ -4,21 +4,21 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 10 Sensor | Big Data Case Studies</title>
-  <meta name="description" content="Chapter 10 Sensor | Big Data Case Studies" />
+  <title>Chapter 13 MessageObjects | Big Data Case Studies</title>
+  <meta name="description" content="Chapter 13 MessageObjects | Big Data Case Studies" />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 10 Sensor | Big Data Case Studies" />
+  <meta property="og:title" content="Chapter 13 MessageObjects | Big Data Case Studies" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="Chapter 10 Sensor | Big Data Case Studies" />
+  <meta property="og:description" content="Chapter 13 MessageObjects | Big Data Case Studies" />
   <meta name="github-repo" content="bchwtz/bchwtz-bdcs" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 10 Sensor | Big Data Case Studies" />
+  <meta name="twitter:title" content="Chapter 13 MessageObjects | Big Data Case Studies" />
   
-  <meta name="twitter:description" content="Chapter 10 Sensor | Big Data Case Studies" />
+  <meta name="twitter:description" content="Chapter 13 MessageObjects | Big Data Case Studies" />
   
 
 <meta name="author" content="Benjamin Buchwitz" />
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ble-gatt-messages.html"/>
-<link rel="next" href="gateway-1.html"/>
+<link rel="prev" href="system-info.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -296,37 +296,46 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sensor-1" class="section level1">
-<h1><span class="header-section-number">Chapter 10</span> Sensor</h1>
-<div id="hardware" class="section level2">
-<h2><span class="header-section-number">10.1</span> Hardware</h2>
-<div id="external-flash-memory" class="section level3">
-<h3><span class="header-section-number">10.1.1</span> External Flash Memory</h3>
-<p>For more extensive data logging external memory (not in the SoC) is required. The most promising candidate is the <a href="https://www.macronix.com/en-us/products/NOR-Flash/Serial-NOR-Flash/Pages/spec.aspx?p=MX25R6435F&amp;m=Serial%20NOR%20Flash&amp;n=PM2138">Macronix MX25R</a> as it supports low power battery driven applications, is quite flexible in terms of required voltage and is also used in some newer Nordic reference designs.</p>
+<div id="messageobjects" class="section level1">
+<h1><span class="header-section-number">Chapter 13</span> MessageObjects</h1>
+<p>The message classes should help to communicate with the backend via mqtt. For this task we need to decode the message into json and decode it back to a class later. Additionally, it makes the gateway library more dynamic.
+There are two types:</p>
+<pre><code>return_values_from_sensor
+send_msg_object</code></pre>
+<div id="return_values_from_sensor" class="section level2">
+<h2><span class="header-section-number">13.1</span> return_values_from_sensor</h2>
+<p>This class takes the returning messages from the sensors and converts them in one of the following objects:</p>
+<pre><code>time_object
+config_object
+flash_statistics_object
+status_object
+acceloration_data_object
+advertisement_data_object</code></pre>
+<p>Depending on the called constructor this objects can be called via return_values_from_sensor.returnValue.</p>
+<p>Objects:
+&gt; time_object: consist of a status, the received time from the sensor and the sensor mac.
+&gt; config_object: consist of a status, the config parameters from the sensor and the sensor mac.
+&gt; flash_statistics_object: consist of a status, the flash statistic parameters from the sensor and the sensor mac.
+&gt; status_object: consist of a status.
+&gt; acceloration_data_object: consists of the received acceleration data and the sensor mac.
+&gt; advertisement_data_object: consists of the current time, the advertisement data from the sensor and the mac address form the sensor</p>
 </div>
-<div id="board-redesign" class="section level3">
-<h3><span class="header-section-number">10.1.2</span> Board Redesign</h3>
-<p>The current sensor board revision features two antennas, while the bluetooth antenna is required and onboard NFC antenna is not used, therefore the board footprint could be smaller.</p>
-<p>Inspiration for a board revision could be drawn from the discontinued <a href="https://www.nordicsemi.com/Software-and-tools/Reference-Designs/nRF51822-Beacon-Kit">nRF51822 Bluetooth Smart Beacon Kit</a> reference design.</p>
-</div>
-</div>
-<div id="software" class="section level2">
-<h2><span class="header-section-number">10.2</span> Software</h2>
-<div id="general-todo" class="section level3">
-<h3><span class="header-section-number">10.2.1</span> General ToDo</h3>
-<ul>
-<li>Remotely customizing the Heartbeat interval (persistence required)</li>
-<li>Flexibilizing the Logging Rate so that it can be precisely controlled and the sensor supports rates that the accelerometer does not support natively (e.g. 2 Hz)</li>
-<li>Adapted Advertisement Message Format: Indicate amount of used internal storage to be used by the gateway to trigger connections and manage dowloading of logged data.</li>
-</ul>
-</div>
-<div id="security" class="section level3">
-<h3><span class="header-section-number">10.2.2</span> Security</h3>
-<p><strong>Questions:</strong>
-* Can Advertisements be encrypted?
-* How to manage access for downloading internally stored data and allow for encrypted transportation?</p>
+<div id="send_msg_object" class="section level2">
+<h2><span class="header-section-number">13.2</span> send_msg_object</h2>
+<p>To communicate with the sensor, you must send the right message object. These message object must be one of the following:</p>
+<pre><code>send_set_sensor_time_object
+send_set_config_object
+send_activate_logging_object
+send_deactivate_logging_object
+send_get_config_object
+send_get_senor_time_object
+send_get_flash_statistics_object
+send_get_logging_status_object
+send_get_acceleration_data_object
+send_activate_advertisement_logging_object</code></pre>
+<p>All these objects take the targeted mac and a command string. The targeted mac can be a single mac address, multiple macs addresses as list or an empty string. In the last case the command is send to all tags in range. The only purpose of this class is to differentiate between the different commands which are sent to the sensors.
+To initialize this object the specific constructor in send_msg_objects must be called.</p>
 
-</div>
 </div>
 </div>
             </section>
@@ -334,8 +343,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="ble-gatt-messages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="gateway-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="system-info.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -366,7 +375,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/rstudio/bookdown-demo/edit/master/21-todo-sensor.Rmd",
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/MessageObjects.Rmd",
 "text": "Edit"
 },
 "history": {
