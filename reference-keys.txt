@@ -115,7 +115,7 @@ activate-acceleration-logging
 deactivate-acceleration-logging
 set-sensor-configuration
 set-sensor-time
-get-sensor-configuratin
+get-sensor-configuration
 get-sensor-time
 get-acceleration-data
 get-flash-statistics
