@@ -150,6 +150,9 @@ bit-data-format-1
 bit-data-format-2
 communication-example
 streaming
+messageobjects
+return_values_from_sensor
+send_msg_object
 sensor-1
 hardware
 external-flash-memory
@@ -168,6 +171,3 @@ bluetooth-hardware
 case
 software-1
 backend-1
-messageobjects
-return_values_from_sensor
-send_msg_object
