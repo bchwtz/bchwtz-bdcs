@@ -37,9 +37,11 @@ It should look like this:
 9. Connect your SDK over USB with your PC
 ![](./gfx/org/SDK_SetUp.jpg)
 
-10. To test if everything is right, open SEGGER and click “Target”->”Connect J-Link”. SEGGER should connect to your SDK
+10. Turn on the switch at the bottom left
 
-11. To flash your ruuvi tag with the cloned firmware, click “Target”->”Erase All”, afterwards click “Build”->”Build and Run”. 
+11. To test if everything is right, open SEGGER and click “Target”->”Connect J-Link”. SEGGER should connect to your SDK
+
+12. To flash your ruuvi tag with the cloned firmware, click “Target”->”Erase All”, afterwards click “Build”->”Build and Run” 
 
 
 
@@ -70,6 +72,8 @@ Documentation follows this video: https://www.youtube.com/watch?v=rGygESilg8w
 7. Install operating system and choose the Raspberry Pi OS (normally recommended).
 
 8. Choose your SD card as storage and click "WRITE".   
+
+### Set up PuTTY and finalize connection to Raspberry
 
 9. On your PC, download PuTTY (https://www.putty.org/)
 
