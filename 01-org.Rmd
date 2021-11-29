@@ -44,8 +44,9 @@ It should look like this:
 
 
 ## Gateway Dev Env
+### Raspberry connection via screen
 
-1. Connect your Raspberry Pi to a screen via HDMI
+1. Connect your Raspberry Pi to a screen via Micro HDMI if you have an external screen.
 
 2. Connect your Raspberry to your WiFi
 
@@ -55,29 +56,43 @@ It should look like this:
 
 ![](./gfx/org/Raspberry_setup2.PNG)
 
+Skip next steps and jump directly to number 9!
 
-4. On your PC, download PuTTY (https://www.putty.org/)
+### Raspberry connection without a screen (headless setup)
+Documentation follows this video: https://www.youtube.com/watch?v=rGygESilg8w
 
-5. Get your Raspberry’s IP-Adress by opening a command line on your PC and and type “ping raspberrypi.local”.
+4. Take the SD-card of the Raspberry and put it in the card reader of your PC.
 
-6. Open PuTTY, type the IP-Adress into the Host Name field. You can save it by entering a name into the “Saved Sessions” field and pressing “save”. Afterwards select “open”.
+5. Go to https://www.raspberrypi.com/software/ and download the Raspberry Pi OS Imager if not yet installed.
 
-7. When asked for the username type “pi” and afterwards enter your password. If you did not change it on Raspberry’s startup it should be “raspberry”.
+6. Open Raspberry Pi imager and flash sd card.
 
-8. To clone the Gateway repository (https://github.com/bchwtz-fhswf/gateway) onto your pi, you need a SSH Key which is connected to your account. Generate it by following the instructions in https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent for Linux (you dont have to pass it to a key agent) and add it to your account by following the instructions in https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account 
-9. Clone the gateway repository to your raspberry by typing “git clone git@github.com:bchwtz-fhswf/gateway.git “ into the PuTTY window connected to your raspberry. When asked, enter the SSH Key password you initiated while generating the key.
+7. Install operating system and choose the Raspberry Pi OS (normally recommended).
 
-10. Before you are able to execute some of the scripts, you have to install some Python modules by typing or pasting the following commands. (You can paste into a PuTTY window by right-clicking) 
+8. Choose your SD card as storage and click "WRITE".   
+
+9. On your PC, download PuTTY (https://www.putty.org/)
+
+10. Get your Raspberry’s IP-Adress by opening a command line on your PC and and type “ping raspberrypi.local”.
+
+11. Open PuTTY, type the IP-Adress into the Host Name field. You can save it by entering a name into the “Saved Sessions” field and pressing “save”. Afterwards select “open”.
+
+12. When asked for the username type “pi” and afterwards enter your password. If you did not change it on Raspberry’s startup it should be “raspberry”.
+
+13. To clone the Gateway repository (https://github.com/bchwtz-fhswf/gateway) onto your pi, you need a SSH Key which is connected to your account. Generate it by following the instructions in https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent for Linux (you dont have to pass it to a key agent) and add it to your account by following the instructions in https://docs.github.com/en/github/authenticating-to-github/adding-a-new-ssh-key-to-your-github-account 
+14. Clone the gateway repository to your raspberry by typing “git clone git@github.com:bchwtz-fhswf/gateway.git “ into the PuTTY window connected to your raspberry. When asked, enter the SSH Key password you initiated while generating the key.
+
+15. Before you are able to execute some of the scripts, you have to install some Python modules by typing or pasting the following commands. (You can paste into a PuTTY window by right-clicking) 
 pip3 install ruuvitag_sensor
 pip3 install crcmod
 pip3 install pygatt
 pip3 install interruptingcow
 sudo apt-get install bluez bluez-hcidump
 
-11. To try if your setup is working, navigate to the cloned repo and type “python3 GetConfigFromSensor.py”. You should see something like this:
+16. To try if your setup is working, navigate to the cloned repo and type “python3 GetConfigFromSensor.py”. You should see something like this:
 ![](./gfx/org/Test.png)
 
-12. To properly use the gateway library, type “python3” into the putty command window. This activates an interactive python session. Type “import SensorGatewayCommunication“. Afterwards you can type
+17. To properly use the gateway library, type “python3” into the putty command window. This activates an interactive python session. Type “import SensorGatewayCommunication“. Afterwards you can type
 test=SensorGatewayCommunication.RuuviTagAccelerometerCommunication()
 test.activate_logging_at_sensor()
 Wait a few seconds and type
