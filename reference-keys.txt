@@ -4,6 +4,8 @@ sensor-dev-env
 software-setup
 hardware-setup
 gateway-dev-env
+raspberry-connection-via-screen
+raspberry-connection-without-a-screen-headless-setup
 setup-a-jupyterhub-on-your-raspberrypi
 prepare-python-environment
 install-jupyterhub

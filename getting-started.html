@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-11-24" />
+<meta name="date" content="2021-11-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,7 +143,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.1.1" data-path="getting-started.html"><a href="getting-started.html#software-setup"><i class="fa fa-check"></i><b>2.1.1</b> Software Setup</a></li>
 <li class="chapter" data-level="2.1.2" data-path="getting-started.html"><a href="getting-started.html#hardware-setup"><i class="fa fa-check"></i><b>2.1.2</b> Hardware Setup</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="getting-started.html"><a href="getting-started.html#raspberry-connection-via-screen"><i class="fa fa-check"></i><b>2.2.1</b> Raspberry connection via screen</a></li>
+<li class="chapter" data-level="2.2.2" data-path="getting-started.html"><a href="getting-started.html#raspberry-connection-without-a-screen-headless-setup"><i class="fa fa-check"></i><b>2.2.2</b> Raspberry connection without a screen (headless setup)</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html"><i class="fa fa-check"></i><b>3</b> Setup a Jupyterhub on your RaspberryPi</a><ul>
 <li class="chapter" data-level="3.1" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html#prepare-python-environment"><i class="fa fa-check"></i><b>3.1</b> Prepare Python environment</a></li>
@@ -338,14 +341,26 @@ It should look like this:</p></li>
 </div>
 <div id="gateway-dev-env" class="section level2">
 <h2><span class="header-section-number">2.2</span> Gateway Dev Env</h2>
+<div id="raspberry-connection-via-screen" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Raspberry connection via screen</h3>
 <ol style="list-style-type: decimal">
-<li><p>Connect your Raspberry Pi to a screen via HDMI</p></li>
+<li><p>Connect your Raspberry Pi to a screen via Micro HDMI if you have an external screen.</p></li>
 <li><p>Connect your Raspberry to your WiFi</p></li>
 <li><p>Activate SSH and VNC by clicking on the raspberry on the top left -&gt; Preferences -&gt; Raspberry-Pi-Configuration-&gt;Interfaces, change SSH and VNC to activated</p></li>
 </ol>
 <p><img src="gfx/org/Raspberry_setup1.PNG" /></p>
 <p><img src="gfx/org/Raspberry_setup2.PNG" /></p>
+<p>Skip next steps and jump directly to number 9!</p>
+</div>
+<div id="raspberry-connection-without-a-screen-headless-setup" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Raspberry connection without a screen (headless setup)</h3>
+<p>Documentation follows this video: <a href="https://www.youtube.com/watch?v=rGygESilg8w" class="uri">https://www.youtube.com/watch?v=rGygESilg8w</a></p>
 <ol start="4" style="list-style-type: decimal">
+<li><p>Take the SD-card of the Raspberry and put it in the card reader of your PC.</p></li>
+<li><p>Go to <a href="https://www.raspberrypi.com/software/" class="uri">https://www.raspberrypi.com/software/</a> and download the Raspberry Pi OS Imager if not yet installed.</p></li>
+<li><p>Open Raspberry Pi imager and flash sd card.</p></li>
+<li><p>Install operating system and choose the Raspberry Pi OS (normally recommended).</p></li>
+<li><p>Choose your SD card as storage and click “WRITE”.</p></li>
 <li><p>On your PC, download PuTTY (<a href="https://www.putty.org/" class="uri">https://www.putty.org/</a>)</p></li>
 <li><p>Get your Raspberry’s IP-Adress by opening a command line on your PC and and type “ping raspberrypi.local”.</p></li>
 <li><p>Open PuTTY, type the IP-Adress into the Host Name field. You can save it by entering a name into the “Saved Sessions” field and pressing “save”. Afterwards select “open”.</p></li>
@@ -374,6 +389,7 @@ You should see some x,y and z acceleration data after executing the get_last_sam
 <span id="cb1-2"><a href="getting-started.html#cb1-2"></a><span class="fu">sudo</span> apt-get install python3-pandas</span>
 <span id="cb1-3"><a href="getting-started.html#cb1-3"></a><span class="fu">sudo</span> apt-get install python3-numpy</span></code></pre></div>
 
+</div>
 </div>
 </div>
             </section>
