@@ -6,6 +6,7 @@ hardware-setup
 gateway-dev-env
 raspberry-connection-via-screen
 raspberry-connection-without-a-screen-headless-setup
+set-up-putty-and-finalize-connection-to-raspberry
 setup-a-jupyterhub-on-your-raspberrypi
 prepare-python-environment
 install-jupyterhub

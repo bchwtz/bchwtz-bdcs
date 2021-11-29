@@ -146,6 +146,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env</a><ul>
 <li class="chapter" data-level="2.2.1" data-path="getting-started.html"><a href="getting-started.html#raspberry-connection-via-screen"><i class="fa fa-check"></i><b>2.2.1</b> Raspberry connection via screen</a></li>
 <li class="chapter" data-level="2.2.2" data-path="getting-started.html"><a href="getting-started.html#raspberry-connection-without-a-screen-headless-setup"><i class="fa fa-check"></i><b>2.2.2</b> Raspberry connection without a screen (headless setup)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="getting-started.html"><a href="getting-started.html#set-up-putty-and-finalize-connection-to-raspberry"><i class="fa fa-check"></i><b>2.2.3</b> Set up PuTTY and finalize connection to Raspberry</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="setup-a-jupyterhub-on-your-raspberrypi.html"><a href="setup-a-jupyterhub-on-your-raspberrypi.html"><i class="fa fa-check"></i><b>3</b> Setup a Jupyterhub on your RaspberryPi</a><ul>
@@ -334,8 +335,9 @@ It should look like this:</p></li>
 <li><p>Connect the other side of the tag connector to the Debug out slot on the Nordic SDK</p></li>
 <li><p>Connect your SDK over USB with your PC
 <img src="gfx/org/SDK_SetUp.jpg" /></p></li>
+<li><p>Turn on the switch at the bottom left</p></li>
 <li><p>To test if everything is right, open SEGGER and click “Target”-&gt;”Connect J-Link”. SEGGER should connect to your SDK</p></li>
-<li><p>To flash your ruuvi tag with the cloned firmware, click “Target”-&gt;”Erase All”, afterwards click “Build”-&gt;”Build and Run”.</p></li>
+<li><p>To flash your ruuvi tag with the cloned firmware, click “Target”-&gt;”Erase All”, afterwards click “Build”-&gt;”Build and Run”</p></li>
 </ol>
 </div>
 </div>
@@ -361,6 +363,11 @@ It should look like this:</p></li>
 <li><p>Open Raspberry Pi Imager.</p></li>
 <li><p>Install operating system and choose the Raspberry Pi OS (normally recommended).</p></li>
 <li><p>Choose your SD card as storage and click “WRITE”.</p></li>
+</ol>
+</div>
+<div id="set-up-putty-and-finalize-connection-to-raspberry" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Set up PuTTY and finalize connection to Raspberry</h3>
+<ol start="9" style="list-style-type: decimal">
 <li><p>On your PC, download PuTTY (<a href="https://www.putty.org/" class="uri">https://www.putty.org/</a>)</p></li>
 <li><p>Get your Raspberry’s IP-Adress by opening a command line on your PC and and type</p></li>
 </ol>
