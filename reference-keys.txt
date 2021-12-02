@@ -14,6 +14,13 @@ configure-jupyterhub-as-a-system-service
 pycharm
 pycharm-git-repository
 remotedeploy
+getting-started-package
+raspbery-pi-os
+baord
+raspberry-pi-4---model-b
+copute-model-4
+enabling-usb-ports
+enabling-camera-dsi-port
 sensor
 initializing-acceleration-logging
 retrieving-data-from-fifo
