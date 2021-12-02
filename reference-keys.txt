@@ -15,8 +15,8 @@ pycharm
 pycharm-git-repository
 remotedeploy
 getting-started-package
-raspbery-pi-os
-baord
+raspbery-pi-os-buster
+board
 raspberry-pi-4---model-b
 copute-model-4
 enabling-usb-ports
