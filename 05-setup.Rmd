@@ -6,7 +6,7 @@
 
 ### Raspberry Pi 4 - Model B
 
-### Copute Model 4
+### Compute Model 4
 
 #### Enabling USB Ports
 
