@@ -18,7 +18,7 @@ getting-started-package
 raspbery-pi-os-buster
 board
 raspberry-pi-4---model-b
-copute-model-4
+compute-model-4
 enabling-usb-ports
 enabling-camera-dsi-port
 sensor
