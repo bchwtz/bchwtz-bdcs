@@ -322,9 +322,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">5.2.2</span> Copute Model 4</h3>
 <div id="enabling-usb-ports" class="section level4">
 <h4><span class="header-section-number">5.2.2.1</span> Enabling USB Ports</h4>
+<p>The USB 2.0 ports on the Wavesahre Baseboard A are disabled by default. To enable those ports the following commands need to be added to the end of <code>/boot/config.txt</code>.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="getting-started-package.html#cb21-1"></a><span class="va">dtoverlay=</span>dwc2,dr_mode=<span class="ex">host</span></span></code></pre></div>
+<p>The system needs to be <em>rebooted</em> to make the USB 2.0 ports work.</p>
 </div>
 <div id="enabling-camera-dsi-port" class="section level4">
 <h4><span class="header-section-number">5.2.2.2</span> Enabling Camera &amp; DSI Port</h4>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="getting-started-package.html#cb22-1"></a><span class="fu">sudo</span> apt-get install p7zip-full</span>
+<span id="cb22-2"><a href="getting-started-package.html#cb22-2"></a> <span class="fu">wget</span> https://www.waveshare.com/w/upload/4/41/CM4_dt_blob.7z</span>
+<span id="cb22-3"><a href="getting-started-package.html#cb22-3"></a> <span class="ex">7z</span> x CM4_dt_blob.7z -O./CM4_dt_blob</span>
+<span id="cb22-4"><a href="getting-started-package.html#cb22-4"></a> <span class="fu">sudo</span> chmod 777 -R CM4_dt_blob</span>
+<span id="cb22-5"><a href="getting-started-package.html#cb22-5"></a> <span class="bu">cd</span> CM4_dt_blob/</span>
+<span id="cb22-6"><a href="getting-started-package.html#cb22-6"></a> <span class="co">#If you want to use both cameras and DSI0</span></span>
+<span id="cb22-7"><a href="getting-started-package.html#cb22-7"></a> <span class="fu">sudo</span>  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp0-double_cam.dts</span>
+<span id="cb22-8"><a href="getting-started-package.html#cb22-8"></a> <span class="co">#If you want to ue both cameras and DSI1</span></span>
+<span id="cb22-9"><a href="getting-started-package.html#cb22-9"></a> <span class="fu">sudo</span>  dtc -I dts -O dtb -o /boot/dt-blob.bin dt-blob-disp1-double_cam.dts</span></code></pre></div>
 
 </div>
 </div>
