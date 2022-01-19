@@ -455,7 +455,7 @@ The following figure visualizes energy consumption of different operation states
  ggplot2::geom_point(ggplot2::aes(shape=action), size=3) +
  ggplot2::geom_text(ggplot2::aes(label=duration_s), nudge_y=70, color="black") +
  ggplot2::theme_bw() +
- ggplot2::scale_y_continuous(name="energy / mJ", sec.axis=ggplot2::sec_axis(trans=~./3, name="charge / µC")) +
+ ggplot2::scale_y_continuous(name="energy / mJ", sec.axis=ggplot2::sec_axis(trans=~./3, name="charge / mC")) +
  ggplot2::xlab("samplingrate / Hz")
  ```
 
