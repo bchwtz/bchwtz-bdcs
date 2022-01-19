@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-12-02" />
+<meta name="date" content="2022-01-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,8 +200,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.3" data-path="external-flash-integration.html"><a href="external-flash-integration.html#macronix-low-level-driver-functions"><i class="fa fa-check"></i><b>7.3.3</b> Macronix low level driver functions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="external-flash-integration.html"><a href="external-flash-integration.html#flashdb-evaluation"><i class="fa fa-check"></i><b>7.4</b> FlashDB evaluation</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="external-flash-integration.html"><a href="external-flash-integration.html#energy-consumption-1"><i class="fa fa-check"></i><b>7.4.1</b> Energy consumption</a></li>
-<li class="chapter" data-level="7.4.2" data-path="external-flash-integration.html"><a href="external-flash-integration.html#github-issue-11-write-performance-on-external-flash"><i class="fa fa-check"></i><b>7.4.2</b> GitHub Issue #11 Write Performance on External Flash</a></li>
+<li class="chapter" data-level="7.4.1" data-path="external-flash-integration.html"><a href="external-flash-integration.html#amount-of-data-wich-can-be-stored"><i class="fa fa-check"></i><b>7.4.1</b> Amount of data wich can be stored</a></li>
+<li class="chapter" data-level="7.4.2" data-path="external-flash-integration.html"><a href="external-flash-integration.html#energy-consumption-1"><i class="fa fa-check"></i><b>7.4.2</b> Energy consumption</a></li>
+<li class="chapter" data-level="7.4.3" data-path="external-flash-integration.html"><a href="external-flash-integration.html#github-issue-11-write-performance-on-external-flash"><i class="fa fa-check"></i><b>7.4.3</b> GitHub Issue #11 Write Performance on External Flash</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>8</b> Gateway</a><ul>
@@ -658,11 +659,51 @@ Unused Space: 0,20%<br />
 <img src="gfx/org/Evaluation%E2%80%93MemoryUsage2.png" /><br />
 Finally for evaluating the memory usage of the FlashDB, a similar analysis as in the introduction is carried out. Here it is analyzed, how long acceleration data can be logged. The first bar is the external flash, then, 49,03 h are possible without using the FlashDB and 5,4 h are lost when using the FlashDB.<br />
 <img src="gfx/org/Evaluation%E2%80%93MemoryUsage3.png" /></p>
+<div id="amount-of-data-wich-can-be-stored" class="section level3">
+<h3><span class="header-section-number">7.4.1</span> Amount of data wich can be stored</h3>
+<p>The maximum amount of acceleration data which can be stored inside the available flash memory can be computed using the following formula.</p>
+<p><span class="math display">\[T_{storable} = \frac{32}{f_S} * blockcount*{\rm floor}\left(\frac{blocksize-56}{16+8+resolution*\frac{3*32}{8}}\right)\]</span>
+The formula used the following parameters:</p>
+<table>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(f_S\)</span></td>
+<td>Samplingrate in Hz.</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(blockcount\)</span></td>
+<td>Number of blocks available. When using the internal flash this equals to 12. When using Macronix flash the number is 4094.</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(blocksize\)</span></td>
+<td>Size of one block. The number is 4000 if using the internal flash. When using Macronix flash the number is 4096.</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(resolution\)</span></td>
+<td>Resolution of one value in bits.</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(T_{storable}\)</span></td>
+<td>Maximum time of samples which can be stored in the flash memory.</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="energy-consumption-1" class="section level3">
-<h3><span class="header-section-number">7.4.1</span> Energy consumption</h3>
+<h3><span class="header-section-number">7.4.2</span> Energy consumption</h3>
 <p>The Macronix flash can operate in two modes: high-performance and low-power. When the Flash is formatted, the high-performance mode is activated to speed up the process. After that, in regular operation mode, it is set back to low-power mode. In the following the energy consumption is analyzed.</p>
 <div id="low-power-mode" class="section level4">
-<h4><span class="header-section-number">7.4.1.1</span> Low-Power Mode</h4>
+<h4><span class="header-section-number">7.4.2.1</span> Low-Power Mode</h4>
 <p>First, the energy consumption is analyzed for flash in low-power mode. Before initializing the flash, an average of 129,6 μA is consumed. The peaks are Bluetooth advertisements.<br />
 <img src="gfx/org/LP1.png" /><br />
 When initializing the falsh, the power consumption goes up:<br />
@@ -674,7 +715,7 @@ The process of initializing takes about 2 min and 58 s.<br />
 While logging the energy consumption is about 20 μA higher than before.</p>
 </div>
 <div id="high-performance-mode" class="section level4">
-<h4><span class="header-section-number">7.4.1.2</span> High-Performance Mode</h4>
+<h4><span class="header-section-number">7.4.2.2</span> High-Performance Mode</h4>
 <p>In high-performance mode, before initializing the flash, an average of 135,26 μA is consumed. That is 6 μA more than in low power mode.<br />
 <img src="gfx/org/HP1.png" /><br />
 When initializing the falsh, the power consumption goes up as seen before:<br />
@@ -694,7 +735,7 @@ High-Performance: <span class="math inline">\(W_{hp}=3 V∙102 s∙4,91 mA=1,50 
 </div>
 </div>
 <div id="github-issue-11-write-performance-on-external-flash" class="section level3">
-<h3><span class="header-section-number">7.4.2</span> GitHub Issue #11 Write Performance on External Flash</h3>
+<h3><span class="header-section-number">7.4.3</span> GitHub Issue #11 Write Performance on External Flash</h3>
 <p>In this issue limitations due to the write performance of the flash or due to the SPI bus speed are evaluated.<br />
 <img src="gfx/org/WritePerformanceOnExternalFlashIssue11.png" /><br />
 The max. page program time is 10 ms in low power mode. Worst case - 4 write function calls:<br />

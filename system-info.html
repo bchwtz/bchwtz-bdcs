@@ -24,7 +24,7 @@
 <meta name="author" content="Benjamin Buchwitz" />
 
 
-<meta name="date" content="2021-12-02" />
+<meta name="date" content="2022-01-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -200,8 +200,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.3.3" data-path="external-flash-integration.html"><a href="external-flash-integration.html#macronix-low-level-driver-functions"><i class="fa fa-check"></i><b>7.3.3</b> Macronix low level driver functions</a></li>
 </ul></li>
 <li class="chapter" data-level="7.4" data-path="external-flash-integration.html"><a href="external-flash-integration.html#flashdb-evaluation"><i class="fa fa-check"></i><b>7.4</b> FlashDB evaluation</a><ul>
-<li class="chapter" data-level="7.4.1" data-path="external-flash-integration.html"><a href="external-flash-integration.html#energy-consumption-1"><i class="fa fa-check"></i><b>7.4.1</b> Energy consumption</a></li>
-<li class="chapter" data-level="7.4.2" data-path="external-flash-integration.html"><a href="external-flash-integration.html#github-issue-11-write-performance-on-external-flash"><i class="fa fa-check"></i><b>7.4.2</b> GitHub Issue #11 Write Performance on External Flash</a></li>
+<li class="chapter" data-level="7.4.1" data-path="external-flash-integration.html"><a href="external-flash-integration.html#amount-of-data-wich-can-be-stored"><i class="fa fa-check"></i><b>7.4.1</b> Amount of data wich can be stored</a></li>
+<li class="chapter" data-level="7.4.2" data-path="external-flash-integration.html"><a href="external-flash-integration.html#energy-consumption-1"><i class="fa fa-check"></i><b>7.4.2</b> Energy consumption</a></li>
+<li class="chapter" data-level="7.4.3" data-path="external-flash-integration.html"><a href="external-flash-integration.html#github-issue-11-write-performance-on-external-flash"><i class="fa fa-check"></i><b>7.4.3</b> GitHub Issue #11 Write Performance on External Flash</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="8" data-path="gateway.html"><a href="gateway.html"><i class="fa fa-check"></i><b>8</b> Gateway</a><ul>
@@ -311,11 +312,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="system-info" class="section level1 unnumbered">
 <h1>System Info</h1>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="system-info.html#cb33-1"></a><span class="kw">Sys.time</span>()</span></code></pre></div>
-<pre><code>## [1] &quot;2021-12-02 23:03:55 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2022-01-19 16:31:58 UTC&quot;</code></pre>
 <div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="system-info.html#cb35-1"></a><span class="kw">sessionInfo</span>()</span></code></pre></div>
 <pre><code>## R version 4.1.2 (2021-11-01)
 ## Platform: x86_64-apple-darwin17.0 (64-bit)
-## Running under: macOS Catalina 10.15.7
+## Running under: macOS Big Sur 10.16
 ## 
 ## Matrix products: default
 ## BLAS:   /Library/Frameworks/R.framework/Versions/4.1/Resources/lib/libRblas.0.dylib
@@ -328,18 +329,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] kableExtra_1.3.4 knitr_1.36      
+## [1] kableExtra_1.3.4 knitr_1.37      
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] tidyselect_1.1.1  xfun_0.28         purrr_0.3.4       colorspace_2.0-2 
+##  [1] tidyselect_1.1.1  xfun_0.29         purrr_0.3.4       colorspace_2.0-2 
 ##  [5] vctrs_0.3.8       generics_0.1.1    htmltools_0.5.2   viridisLite_0.4.0
 ##  [9] yaml_2.2.1        utf8_1.2.2        rlang_0.4.12      jquerylib_0.1.4  
-## [13] pillar_1.6.4      glue_1.5.1        DBI_1.1.1         lifecycle_1.0.1  
+## [13] pillar_1.6.4      glue_1.6.0        DBI_1.1.2         lifecycle_1.0.1  
 ## [17] stringr_1.4.0     munsell_0.5.0     gtable_0.3.0      rvest_1.0.2      
 ## [21] zip_2.2.0         evaluate_0.14     labeling_0.4.2    fastmap_1.1.0    
-## [25] fansi_0.5.0       highr_0.9         Rcpp_1.0.7        scales_1.1.1     
+## [25] fansi_1.0.2       highr_0.9         Rcpp_1.0.8        scales_1.1.1     
 ## [29] webshot_0.5.2     farver_2.1.0      systemfonts_1.0.3 ggplot2_3.3.5    
-## [33] digest_0.6.29     stringi_1.7.6     openxlsx_4.2.4    bookdown_0.24    
+## [33] digest_0.6.29     stringi_1.7.6     openxlsx_4.2.5    bookdown_0.24    
 ## [37] dplyr_1.0.7       grid_4.1.2        tools_4.1.2       magrittr_2.0.1   
 ## [41] tibble_3.1.6      crayon_1.4.2      pkgconfig_2.0.3   ellipsis_0.3.2   
 ## [45] xml2_1.3.3        assertthat_0.2.1  rmarkdown_2.11    svglite_2.0.0    

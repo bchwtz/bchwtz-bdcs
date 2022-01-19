@@ -115,6 +115,7 @@ rd_status_t-mx_check_write_enablevoid
 void-mx_spi_ready_for_transfer-void
 rd_status_t-mx_high_performance_switch-bool-high_power
 flashdb-evaluation
+amount-of-data-wich-can-be-stored
 energy-consumption-1
 low-power-mode
 high-performance-mode
