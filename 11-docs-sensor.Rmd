@@ -455,7 +455,7 @@ The following figure visualizes energy consumption of different operation states
  ggplot2::geom_point(ggplot2::aes(shape=action), size=3) +
  ggplot2::geom_text(ggplot2::aes(label=duration_s), nudge_y=70, color="black") +
  ggplot2::theme_bw() +
- ggplot2::ylab("energy / mJ") +
+ ggplot2::scale_y_continuous(name="energy / mJ", sec.axis=ggplot2::sec_axis(trans=~./3, name="charge / µC")) +
  ggplot2::xlab("samplingrate / Hz")
  ```
 
@@ -729,6 +729,20 @@ Unused Space: 0,20%
 ![](./gfx/org/Evaluation–MemoryUsage2.png)  
 Finally for evaluating the memory usage of the FlashDB, a similar analysis as in the introduction is carried out. Here it is analyzed, how long acceleration data can be logged. The first bar is the external flash, then, 49,03 h are possible without using the FlashDB and 5,4 h are lost when using the FlashDB.  
 ![](./gfx/org/Evaluation–MemoryUsage3.png)  
+
+### Amount of data wich can be stored ###
+The maximum amount of acceleration data which can be stored inside the available flash memory can be computed using the following formula.
+
+$$T_{storable} = \frac{32}{f_S} * blockcount*{\rm floor}\left(\frac{blocksize-56}{16+8+resolution*\frac{3*32}{8}}\right)$$
+The formula used the following parameters:
+
+| Parameter | Description |
+|-|-|
+| $f_S$ | Samplingrate in Hz. |
+| $blockcount$ | Number of blocks available. When using the internal flash this equals to 12. When using Macronix flash the number is 4094. |
+| $blocksize$ | Size of one block. The number is 4000 if using the internal flash. When using Macronix flash the number is 4096. |
+| $resolution$ | Resolution of one value in bits. |
+| $T_{storable}$ | Maximum time of samples which can be stored in the flash memory. |
 
 ### Energy consumption ###   
 The Macronix flash can operate in two modes: high-performance and low-power. When the Flash is formatted, the high-performance mode is activated to speed up the process. After that, in regular operation mode, it is set back to low-power mode. In the following the energy consumption is analyzed.  
