@@ -27,7 +27,12 @@ retrieving-data-from-fifo
 using-the-data-by-hearbeat
 initialization-during-boot
 streaming-of-acceleration-data
+heartbeat
 implementation
+app_heartbeat.c
+uint16_t-get_current_heartbeatvoid
+rd_status_t-app_heartbeat_stopvoid
+rd_status_t-app_heartbeat_startuint16_t-heartbeat_ms
 app_accelerometer_logging.c
 rd_status_t-app_enable_sensor_loggingconst-bool-use_ram_db-const-bool-format_db
 rd_status_t-app_disable_sensor_loggingvoid
@@ -139,6 +144,8 @@ backend
 ble-gatt-messages
 general-message-structure
 control-messages
+set-heartbeat
+get-heartbeat
 start-transmitting-acceleration-data
 set-configuration-of-acceleration-sensor
 read-configuration-of-acceleration-sensor
