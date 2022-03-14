@@ -21,6 +21,26 @@ The first byte *destination* addresses the service which should process the mess
 
 Control messages are sent to the sensor. They must be padded by nullbytes to a minimum length of 11 bytes. This requirement is introduced by the Ruuvi firmware. The padding bytes are not shown in the following description of the messages.
 
+### Set heartbeat ###
+
+This message is used to set the heartbeat of the sensor in milliseconds. It must be transmitted as 16 bit unsigned int in [little-endian][endianess] byte sequence. The sensor responds to this message with a [status response](ble-gatt-messages.html#status-response).
+
+The concrete content of this message is `0x22 0x00 0xF2 V1 V2`.
+
+| Parameter | Description |
+|-|-|
+| `V1 V2` | 16 Bit unsigned int encoded value of heartbeat in ms (e.g. `00 FF` for 255ms).  |
+
+
+### Get heartbeat ###
+
+This message is used to get the current heartbeat of the sensor. The sensor responds to this message with a [status response](ble-gatt-messages.html#status-response) and current heartbeat set on sensor side in milliseconds encoded in [little-endian][endianess].
+
+The concrete content of this message is `0x22 0x00 0xF3`.
+
+An example response of this message could be `22 00 F3 00 00 FF` for a heartbeat of 255ms.
+
+
 ### Start transmitting acceleration data ###
 
 This message starts transmitting of acceleration data. It takes one parameter.

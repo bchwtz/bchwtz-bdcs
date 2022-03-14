@@ -39,8 +39,31 @@ When logging is active, the acceleration sensor LIS2DH12 generated an interrupt 
 
 When streaming is active, the process is started by the same condition. But the FIFO is read by [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). Instead of scheduling [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) the function hands over the data to FlashDB which stores them in RAM. This is done inside interrupt context (blue). In case of streaming there is no explicit command to read the data by the gateway. Instead, if connected to Bluetooth GATT service, the data is automatically send. This is done by scheduling [`app_acc_log_transfer_ram_db()`](sensor.html#void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size). [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) schedules execution of this function if `rt_gatt_nus_is_connected()` returns true.
 
+## Heartbeat ##
+The heartbeat is an interval in which the sensor communicates via Bluetooth to the outside world. One of the most important facts about the heartbeat is that this is the only point in time a device can connect to the sensor. The default interval is around 800ms. However, the heartbeat can be get and set on sensor site with static methods `get_current_heartbeat()` and `app_heartbeat_start(uint16_t heartbeat_ms)` defined in [app_heartbeat.c](sensor.html#app_heartbeat.c).
+Once the heartbeat is modified by hand (either from the sensor itself or from outside via Bluetooth messages) the new value is stored and will be applied directly and on every following reboot. Therefore it is advisable to be careful with modifying the heartbeat. 
 
 ## Implementation ##
+
+### app_heartbeat.c ###
+
+#### `uint16_t get_current_heartbeat(void)` ####
+
+Get the current heartbeat.
+
+#### `rd_status_t app_heartbeat_stop(void)` ####
+
+Stop the heartbeat.
+Note: This method should always be called before `app_heartbeat_start()` is called.
+
+
+#### `rd_status_t app_heartbeat_start(uint16_t heartbeat_ms)` ####
+
+Start and store the heartbeat with the new interval.
+
+| Parameters |||
+| - | - | - |
+| heartbeat_ms | in | New interval for heartbeat in milliseconds. |
 
 ### app_accelerometer_logging.c ###
 
