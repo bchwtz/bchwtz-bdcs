@@ -2,6 +2,7 @@ introduction
 getting-started
 sensor-dev-env
 software-setup
+alternative-software-setup-building-releases
 hardware-setup
 gateway-dev-env
 raspberry-connection-via-screen

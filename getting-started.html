@@ -141,7 +141,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="getting-started.html"><a href="getting-started.html"><i class="fa fa-check"></i><b>2</b> Getting Started<span></span></a><ul>
 <li class="chapter" data-level="2.1" data-path="getting-started.html"><a href="getting-started.html#sensor-dev-env"><i class="fa fa-check"></i><b>2.1</b> Sensor Dev Env<span></span></a><ul>
 <li class="chapter" data-level="2.1.1" data-path="getting-started.html"><a href="getting-started.html#software-setup"><i class="fa fa-check"></i><b>2.1.1</b> Software Setup<span></span></a></li>
-<li class="chapter" data-level="2.1.2" data-path="getting-started.html"><a href="getting-started.html#hardware-setup"><i class="fa fa-check"></i><b>2.1.2</b> Hardware Setup<span></span></a></li>
+<li class="chapter" data-level="2.1.2" data-path="getting-started.html"><a href="getting-started.html#alternative-software-setup-building-releases"><i class="fa fa-check"></i><b>2.1.2</b> Alternative Software Setup (building releases)<span></span></a></li>
+<li class="chapter" data-level="2.1.3" data-path="getting-started.html"><a href="getting-started.html#hardware-setup"><i class="fa fa-check"></i><b>2.1.3</b> Hardware Setup<span></span></a></li>
 </ul></li>
 <li class="chapter" data-level="2.2" data-path="getting-started.html"><a href="getting-started.html#gateway-dev-env"><i class="fa fa-check"></i><b>2.2</b> Gateway Dev Env<span></span></a><ul>
 <li class="chapter" data-level="2.2.1" data-path="getting-started.html"><a href="getting-started.html#raspberry-connection-via-screen"><i class="fa fa-check"></i><b>2.2.1</b> Raspberry connection via screen<span></span></a></li>
@@ -341,8 +342,18 @@ It should look like this:</p></li>
 <li><p>Search “Project ‘ruuvitag_b’” on the left inside SEGGER, right-click and choose “Set as Active Project”.</p></li>
 </ol>
 </div>
+<div id="alternative-software-setup-building-releases" class="section level3 hasAnchor">
+<h3><span class="header-section-number">2.1.2</span> Alternative Software Setup (building releases)<a href="getting-started.html#alternative-software-setup-building-releases" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: decimal">
+<li><p>Install docker (either docker-desktop or on linux your preferred docker package).</p></li>
+<li><p>If you use Windows or Mac, please set your preferred RAM-size and CPU-Count in the docker-desktop-app.</p></li>
+<li><p>Run <code>docker_build.sh</code> in any bash-compatible environment (e.g. <a href="https://gitforwindows.org/">git-bash</a>)</p></li>
+</ol>
+<p>This leaves you with the release-binaries in <code>src/targets/ruuvitag_b/arm_gcc/</code>.
+For further details refer to the <a href="https://github.com/bchwtz-fhswf/ruuvi.firmware.c#using-the-build-toolchain-inside-docker-recommended-way">README.md</a></p>
+</div>
 <div id="hardware-setup" class="section level3 hasAnchor">
-<h3><span class="header-section-number">2.1.2</span> Hardware Setup<a href="getting-started.html#hardware-setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<h3><span class="header-section-number">2.1.3</span> Hardware Setup<a href="getting-started.html#hardware-setup" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ol start="6" style="list-style-type: decimal">
 <li>Open your ruuvi tag, take PCB &amp; battery out (you can do so with a little screwdriver or by gently pulling on the battery clip)</li>
 </ol>
