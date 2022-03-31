@@ -76,9 +76,12 @@ Start and store the heartbeat with the new interval.
 #### `rd_status_t rt_sensor_get_from_fdb(fdb_kvdb_t kvdb, rt_sensor_ctx_t *sensor)` ####
 
 Retrieves data from fdb-kv-partition and loads it onto the sensor struct.
+
 #### `rd_status_t rt_sensor_store_to_fdb(fdb_kvdb_t kvdb, rt_sensor_ctx_t *sensor)` ####
 
 Stores data from the sensor-struct to the kvdb, referencing the current timestamp.
+
+
 ### app_accelerometer_logging.c ###
 
 #### `rd_status_t app_enable_sensor_logging(const bool use_ram_db, const bool format_db)` ####
