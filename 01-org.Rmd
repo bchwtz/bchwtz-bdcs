@@ -24,6 +24,17 @@ It should look like this:
 
 5. Search “Project ‘ruuvitag_b’” on the left inside SEGGER, right-click and choose “Set as Active Project”.
 
+### Alternative Software Setup (building releases)
+
+1. Install docker (either docker-desktop or on linux your preferred docker package).
+
+2. If you use Windows or Mac, please set your preferred RAM-size and CPU-Count in the docker-desktop-app.
+
+3. Run `docker_build.sh` in any bash-compatible environment (e.g. [git-bash](https://gitforwindows.org/))
+
+This leaves you with the release-binaries in `src/targets/ruuvitag_b/arm_gcc/`.
+For further details refer to the [README.md](https://github.com/bchwtz-fhswf/ruuvi.firmware.c#using-the-build-toolchain-inside-docker-recommended-way)
+
 ### Hardware Setup
 
 6. Open your ruuvi tag, take PCB & battery out (you can do so with a little screwdriver or by gently pulling on the battery clip)
