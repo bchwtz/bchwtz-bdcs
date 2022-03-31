@@ -18,7 +18,7 @@ When FIFO is full inside LIS2DH12 the interrupt starts the function [`on_fifo_fu
 
 Inside [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) the FIFO from LIS2DH12 is read (5). The values are store in memory in raw format to be ready to present them to the function [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data) which is important for heartbeat. In parallel the raw values are compacted by removing all unused bits. This is done by the function [`pack()`](sensor.html#void-packconst-uint8_t-resolution-const-uint16_t-sizedata-const-uint8_t-const-data-uint8_t-const-packeddata). These values are handover to the FlashDB which writes them to flash (6).
 
-## Using the data by hearbeat ##
+## Using the data by heartbeat ##
 This use case is shown with magenta arrows and numbers inside magenta circles in the figure above.
 
 The heartbeat retrieves the values from all sensors by calling the function `app_sensor_get()` inside the module [app_sensors.c](sensor.html#app_sensor.c). In the original setup this function calls [`ri_lis2dh12_data_get()`](sensor.html#rd_status_t-ri_lis2dh12_data_get-rd_sensor_data_t-const-data) inside [ruuvi_interface_lis2dh12.c](sensor.html#ruuvi_interface_lis2dh12.c). During initialization this function is replaced by [`lis2dh12_logged_data_get()`](sensor.html#rd_status_t-lis2dh12_logged_data_get-rd_sensor_data_t-const-data).
@@ -38,6 +38,13 @@ The following figure shows the difference between logging of acceleration data a
 When logging is active, the acceleration sensor LIS2DH12 generated an interrupt every time its FIFO is full. The interrupt causes the execution of [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). This function schedules the execution of [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) outside interrupt context (grey). The following process was described [earlier](sensor.html#retrieving-data-from-fifo).
 
 When streaming is active, the process is started by the same condition. But the FIFO is read by [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt). Instead of scheduling [`fifo_full_handler()`](sensor.html#void-fifo_full_handler-void-p_event_data-uint16_t-event_size) the function hands over the data to FlashDB which stores them in RAM. This is done inside interrupt context (blue). In case of streaming there is no explicit command to read the data by the gateway. Instead, if connected to Bluetooth GATT service, the data is automatically send. This is done by scheduling [`app_acc_log_transfer_ram_db()`](sensor.html#void-app_acc_log_transfer_ram_db-void-p_event_data-uint16_t-event_size). [`on_fifo_full()`](sensor.html#void-on_fifo_full-const-ri_gpio_evt_t-evt) schedules execution of this function if `rt_gatt_nus_is_connected()` returns true.
+
+## Saving the config inside the flashdb ##
+
+To be able to report different sensor-config versions to the gateway, at different times, the current config is stored in the key-value-partition of the flashdb.
+The configuration can be accessed via `rt_sensor_get_from_fdb` defined in [ruuvi_task_sensor.c](sensor.html#ruuvi_task_sensor.c).
+The values will then be automatically loaded onto the sensor struct.
+To save a config you will have to use `rt_sensor_store_to_fdb` defined in [ruuvi_task_sensor.c](sensor.html#ruuvi_task_sensor.c).
 
 ## Heartbeat ##
 The heartbeat is an interval in which the sensor communicates via Bluetooth to the outside world. One of the most important facts about the heartbeat is that this is the only point in time a device can connect to the sensor. The default interval is around 800ms. However, the heartbeat can be get and set on sensor site with static methods `get_current_heartbeat()` and `app_heartbeat_start(uint16_t heartbeat_ms)` defined in [app_heartbeat.c](sensor.html#app_heartbeat.c).
@@ -65,6 +72,13 @@ Start and store the heartbeat with the new interval.
 | - | - | - |
 | heartbeat_ms | in | New interval for heartbeat in milliseconds. |
 
+### ruuvi_task_sensor.c ###
+#### `rd_status_t rt_sensor_get_from_fdb(fdb_kvdb_t kvdb, rt_sensor_ctx_t *sensor)` ####
+
+Retrieves data from fdb-kv-partition and loads it onto the sensor struct.
+#### `rd_status_t rt_sensor_store_to_fdb(fdb_kvdb_t kvdb, rt_sensor_ctx_t *sensor)` ####
+
+Stores data from the sensor-struct to the kvdb, referencing the current timestamp.
 ### app_accelerometer_logging.c ###
 
 #### `rd_status_t app_enable_sensor_logging(const bool use_ram_db, const bool format_db)` ####
