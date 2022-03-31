@@ -24,6 +24,8 @@ It should look like this:
 
 5. Search “Project ‘ruuvitag_b’” on the left inside SEGGER, right-click and choose “Set as Active Project”.
 
+6. To pull the current version of all subrepositories, please use `make pull` in any bash-compatible shell.
+
 ### Alternative Software Setup (building releases)
 
 1. Install docker (either docker-desktop or on linux your preferred docker package).
