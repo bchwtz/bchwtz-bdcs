@@ -189,3 +189,7 @@ bluetooth-hardware
 case
 software-1
 backend-1
+merging
+caveates
+dontt-do-feature-master
+do-master-feature-master
