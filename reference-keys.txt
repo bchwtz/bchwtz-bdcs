@@ -36,6 +36,8 @@ rd_status_t-app_heartbeat_stopvoid
 rd_status_t-app_heartbeat_startuint16_t-heartbeat_ms
 ruuvi_task_sensor.c
 rd_status_t-rt_sensor_get_from_fdbfdb_kvdb_t-kvdb-rt_sensor_ctx_t-sensor
+rd_status_t-rt_sensor_store_to_fdbfdb_kvdb_t-kvdb-rt_sensor_ctx_t-sensor
+app_accelerometer_logging.c
 rd_status_t-app_enable_sensor_loggingconst-bool-use_ram_db-const-bool-format_db
 rd_status_t-app_disable_sensor_loggingvoid
 void-on_fifo_full-const-ri_gpio_evt_t-evt
