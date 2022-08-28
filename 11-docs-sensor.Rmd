@@ -491,7 +491,7 @@ The following figure visualizes energy consumption of different operation states
 
  energymeasurement %>% ggplot2::ggplot() +
  ggplot2::aes(x=samplingrate_hz, y=energy_mJ, color=flash) +
- ggplot2::geom_line() +
+ ggplot2::geom_path() +
  ggplot2::geom_point(ggplot2::aes(shape=action), size=3) +
  ggplot2::geom_text(ggplot2::aes(label=duration_s), nudge_y=70, color="black") +
  ggplot2::theme_bw() +
